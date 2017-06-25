@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="text_reservations")
-public class TextReservation extends Reservation{
+public class TextReservation extends Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
