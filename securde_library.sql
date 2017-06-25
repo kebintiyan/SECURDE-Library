@@ -37,7 +37,6 @@ CREATE TABLE `temp_admins` (
     PRIMARY KEY (`temp_admin_id`)
 );
 
-
 CREATE TABLE `texts` (
 	`text_id` 		INT NOT NULL AUTO_INCREMENT,
     `title` 		VARCHAR(128) NOT NULL,
