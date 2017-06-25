@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service("userService")
-public class UserService implements UserServiceInterface {
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -19,18 +19,15 @@ public class UserService implements UserServiceInterface {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @Override
-    public User findByUsername(String username) {
+    public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    @Override
-    public User findByEmail(String email) {
+    public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    @Override
-    public void save(User user) {
+    public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }

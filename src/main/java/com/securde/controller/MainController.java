@@ -1,9 +1,13 @@
 package com.securde.controller;
 
+import com.securde.model.account.Admin;
 import com.securde.model.account.User;
+import com.securde.model.repository.AdminRepository;
 import com.securde.model.repository.UserRepository;
+import com.securde.service.AdminService;
 import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,11 +22,11 @@ public class MainController {
     UserService userService;
 
     @Autowired
-    UserRepository userRepository;
+    AdminService adminService;
 
     @RequestMapping("")
     public void hello() {
-        User user = new User()
+        /*User user = new User()
                 .setUserId("11425520")
                 .setFirstName("Kevin")
                 .setMiddleInitial("D.")
@@ -35,6 +39,16 @@ public class MainController {
                 .setSecretAnswer("Test")
                 .setUserType(User.Type.STUDENT);
 
-        userService.save(user);
+        userService.saveUser(user);*/
+
+        /*Admin admin = new Admin()
+                .setAdminType(Admin.Type.ADMINISTRATOR)
+                .setUsername("admin")
+                .setPassword("password");
+
+        adminService.saveUser(admin);
+
+        admin = adminRepository.findUserByUsername("admin");
+        System.out.println(admin.getPassword());*/
     }
 }

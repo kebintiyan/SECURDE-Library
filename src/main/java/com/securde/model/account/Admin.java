@@ -1,15 +1,13 @@
 package com.securde.model.account;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by kevin on 6/25/2017.
  */
 
 @Entity
+@Table(name = "admins")
 public class Admin {
 
     public enum Type {
@@ -24,6 +22,8 @@ public class Admin {
 
     private String username;
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private Type adminType;
 
     public Admin() {}

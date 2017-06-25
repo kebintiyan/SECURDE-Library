@@ -32,7 +32,7 @@ CREATE TABLE `temp_admins` (
     `username` 				VARCHAR(32) NOT NULL,
     `password` 				VARCHAR(128) NOT NULL,
     `admin_type` 			ENUM('MANAGER', 'STAFF', 'ADMINISTRATOR'),
-    `date_time_created` 	DATETIME NOT NULL,
+    `date_time_created` 	DATETIME NOT NULL DEFAULT current_timestamp,
     
     PRIMARY KEY (`temp_admin_id`)
 );
@@ -51,9 +51,9 @@ CREATE TABLE `texts` (
 );
 
 CREATE TABLE `rooms` (
-	`room_id` 		INT NOT NULL AUTO_INCREMENT,
-    `name` 			VARCHAR(64) NOT NULL,
-    `availability` 	ENUM('RESERVED', 'AVAILABLE') NOT NULL DEFAULT 'AVAILABLE',
+	`room_id` 	INT NOT NULL AUTO_INCREMENT,
+    `name` 		VARCHAR(64) NOT NULL,
+    `status` 	ENUM('RESERVED', 'AVAILABLE') NOT NULL DEFAULT 'AVAILABLE',
     
     PRIMARY KEY (`room_id`)
 );
@@ -105,3 +105,7 @@ VALUES
     ('Mistborn', 'Fiction', 'Brandon Sanderson', 'TOR', '2000', 'fiction'),
     ('The Well of Ascension', 'Fiction', 'Brandon Sanderson', 'TOR', '2003', 'fiction'),
     ('The Hero of Ages', 'Fiction', 'Brandon Sanderson', 'TOR', '2006', 'fiction');
+
+INSERT INTO `admins`(`admin_type`, `password`, `username`)
+VALUES
+	('ADMINISTRATOR', '$2a$10$590se6hcQjWKT5POucM1zO0rtWzk/VMZK4lJezJYTTfSGhWnqG012', 'admin');
