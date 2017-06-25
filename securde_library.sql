@@ -9,11 +9,11 @@ CREATE TABLE `users` (
     `last_name` 		VARCHAR(64) NOT NULL,
     `username` 			VARCHAR(32) NOT NULL,
     `password` 			VARCHAR(128) NOT NULL,
-    `email_address` 	VARCHAR(64) NOT NULL,
+    `email` 			VARCHAR(64) NOT NULL,
     `birthday` 			DATE NOT NULL,
     `secret_question` 	VARCHAR(128) NOT NULL,
     `secret_answer` 	VARCHAR(128) NOT NULL,
-    `user_type` 		ENUM('student', 'faculty') NOT NULL,
+    `user_type` 		ENUM('STUDENT', 'FACULTY') NOT NULL,
     
     PRIMARY KEY(`user_id`)
 );
@@ -22,7 +22,7 @@ CREATE TABLE `admins` (
 	`admin_id` 		INT NOT NULL AUTO_INCREMENT,
     `username` 		VARCHAR(32) NOT NULL,
     `password` 		VARCHAR(128) NOT NULL,
-    `admin_type` 	ENUM('manager', 'staff', 'administrator'),
+    `admin_type` 	ENUM('MANAGER', 'STAFF', 'ADMINISTRATOR'),
     
     PRIMARY KEY (`admin_id`)
 );
@@ -31,7 +31,7 @@ CREATE TABLE `temp_admins` (
 	`temp_admin_id` 		INT NOT NULL AUTO_INCREMENT,
     `username` 				VARCHAR(32) NOT NULL,
     `password` 				VARCHAR(128) NOT NULL,
-    `admin_type` 			ENUM('manager', 'staff', 'administrator'),
+    `admin_type` 			ENUM('MANAGER', 'STAFF', 'ADMINISTRATOR'),
     `date_time_created` 	DATETIME NOT NULL,
     
     PRIMARY KEY (`temp_admin_id`)
@@ -45,7 +45,7 @@ CREATE TABLE `texts` (
     `publisher` 	VARCHAR(128),
     `year`			VARCHAR(4) NOT NULL,
     `tags` 			VARCHAR(255),
-    `status` 		ENUM('out', 'reserved', 'available') NOT NULL DEFAULT 'available',
+    `status` 		ENUM('OUT', 'RESERVED', 'AVAILABLE') NOT NULL DEFAULT 'AVAILABLE',
     
     PRIMARY KEY (`text_id`)
 );
@@ -53,7 +53,7 @@ CREATE TABLE `texts` (
 CREATE TABLE `rooms` (
 	`room_id` 		INT NOT NULL AUTO_INCREMENT,
     `name` 			VARCHAR(64) NOT NULL,
-    `availability` 	ENUM('reserved', 'available') NOT NULL DEFAULT 'available',
+    `availability` 	ENUM('RESERVED', 'AVAILABLE') NOT NULL DEFAULT 'AVAILABLE',
     
     PRIMARY KEY (`room_id`)
 );

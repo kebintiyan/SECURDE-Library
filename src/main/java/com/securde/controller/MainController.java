@@ -2,8 +2,8 @@ package com.securde.controller;
 
 import com.securde.model.account.User;
 import com.securde.model.repository.UserRepository;
+import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MainController {
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     UserRepository userRepository;
@@ -26,17 +29,12 @@ public class MainController {
                 .setLastName("Chan")
                 .setUsername("kebintiyan")
                 .setPassword("password")
-                .setEmailAddress("kevin98gray@gmail.com")
+                .setEmail("kevin98gray@gmail.com")
                 .setBirthday("1998-01-11")
                 .setSecretQuestion("Test")
                 .setSecretAnswer("Test")
                 .setUserType(User.Type.STUDENT);
 
-        userRepository.save(user);
-    }
-
-    @RequestMapping("/admin/test")
-    public void admin() {
-        System.out.println("admin");
+        userService.save(user);
     }
 }

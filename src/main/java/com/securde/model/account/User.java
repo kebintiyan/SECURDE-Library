@@ -23,7 +23,7 @@ public class User {
     private String lastName;
     private String username;
     private String password;
-    private String emailAddress;
+    private String email;
     private String birthday;
     private String secretQuestion;
     private String secretAnswer;
@@ -89,12 +89,12 @@ public class User {
         return this;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
 
-    public User setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public User setEmail(String email) {
+        this.email = email;
         return this;
     }
 
