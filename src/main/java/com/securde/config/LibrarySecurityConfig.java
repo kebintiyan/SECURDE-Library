@@ -5,25 +5,55 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    // roles admin allow to access /admin/**
-    // roles user allow to access /user/**
-    // custom 403 access denied error
+    @Autowired
+    private DataSource dataSource;
+
+    private String usersQuery = "select username, password " +
+            "from admins " +
+            "where username = ? " +
+            "union " +
+            "select username, password " +
+            "from users " +
+            "where username = ? " +
+            "union " +
+            "select username, password " +
+            "from temp_admins " +
+            "where username = ? ";
+
+    private String rolesQuery = "select * from roles where username = ?";
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(usersQuery)
+                .authoritiesByUsernameQuery(rolesQuery)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder);
+    }
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
+        /*http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/home", "/about").permitAll()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("USER")
+                .antMatchers("/admin*//**").hasAnyRole("ADMINISTRATOR")
+                .antMatchers("/user*//**").hasAnyRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -33,16 +63,25 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll()
                 .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
-    }
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);*/
 
-    // create two users, admin and user
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER")
-                .and()
-                .withUser("admin").password("password").roles("ADMIN");
+        http.
+                authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/manager/**").hasAuthority("MANAGER")
+                .antMatchers("/staff/**").hasAuthority("STAFF")
+                .antMatchers("/admin/**").hasAuthority("ADMINISTRATOR")
+                .anyRequest()
+                .authenticated().and().csrf().disable().formLogin()
+                .loginPage("/login").failureUrl("/login?error=true")
+                .defaultSuccessUrl("/admin/home")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .and().logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").and().exceptionHandling()
+                .accessDeniedPage("/access-denied");
     }
 }

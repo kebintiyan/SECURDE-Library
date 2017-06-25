@@ -37,6 +37,48 @@ CREATE TABLE `temp_admins` (
     PRIMARY KEY (`temp_admin_id`)
 );
 
+CREATE TABLE `roles` (
+	`username` VARCHAR(32) NOT NULL,
+    `role` ENUM('STUDENT', 'FACULTY', 'MANAGER', 'STAFF', 'ADMINISTRATOR') NOT NULL
+);
+
+
+DELIMITER $$
+USE `securde_library`$$
+DROP TRIGGER IF EXISTS `set_roles_users`$$
+CREATE TRIGGER `set_roles_users` AFTER INSERT ON `users` FOR EACH ROW
+BEGIN
+	INSERT INTO `roles` VALUES (NEW.username, NEW.user_type);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+USE `securde_library`$$
+DROP TRIGGER IF EXISTS `set_roles_admins`$$
+CREATE TRIGGER `set_roles_admins` AFTER INSERT ON `admins` FOR EACH ROW
+BEGIN
+	INSERT INTO `roles` VALUES (NEW.username, NEW.admin_type);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+USE `securde_library`$$
+DROP TRIGGER IF EXISTS `set_roles_temp_admins`$$
+CREATE TRIGGER `set_roles_temp_admins` AFTER INSERT ON `temp_admins` FOR EACH ROW
+BEGIN
+	INSERT INTO `roles` VALUES (NEW.username, NEW.admin_type);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+USE `securde_library`$$
+DROP TRIGGER IF EXISTS `remove_roles_temp_admins`$$
+CREATE TRIGGER `remove_roles_temp_admins` BEFORE DELETE ON `temp_admins` FOR EACH ROW
+BEGIN
+	DELETE FROM `roles` WHERE OLD.username = roles.username;
+END$$
+DELIMITER ;
+
 CREATE TABLE `texts` (
 	`text_id` 		INT NOT NULL AUTO_INCREMENT,
     `title` 		VARCHAR(128) NOT NULL,

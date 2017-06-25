@@ -26,7 +26,7 @@ public class MainController {
 
     @RequestMapping("")
     public void hello() {
-        /*User user = new User()
+        User user = new User()
                 .setUserId("11425520")
                 .setFirstName("Kevin")
                 .setMiddleInitial("D.")
@@ -39,7 +39,7 @@ public class MainController {
                 .setSecretAnswer("Test")
                 .setUserType(User.Type.STUDENT);
 
-        userService.saveUser(user);*/
+        userService.saveUser(user);
 
         /*Admin admin = new Admin()
                 .setAdminType(Admin.Type.ADMINISTRATOR)
