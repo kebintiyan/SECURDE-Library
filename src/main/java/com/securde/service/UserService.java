@@ -29,6 +29,11 @@ public class UserService {
 
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (user.getSecretAnswer() != null) {
+            user.setSecretAnswer(passwordEncoder.encode(user.getSecretAnswer()));
+        }
+
         userRepository.save(user);
     }
 }

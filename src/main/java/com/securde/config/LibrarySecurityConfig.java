@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
@@ -21,18 +20,10 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 
     private String usersQuery = "select username, password " +
-            "from admins " +
-            "where username = ? " +
-            "union " +
-            "select username, password " +
             "from users " +
-            "where username = ? " +
-            "union " +
-            "select username, password " +
-            "from temp_admins " +
-            "where username = ? ";
+            "where username = ?";
 
-    private String rolesQuery = "select * from roles where username = ?";
+    private String rolesQuery = "select username, role from users where username = ?";
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)

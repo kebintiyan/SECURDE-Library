@@ -10,37 +10,82 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
 
-    public enum Type {
-        STUDENT,
-        FACULTY
-    }
-
     @Id
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer userId;
 
+    private String username;
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    private String idNumber;
+    private String email;
     private String firstName;
     private String middleInitial;
     private String lastName;
-    private String username;
-    private String password;
-    private String email;
     private String birthday;
     private String secretQuestion;
     private String secretAnswer;
 
-    @Enumerated(EnumType.STRING)
-    private Type userType;
+    private String dateTimeCreated;
 
     public User() {
 
     }
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public User setUserId(String userId) {
+    public User setUserId(Integer userId) {
         this.userId = userId;
+        return this;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public User setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public User setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public User setEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -71,33 +116,6 @@ public class User {
         return this;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public User setUsername(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
     public String getBirthday() {
         return birthday;
     }
@@ -125,21 +143,12 @@ public class User {
         return this;
     }
 
-    public Type getUserType() {
-        return userType;
+    public String getDateTimeCreated() {
+        return dateTimeCreated;
     }
 
-    public String getUserTypeAsString() {
-        switch(userType) {
-            case STUDENT: return "student";
-            case FACULTY: return "faculty";
-        }
-
-        return "";
-    }
-
-    public User setUserType(Type userType) {
-        this.userType = userType;
+    public User setDateTimeCreated(String dateTimeCreated) {
+        this.dateTimeCreated = dateTimeCreated;
         return this;
     }
 }

@@ -3,21 +3,26 @@ CREATE SCHEMA `securde_library`;
 USE `securde_library`;
 
 CREATE TABLE `users` (
-	`user_id` 			VARCHAR(16) NOT NULL,
-	`first_name` 		VARCHAR(64) NOT NULL,
-    `middle_initial` 	VARCHAR(5) NOT NULL,
-    `last_name` 		VARCHAR(64) NOT NULL,
+	`user_id` 			INT NOT NULL AUTO_INCREMENT,
     `username` 			VARCHAR(32) NOT NULL,
     `password` 			VARCHAR(128) NOT NULL,
-    `email` 			VARCHAR(64) NOT NULL,
-    `birthday` 			DATE NOT NULL,
-    `secret_question` 	VARCHAR(128) NOT NULL,
-    `secret_answer` 	VARCHAR(128) NOT NULL,
-    `user_type` 		ENUM('STUDENT', 'FACULTY') NOT NULL,
+    `role` 				ENUM('STUDENT', 'FACULTY', 'MANAGER', 'STAFF', 'ADMINISTRATOR') NOT NULL,
+    
+    `id_number` 		VARCHAR(16),
+    `email` 			VARCHAR(64),
+	`first_name` 		VARCHAR(64),
+    `middle_initial` 	VARCHAR(5),
+    `last_name` 		VARCHAR(64),    
+    `birthday` 			DATE,
+    `secret_question` 	VARCHAR(128),
+    `secret_answer` 	VARCHAR(128),
+    
+    `date_time_created` DATETIME NOT NULL,
     
     PRIMARY KEY(`user_id`)
 );
 
+/*
 CREATE TABLE `admins` (
 	`admin_id` 		INT NOT NULL AUTO_INCREMENT,
     `username` 		VARCHAR(32) NOT NULL,
@@ -43,6 +48,7 @@ CREATE TABLE `roles` (
 );
 
 
+
 DELIMITER $$
 USE `securde_library`$$
 DROP TRIGGER IF EXISTS `set_roles_users`$$
@@ -51,6 +57,7 @@ BEGIN
 	INSERT INTO `roles` VALUES (NEW.username, NEW.user_type);
 END$$
 DELIMITER ;
+
 
 DELIMITER $$
 USE `securde_library`$$
@@ -78,6 +85,7 @@ BEGIN
 	DELETE FROM `roles` WHERE OLD.username = roles.username;
 END$$
 DELIMITER ;
+*/
 
 CREATE TABLE `texts` (
 	`text_id` 		INT NOT NULL AUTO_INCREMENT,
@@ -102,7 +110,7 @@ CREATE TABLE `rooms` (
 
 CREATE TABLE `text_reservations` (
 	`text_reservation_id` 		INT NOT NULL AUTO_INCREMENT,
-    `user_id` 					VARCHAR(16) NOT NULL,
+    `user_id` 					INT NOT NULL,
     `text_id` 					INT NOT NULL,
     `reservation_date_time` 	DATETIME NOT NULL,
     
@@ -116,7 +124,7 @@ CREATE TABLE `text_reservations` (
 
 CREATE TABLE `room_reservations` (
 	`room_reservation_id` 		INT NOT NULL AUTO_INCREMENT,
-    `user_id` 					VARCHAR(16) NOT NULL,
+    `user_id` 					INT NOT NULL,
     `room_id` 					INT NOT NULL,
     `reservation_date` 			DATE NOT NULL,
     `reservation_start_time` 	TIME NOT NULL,
@@ -130,6 +138,35 @@ CREATE TABLE `room_reservations` (
         REFERENCES `rooms`(`room_id`)
 );
 
+DELIMITER $$
+USE `securde_library`$$
+DROP TRIGGER IF EXISTS `default_date_time_text_users`$$
+CREATE TRIGGER `default_date_time_text_users` BEFORE INSERT ON `users` FOR EACH ROW
+	IF ( isnull(NEW.date_time_created) ) THEN
+		SET NEW.date_time_created=NOW();
+	END IF;
+$$
+delimiter ;
+
+DELIMITER $$
+USE `securde_library`$$
+DROP TRIGGER IF EXISTS `default_date_time_text_reservations`$$
+CREATE TRIGGER `default_date_time_text_reservations` BEFORE INSERT ON `text_reservations` FOR EACH ROW
+	IF ( isnull(NEW.reservation_date_time) ) THEN
+		SET NEW.reservation_date_time=NOW();
+	END IF;
+$$
+delimiter ;
+
+DELIMITER $$
+USE `securde_library`$$
+DROP TRIGGER IF EXISTS `default_date_room_reservations`$$
+CREATE TRIGGER `default_date_room_reservations` BEFORE INSERT ON `room_reservations` FOR EACH ROW
+	IF ( isnull(NEW.reservation_date) ) THEN
+		SET NEW.reservation_date=CURDATE();
+	END IF;
+$$
+delimiter ;
 
 /* Initial data*/
 
@@ -148,6 +185,6 @@ VALUES
     ('The Well of Ascension', 'Fiction', 'Brandon Sanderson', 'TOR', '2003', 'fiction'),
     ('The Hero of Ages', 'Fiction', 'Brandon Sanderson', 'TOR', '2006', 'fiction');
 
-INSERT INTO `admins`(`admin_type`, `password`, `username`)
+INSERT INTO `users`(`role`, `password`, `username`)
 VALUES
 	('ADMINISTRATOR', '$2a$10$590se6hcQjWKT5POucM1zO0rtWzk/VMZK4lJezJYTTfSGhWnqG012', 'admin');

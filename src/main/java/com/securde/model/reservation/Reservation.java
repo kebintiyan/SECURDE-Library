@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
  */
 
 @MappedSuperclass
-public class Reservation {
+public abstract class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
