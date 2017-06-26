@@ -1,6 +1,7 @@
 package com.securde.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,11 +20,14 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    private String usersQuery = "select username, password " +
-            "from users " +
-            "where username = ?";
+    @Autowired
+    private LibraryAuthenticationSuccessHandler libraryAuthenticationSuccessHandler;
 
-    private String rolesQuery = "select username, role from users where username = ?";
+    @Value("${spring.queries.users-query}")
+    private String usersQuery;
+
+    @Value("${spring.queries.roles-query}")
+    private String rolesQuery;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
@@ -60,15 +64,17 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/user/**").hasAuthority("STUDENT")
+                .antMatchers("/user/**").hasAuthority("FACULTY")
                 .antMatchers("/manager/**").hasAuthority("MANAGER")
                 .antMatchers("/staff/**").hasAuthority("STAFF")
                 .antMatchers("/admin/**").hasAuthority("ADMINISTRATOR")
                 .anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
-                .usernameParameter("email")
+                .successHandler(libraryAuthenticationSuccessHandler)
+                .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

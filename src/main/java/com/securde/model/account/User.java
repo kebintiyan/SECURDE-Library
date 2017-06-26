@@ -29,6 +29,9 @@ public class User {
     private String secretQuestion;
     private String secretAnswer;
 
+    @Column(name = "temp")
+    private boolean temp;
+
     private String dateTimeCreated;
 
     public User() {
@@ -140,6 +143,15 @@ public class User {
 
     public User setSecretAnswer(String secretAnswer) {
         this.secretAnswer = secretAnswer;
+        return this;
+    }
+
+    public boolean isTemp() {
+        return temp;
+    }
+
+    public User setTemp(boolean temp) {
+        this.temp = temp;
         return this;
     }
 
