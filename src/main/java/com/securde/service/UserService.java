@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public User findUserByIdNumber(String idNumber) {
+        return userRepository.findByIdNumber(idNumber);
+    }
+
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

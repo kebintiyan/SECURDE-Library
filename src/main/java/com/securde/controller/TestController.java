@@ -1,5 +1,6 @@
 package com.securde.controller;
 
+import com.securde.model.account.Role;
 import com.securde.model.account.User;
 import com.securde.model.reservable.Text;
 import com.securde.service.TextService;
@@ -29,8 +30,7 @@ public class TestController {
     public void test() {
         User user = userService.findUserByUsername("admin");
 
-        System.out.println(user.isTemp());
-    }*/
+        userService.saveUser(user);*/
 
     @RequestMapping("/")
     public void test() {

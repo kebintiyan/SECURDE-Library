@@ -64,6 +64,7 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/test").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/user/**").hasAuthority("STUDENT")
                 .antMatchers("/user/**").hasAuthority("FACULTY")
