@@ -20,7 +20,8 @@ public class TextReservation extends Reservation {
     @JoinColumn(name = "text_id")
     private Text text;
 
-    private String reservationDateTime;
+    private String reservationStartDate;
+    private String reservationEndDate;
 
     public Integer getTextReservationId() {
         return textReservationId;
@@ -40,12 +41,21 @@ public class TextReservation extends Reservation {
         return this;
     }
 
-    public String getReservationDateTime() {
-        return reservationDateTime;
+    public String getReservationStartDate() {
+        return reservationStartDate;
     }
 
-    public TextReservation setReservationDateTime(String reservationDateTime) {
-        this.reservationDateTime = reservationDateTime;
+    public TextReservation setReservationStartDate(String reservationStartDate) {
+        this.reservationStartDate = reservationStartDate;
+        return this;
+    }
+
+    public String getReservationEndDate() {
+        return reservationEndDate;
+    }
+
+    public TextReservation setReservationEndDate(String reservationEndDate) {
+        this.reservationEndDate = reservationEndDate;
         return this;
     }
 }

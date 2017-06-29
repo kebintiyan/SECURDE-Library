@@ -21,4 +21,5 @@ public interface TextRepository extends CrudRepository <Text, Integer> {
             "t.year LIKE LOWER(CONCAT('%',:searchParam, '%')) OR " +
             "t.tags LIKE LOWER(CONCAT('%',:searchParam, '%'))")
     ArrayList<Text> search(@Param("searchParam") String searchParam);
+    ArrayList<Text> findByTitle(String title);
 }

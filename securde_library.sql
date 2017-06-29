@@ -4,9 +4,9 @@ USE `securde_library`;
 
 CREATE TABLE `users` (
 	`user_id` 			INT NOT NULL AUTO_INCREMENT,
-    `username` 			VARCHAR(32) NOT NULL,
+    `username` 			VARCHAR(16) NOT NULL,
     `password` 			VARCHAR(128) NOT NULL,
-    `role` 				ENUM('STUDENT', 'FACULTY', 'MANAGER', 'STAFF', 'ADMINISTRATOR') NOT NULL,
+    `role` 				ENUM('STUDENT', 'FACULTY', 'MANAGER', 'STAFF', 'ADMINISTRATOR') NOT NULL DEFAULT 'STUDENT',
     
     `id_number` 		VARCHAR(16),
     `email` 			VARCHAR(64),
@@ -25,71 +25,6 @@ CREATE TABLE `users` (
     PRIMARY KEY(`user_id`)
 );
 
-/*
-CREATE TABLE `admins` (
-	`admin_id` 		INT NOT NULL AUTO_INCREMENT,
-    `username` 		VARCHAR(32) NOT NULL,
-    `password` 		VARCHAR(128) NOT NULL,
-    `admin_type` 	ENUM('MANAGER', 'STAFF', 'ADMINISTRATOR'),
-    
-    PRIMARY KEY (`admin_id`)
-);
-
-CREATE TABLE `temp_admins` (
-	`temp_admin_id` 		INT NOT NULL AUTO_INCREMENT,
-    `username` 				VARCHAR(32) NOT NULL,
-    `password` 				VARCHAR(128) NOT NULL,
-    `admin_type` 			ENUM('MANAGER', 'STAFF', 'ADMINISTRATOR'),
-    `date_time_created` 	DATETIME NOT NULL DEFAULT current_timestamp,
-    
-    PRIMARY KEY (`temp_admin_id`)
-);
-
-CREATE TABLE `roles` (
-	`username` VARCHAR(32) NOT NULL,
-    `role` ENUM('STUDENT', 'FACULTY', 'MANAGER', 'STAFF', 'ADMINISTRATOR') NOT NULL
-);
-
-
-
-DELIMITER $$
-USE `securde_library`$$
-DROP TRIGGER IF EXISTS `set_roles_users`$$
-CREATE TRIGGER `set_roles_users` AFTER INSERT ON `users` FOR EACH ROW
-BEGIN
-	INSERT INTO `roles` VALUES (NEW.username, NEW.user_type);
-END$$
-DELIMITER ;
-
-
-DELIMITER $$
-USE `securde_library`$$
-DROP TRIGGER IF EXISTS `set_roles_admins`$$
-CREATE TRIGGER `set_roles_admins` AFTER INSERT ON `admins` FOR EACH ROW
-BEGIN
-	INSERT INTO `roles` VALUES (NEW.username, NEW.admin_type);
-END$$
-DELIMITER ;
-
-DELIMITER $$
-USE `securde_library`$$
-DROP TRIGGER IF EXISTS `set_roles_temp_admins`$$
-CREATE TRIGGER `set_roles_temp_admins` AFTER INSERT ON `temp_admins` FOR EACH ROW
-BEGIN
-	INSERT INTO `roles` VALUES (NEW.username, NEW.admin_type);
-END$$
-DELIMITER ;
-
-DELIMITER $$
-USE `securde_library`$$
-DROP TRIGGER IF EXISTS `remove_roles_temp_admins`$$
-CREATE TRIGGER `remove_roles_temp_admins` BEFORE DELETE ON `temp_admins` FOR EACH ROW
-BEGIN
-	DELETE FROM `roles` WHERE OLD.username = roles.username;
-END$$
-DELIMITER ;
-*/
-
 CREATE TABLE `texts` (
 	`text_id` 		INT NOT NULL AUTO_INCREMENT,
     `title` 		VARCHAR(128) NOT NULL,
@@ -97,6 +32,7 @@ CREATE TABLE `texts` (
     `author` 		VARCHAR(128) NOT NULL,
     `publisher` 	VARCHAR(128),
     `year`			VARCHAR(4) NOT NULL,
+    `type` 			ENUM('BOOK', 'THESIS', 'MAGAZINE') NOT NULL DEFAULT 'BOOK',
     `tags` 			VARCHAR(255),
     `status` 		ENUM('OUT', 'RESERVED', 'AVAILABLE') NOT NULL DEFAULT 'AVAILABLE',
     
@@ -115,7 +51,8 @@ CREATE TABLE `text_reservations` (
 	`text_reservation_id` 		INT NOT NULL AUTO_INCREMENT,
     `user_id` 					INT NOT NULL,
     `text_id` 					INT NOT NULL,
-    `reservation_date_time` 	DATETIME NOT NULL,
+    `reservation_start_date` 	DATE NOT NULL,
+    `reservation_end_date` 		DATE NOT NULL,
     
     PRIMARY KEY (`text_reservation_id`),
     
@@ -151,26 +88,6 @@ CREATE TRIGGER `default_date_time_text_users` BEFORE INSERT ON `users` FOR EACH 
 $$
 delimiter ;
 
-DELIMITER $$
-USE `securde_library`$$
-DROP TRIGGER IF EXISTS `default_date_time_text_reservations`$$
-CREATE TRIGGER `default_date_time_text_reservations` BEFORE INSERT ON `text_reservations` FOR EACH ROW
-	IF ( isnull(NEW.reservation_date_time) ) THEN
-		SET NEW.reservation_date_time=NOW();
-	END IF;
-$$
-delimiter ;
-
-DELIMITER $$
-USE `securde_library`$$
-DROP TRIGGER IF EXISTS `default_date_room_reservations`$$
-CREATE TRIGGER `default_date_room_reservations` BEFORE INSERT ON `room_reservations` FOR EACH ROW
-	IF ( isnull(NEW.reservation_date) ) THEN
-		SET NEW.reservation_date=CURDATE();
-	END IF;
-$$
-delimiter ;
-
 /* Initial data*/
 
 INSERT INTO `rooms` (`name`)
@@ -191,3 +108,9 @@ VALUES
 INSERT INTO `users`(`role`, `password`, `username`)
 VALUES
 	('ADMINISTRATOR', '$2a$10$590se6hcQjWKT5POucM1zO0rtWzk/VMZK4lJezJYTTfSGhWnqG012', 'admin');
+    
+INSERT INTO `users`(`id_number`, `username`, `password`, `email`, `role`, `first_name`, `middle_initial`, `last_name`,
+	`birthday`, `secret_question`, `secret_answer`)
+VALUES
+	('11425520', 'user', '$2a$10$p.8wHhg0ht54.01DN5vmS.WNq5DagkbGDSfS.aCwWwM2UM0jZfxa2', 'test@test.com', 'STUDENT', 'Test', 'T.', 'Test',
+    '1998-01-11', 'The answer is answer', '$2a$10$.vGupWhgS.oorGBlfVRNBunSWEzx1ypRJFkCa5qk5oOTign5REY8.');

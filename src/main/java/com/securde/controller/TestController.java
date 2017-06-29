@@ -1,5 +1,6 @@
 package com.securde.controller;
 
+import com.securde.model.account.Role;
 import com.securde.model.account.User;
 import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,23 @@ public class TestController {
     @Autowired
     UserService userService;
 
-    /*@RequestMapping("/")
-    public void test() {
-        User user = userService.findUserByUsername("admin");
+    @RequestMapping(value={"/test"}, method = RequestMethod.GET)
+    public void test(){
+        /*User user = new User()
+                .setIdNumber("11425520")
+                .setUsername("user")
+                .setPassword("password")
+                .setEmail("test@test.com")
+                .setRole(Role.STUDENT)
+                .setFirstName("Test")
+                .setMiddleInitial("T.")
+                .setLastName("Test")
+                .setBirthday("1998-01-11")
+                .setSecretQuestion("The answer is answer")
+                .setSecretAnswer("answer");
 
-        System.out.println(user.isTemp());
-    }*/
+        userService.saveUser(user);
 
-    @RequestMapping(value={"/login"}, method = RequestMethod.POST)
-    public void login(){
-        System.out.println("Heeeeere");
+        System.out.println(userService.findUserByUsername("user").getPassword());*/
     }
 }

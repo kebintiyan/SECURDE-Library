@@ -17,6 +17,12 @@ public class Text extends Reservable {
         AVAILABLE
     }
 
+    public enum Type {
+        BOOK,
+        THESIS,
+        MAGAZINE
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer textId;
@@ -26,14 +32,20 @@ public class Text extends Reservable {
     private String author;
     private String publisher;
     private String year;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
     private String tags;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public int getTextId() {
         return textId;
     }
 
-    public Text setTextId(int textId) {
+    public Text setTextId(Integer textId) {
         this.textId = textId;
         return this;
     }
@@ -80,6 +92,15 @@ public class Text extends Reservable {
 
     public Text setYear(String year) {
         this.year = year;
+        return this;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Text setType(Type type) {
+        this.type = type;
         return this;
     }
 
