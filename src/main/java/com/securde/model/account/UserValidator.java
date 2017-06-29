@@ -25,9 +25,6 @@ public class UserValidator implements Validator {
 
     private static final int EMAIL_MAX_LENGTH = 64;
 
-    @Autowired
-    UserService userService;
-
     @Override
     public boolean supports(Class<?> clazz) {
         return User.class.equals(clazz);
@@ -63,10 +60,6 @@ public class UserValidator implements Validator {
             errors.rejectValue("username", ERROR_CODE_MAX_LENGTH, "Username cannot exceed " +
                     USERNAME_MIN_LENGTH + " characters.");
         }
-
-        if (userService.findUserByUsername(username) != null) {
-            errors.rejectValue("username", "error.user", "Username is already in use.");
-        }
     }
 
     private void validatePassword(String password, Errors errors) {
@@ -90,10 +83,6 @@ public class UserValidator implements Validator {
         else if (idNumber.length() != ID_NUMBER_LENGTH) {
             errors.rejectValue("idNumber", ERROR_LENGTH, "ID Number must be exactly " + ID_NUMBER_LENGTH + " characters.");
         }
-
-        if (userService.findUserByIdNumber(idNumber) != null) {
-            errors.rejectValue("idNumber", "error.user", "ID Number is already in use.");
-        }
     }
 
     private void validateEmail(String email, Errors errors) {
@@ -103,10 +92,6 @@ public class UserValidator implements Validator {
 
         else if (email.length() > EMAIL_MAX_LENGTH) {
             errors.rejectValue("email", ERROR_CODE_MAX_LENGTH, "Your email address is too long!");
-        }
-
-        if (userService.findUserByEmail(email) != null) {
-            errors.rejectValue("email", "error.user","Email is already in use.");
         }
     }
 

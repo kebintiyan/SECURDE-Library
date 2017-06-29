@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,11 @@ public class MainController {
 
     @Autowired
     UserService userService;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(new UserValidator());
+    }
 
     @RequestMapping(value = {"/"})
     public ModelAndView main() {
@@ -49,14 +56,22 @@ public class MainController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView createNewUser(User user, BindingResult bindingResult) {
+    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
 
-        UserValidator validator = new UserValidator();
-        validator.validate(user, bindingResult);
+        if (userService.findUserByUsername(user.getUsername()) != null) {
+            bindingResult.rejectValue("username", "error.user", "Username is already in use.");
+        }
+
+        if (userService.findUserByIdNumber(user.getIdNumber()) != null) {
+            bindingResult.rejectValue("idNumber", "error.user", "ID Number is already in use.");
+        }
+
+        if (userService.findUserByEmail(user.getEmail()) != null) {
+            bindingResult.rejectValue("email", "error.user","Email is already in use.");
+        }
 
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getAllErrors().get(0).toString());
             modelAndView.setViewName("register");
         }
         else {
