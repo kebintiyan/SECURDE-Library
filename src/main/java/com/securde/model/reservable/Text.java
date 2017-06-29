@@ -27,6 +27,8 @@ public class Text extends Reservable {
     private String publisher;
     private String year;
     private String tags;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public int getTextId() {
