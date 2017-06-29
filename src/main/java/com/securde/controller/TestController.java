@@ -1,12 +1,16 @@
 package com.securde.controller;
 
 import com.securde.model.account.User;
+import com.securde.model.reservable.Text;
+import com.securde.service.TextService;
 import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
 
 /**
  * Created by kevin on 6/26/2017.
@@ -18,12 +22,25 @@ public class TestController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    TextService textService;
+
     /*@RequestMapping("/")
     public void test() {
         User user = userService.findUserByUsername("admin");
 
         System.out.println(user.isTemp());
     }*/
+
+    @RequestMapping("/")
+    public void test() {
+        ArrayList<Text> text = textService.findTextByTitleContaining("mis");
+
+        for(int i = 0; i < text.size(); i++)
+            System.out.println(text.get(i).getTitle());
+
+        //System.out.println(text.getTitle());
+    }
 
     @RequestMapping(value={"/login"}, method = RequestMethod.POST)
     public void login(){
