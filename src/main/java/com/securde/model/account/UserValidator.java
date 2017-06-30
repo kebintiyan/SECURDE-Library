@@ -96,23 +96,33 @@ public class UserValidator implements Validator {
     }
 
     private void validateFirstName(String firstName, Errors errors) {
-
+        if (isNullOrEmpty(firstName)) {
+            rejectRequired(errors, "first name");
+        }
     }
 
     private void validateMiddleInitial(String middleInitial, Errors errors) {
-
+        if (isNullOrEmpty(middleInitial)) {
+            rejectRequired(errors, "middle initial");
+        }
     }
 
     private void validateLastName(String lastName, Errors errors) {
-
+        if (isNullOrEmpty(lastName)) {
+            rejectRequired(errors, "last name");
+        }
     }
 
     private void validateSecretQuestion(String secretQuestion, Errors errors) {
-
+        if (isNullOrEmpty(secretQuestion)) {
+            rejectRequired(errors, "secret question");
+        }
     }
 
     private void validateSecretAnswer(String secretAnswer, Errors errors) {
-
+        if (isNullOrEmpty(secretAnswer)) {
+            rejectRequired(errors, "secret answer");
+        }
     }
 
     private boolean isNullOrEmpty(String text) {
