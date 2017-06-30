@@ -32,7 +32,7 @@ public class TestController {
 
         userService.saveUser(user);*/
 
-    @RequestMapping("/")
+    /*@RequestMapping("/")
     public void test() {
         ArrayList<Text> text = textService.findTextByTitleContaining("mis");
 
@@ -40,10 +40,10 @@ public class TestController {
             System.out.println(text.get(i).getTitle());
 
         //System.out.println(text.getTitle());
-    }
+    }*/
 
-    @RequestMapping(value={"/login"}, method = RequestMethod.POST)
+    /*@RequestMapping(value={"/login"}, method = RequestMethod.POST)
     public void login(){
         System.out.println("Heeeeere");
-    }
+    }*/
 }
