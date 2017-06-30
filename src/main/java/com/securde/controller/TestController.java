@@ -26,24 +26,4 @@ public class TestController {
     @Autowired
     TextService textService;
 
-    /*@RequestMapping("/")
-    public void test() {
-        User user = userService.findUserByUsername("admin");
-
-        userService.saveUser(user);*/
-
-    @RequestMapping("/")
-    public void test() {
-        ArrayList<Text> text = textService.findTextByTitleContaining("mis");
-
-        for(int i = 0; i < text.size(); i++)
-            System.out.println(text.get(i).getTitle());
-
-        //System.out.println(text.getTitle());
-    }
-
-    @RequestMapping(value={"/login"}, method = RequestMethod.POST)
-    public void login(){
-        System.out.println("Heeeeere");
-    }
 }

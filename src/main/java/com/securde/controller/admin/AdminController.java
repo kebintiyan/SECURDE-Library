@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -33,6 +34,18 @@ public class AdminController {
         modelAndView.addObject("roles", roles);
 
         modelAndView.setViewName("admin/create");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/admin/create"}, method = RequestMethod.POST)
+    public ModelAndView createUser(User user, @RequestParam("radio_role") String role) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        if(role.equals("manager"))
+            user.setRole(Role.MANAGER);
+        else
+            user.setRole(Role.STAFF);
 
         return modelAndView;
     }
