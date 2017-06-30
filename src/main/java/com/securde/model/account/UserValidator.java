@@ -15,11 +15,11 @@ public class UserValidator implements Validator {
     private static final String ERROR_CODE_MIN_LENGTH = "field.min.length";
     private static final String ERROR_CODE_MAX_LENGTH = "field.max.length";
 
-    private static final int USERNAME_MIN_LENGTH = 16;
-    private static final int USERNAME_MAX_LENGTH = 6;
+    private static final int USERNAME_MIN_LENGTH = 4;
+    private static final int USERNAME_MAX_LENGTH = 16;
 
     private static final int PASSWORD_MIN_LENGTH = 6;
-    private static final int PASSWORD_MAX_LENGTH = 16;
+    private static final int PASSWORD_MAX_LENGTH = 32;
 
     private static final int ID_NUMBER_LENGTH = 8;
 
@@ -52,13 +52,13 @@ public class UserValidator implements Validator {
         if (isNullOrEmpty(username)) {
             rejectRequired(errors, "username");
         }
-        else if (username.length() < USERNAME_MAX_LENGTH) {
+        else if (username.length() < USERNAME_MIN_LENGTH) {
             errors.rejectValue("username", ERROR_CODE_MIN_LENGTH, "Username must be at least " +
-                    USERNAME_MAX_LENGTH + " characters.");
-        }
-        else if (username.length() > USERNAME_MIN_LENGTH) {
-            errors.rejectValue("username", ERROR_CODE_MAX_LENGTH, "Username cannot exceed " +
                     USERNAME_MIN_LENGTH + " characters.");
+        }
+        else if (username.length() > USERNAME_MAX_LENGTH) {
+            errors.rejectValue("username", ERROR_CODE_MAX_LENGTH, "Username cannot exceed " +
+                    USERNAME_MAX_LENGTH + " characters.");
         }
     }
 
