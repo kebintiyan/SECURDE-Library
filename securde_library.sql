@@ -107,7 +107,9 @@ VALUES
 
 INSERT INTO `users`(`role`, `password`, `username`)
 VALUES
-	('ADMINISTRATOR', '$2a$10$590se6hcQjWKT5POucM1zO0rtWzk/VMZK4lJezJYTTfSGhWnqG012', 'admin');
+	('ADMINISTRATOR', '$2a$10$590se6hcQjWKT5POucM1zO0rtWzk/VMZK4lJezJYTTfSGhWnqG012', 'admin'),
+    ('STAFF', '$2a$10$gnxZlQQxcccuRF7XW6R0h.7bx8V3eVlvGpUQOKOCL2o33vCgO.ts6', 'staff'),
+    ('MANAGER', '$2a$10$xHXarKF8V1wldza3Yurm0O3q9HJ307VMHcJlwV8a5LeHHY0aYZzCm', 'manager');
     
 INSERT INTO `users`(`id_number`, `username`, `password`, `email`, `role`, `first_name`, `middle_initial`, `last_name`,
 	`birthday`, `secret_question`, `secret_answer`)

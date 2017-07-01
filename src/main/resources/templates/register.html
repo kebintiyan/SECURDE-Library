@@ -22,7 +22,7 @@
                 <h2>Registration Form</h2>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{username}" placeholder="Username"
+                        <input type="text" th:maxlength="16" th:field="*{username}" placeholder="Username"
                                class="form-control" />
                         <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                                class="validation-message"></label>
@@ -32,7 +32,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="password" th:field="*{password}"
+                        <input type="password" th:field="*{password}" th:maxlength="32"
                                placeholder="Password" class="form-control" />
                         <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                                class="validation-message"></label>
@@ -41,7 +41,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{idNumber}"
+                        <input type="text" th:field="*{idNumber}" th:maxlength="8"
                                placeholder="ID Number" class="form-control" />
                         <label th:if="${#fields.hasErrors('idNumber')}" th:errors="*{idNumber}"
                                class="validation-message"></label>
@@ -50,7 +50,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{email}" placeholder="Email"
+                        <input type="text" th:field="*{email}" placeholder="Email" th:maxlength="32"
                                class="form-control" />
                         <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                class="validation-message"></label>
@@ -59,7 +59,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{firstName}"
+                        <input type="text" th:field="*{firstName}" th:maxlength="16"
                                placeholder="First Name" class="form-control" />
                         <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
                                class="validation-message"></label>
@@ -68,7 +68,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{middleInitial}"
+                        <input type="text" th:field="*{middleInitial}" th:maxlength="5"
                                placeholder="Middle Initial" class="form-control" />
                         <label th:if="${#fields.hasErrors('middleInitial')}" th:errors="*{middleInitial}"
                                class="validation-message"></label>
@@ -77,7 +77,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{lastName}"
+                        <input type="text" th:field="*{lastName}" th:maxlength="16"
                                placeholder="Last Name" class="form-control" />
                         <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                                class="validation-message"></label>
@@ -95,7 +95,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{secretQuestion}"
+                        <input type="text" th:field="*{secretQuestion}" th:maxlength="64"
                                placeholder="Secret Question" class="form-control" />
                         <label th:if="${#fields.hasErrors('secretQuestion')}" th:errors="*{secretQuestion}"
                                class="validation-message"></label>
@@ -104,7 +104,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{secretAnswer}"
+                        <input type="text" th:field="*{secretAnswer}" th:maxlength="32"
                                placeholder="Secret Answer" class="form-control" />
                         <label th:if="${#fields.hasErrors('secretAnswer')}" th:errors="*{secretAnswer}"
                                class="validation-message"></label>

@@ -13,13 +13,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form autocomplete="off" action="#" th:action="@{/admin/create}"
+
+            <form autocomplete="off" th:action="@{/admin/create}"
                   th:object="${user}" method="post" class="form-horizontal"
                   role="form">
-                <h2>Registration Form</h2>
+
+                <h2>Create a New Superuser</h2>
+
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{username}" placeholder="Username"
+                        <input type="text" th:field="*{username}" th:maxlength="16" placeholder="Username"
                                class="form-control" />
                         <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                                class="validation-message"></label>
@@ -29,22 +32,17 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="password" th:field="*{password}"
+                        <input type="password" th:field="*{password}" th:maxlength="32"
                                placeholder="Temporary Password" class="form-control" />
                         <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                                class="validation-message"></label>
                     </div>
                 </div>
 
-                <!--<ul>
-                    <li th:each="r : ${roles}">
-                        <input type="radio" th:field="${r}" th:value="${r}" />
-                        <label th:for="${r}" th:text="${r}"></label>
-                    </li>
-                </ul>-->
-
                 <div class="form-group">
                     <div class="col-sm-9">
+                        <label>Role: </label>
+                        <br/>
                         <label class="radio-inline">
                             <input  type="radio" name="radio_role"  id="radio_staff" value="staff" checked="checked"/>
                             Library Staff

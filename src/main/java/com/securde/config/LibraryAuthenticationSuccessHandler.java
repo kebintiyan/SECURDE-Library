@@ -10,6 +10,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -23,11 +24,16 @@ import java.util.Collection;
  * Created by kevin on 6/26/2017.
  */
 @Component
-public class LibraryAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class LibraryAuthenticationSuccessHandler
+        implements AuthenticationSuccessHandler {
 
     protected Log logger = LogFactory.getLog(this.getClass());
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+    public LibraryAuthenticationSuccessHandler() {
+        super();
+    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -66,10 +72,10 @@ public class LibraryAuthenticationSuccessHandler implements AuthenticationSucces
                 return "/admin/home";
             }
             else if (auth.equals(Role.MANAGER.getAuthority())) {
-                return "";
+                return "/manager/home";
             }
             else if (auth.equals(Role.STAFF.getAuthority())) {
-                return "";
+                return "/staff/home";
             }
             else if (auth.equals(Role.STUDENT.getAuthority()) ||
                     auth.equals(Role.FACULTY.getAuthority())) {
@@ -79,6 +85,7 @@ public class LibraryAuthenticationSuccessHandler implements AuthenticationSucces
 
         throw new IllegalStateException();
     }
+
 
     protected void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

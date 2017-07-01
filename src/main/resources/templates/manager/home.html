@@ -1,12 +1,37 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"></meta>
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
 </head>
 <body>
-Weeee!
+<h2>Manager home</h2>
+
+<ul>
+    <li>
+        <a>Manage Texts</a>
+    </li>
+
+    <li>
+        <a>Manage Reservations</a>
+    </li>
+
+    <li>
+        <a>Export logs</a>
+    </li>
+
+    <li>
+        <a>Change password</a>
+    </li>
+
+    <li>
+        <a>Log out</a>
+    </li>
+</ul>
 </body>
 </html>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 
@@ -30,6 +31,28 @@ public class MainController {
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(new UserValidator());
+    }
+
+    @RequestMapping("/home")
+    public RedirectView redirectAfterLogin(Authentication auth) {
+        RedirectView redirectView = new RedirectView();
+
+        String role = auth.getAuthorities().toArray()[0].toString();
+
+        if (role.equals(Role.ADMINISTRATOR.toString())) {
+            redirectView.setUrl("/admin/home");
+        }
+        else if (role.equals(Role.MANAGER.toString())) {
+            redirectView.setUrl("/manager/home");
+        }
+        else if (role.equals(Role.STAFF.toString())) {
+            redirectView.setUrl("/staff/home");
+        }
+        else {
+            redirectView.setUrl("/");
+        }
+
+        return redirectView;
     }
 
     @RequestMapping(value = {"/"})
@@ -81,6 +104,13 @@ public class MainController {
             modelAndView.setViewName("register");
         }
 
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
+    public ModelAndView viewAccessDenied() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("access-denied");
         return modelAndView;
     }
 }

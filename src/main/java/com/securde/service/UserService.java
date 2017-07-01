@@ -1,5 +1,6 @@
 package com.securde.service;
 
+import com.securde.model.account.Role;
 import com.securde.model.account.User;
 import com.securde.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,15 @@ public class UserService {
 
         if (user.getSecretAnswer() != null) {
             user.setSecretAnswer(passwordEncoder.encode(user.getSecretAnswer()));
+        }
+
+        if (user.getIdNumber() != null) {
+            if (user.getIdNumber().charAt(0) == '2') {
+                user.setRole(Role.FACULTY);
+            }
+            else {
+                user.setRole(Role.STUDENT);
+            }
         }
 
         userRepository.save(user);
