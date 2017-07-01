@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"></meta>
@@ -14,34 +14,38 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="input-group" id="adv-search">
-                <input type="text" class="form-control" placeholder="Search for books" />
-                <div class="input-group-btn">
-                    <div class="btn-group" role="group">
-                        <div class="dropdown dropdown-lg">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal" role="form">
-                                    <div class="form-group">
-                                        <label>Filter by</label>
-                                        <select class="form-control">
-                                            <option value="0" selected="true">Author</option>
-                                            <option value="1">Title</option>
-                                            <option value="2">Publisher</option>
-                                        </select>
+            <form autocomplete="off" action="#" th:action="@{/search}"
+            th:object="${text}" method="post" class="form-horizontal"
+            role="form">
+                <div class="input-group" id="adv-search">
+                    <input type="text" class="form-control" th:field="${text}" placeholder="Search for books" />
+                        <div class="input-group-btn">
+                            <div class="btn-group" role="group">
+                                <div class="dropdown dropdown-lg">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label>Filter by</label>
+                                                <select class="form-control">
+                                                    <option value="0" selected="true">Author</option>
+                                                    <option value="1">Title</option>
+                                                    <option value="2">Publisher</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Contains the words</label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                        </form>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Contains the words</label>
-                                        <input class="form-control" type="text" />
-                                    </div>
-                                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                </form>
+                                </div>
+                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                             </div>
-                        </div>
-                        <button th:action="@{/search}" th:object="" method="get" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
+                         </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

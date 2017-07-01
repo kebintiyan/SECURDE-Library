@@ -58,7 +58,7 @@ public class MainController {
     @RequestMapping(value = {"/"})
     public ModelAndView main() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("search");
+        modelAndView.setViewName("main");
         return modelAndView;
     }
 
