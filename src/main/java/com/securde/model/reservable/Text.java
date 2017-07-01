@@ -1,6 +1,7 @@
 package com.securde.model.reservable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 /**
  * Created by kevin on 6/21/2017.
@@ -36,12 +37,14 @@ public class Text extends Reservable {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    private String tags;
+    @Column
+    @Convert(converter = TagConverter.class)
+    private ArrayList<String> tags;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public int getTextId() {
+    public Integer getTextId() {
         return textId;
     }
 
@@ -104,11 +107,11 @@ public class Text extends Reservable {
         return this;
     }
 
-    public String getTags() {
+    public ArrayList<String> getTags() {
         return tags;
     }
 
-    public Text setTags(String tags) {
+    public Text setTags(ArrayList<String> tags) {
         this.tags = tags;
         return this;
     }

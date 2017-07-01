@@ -50,8 +50,11 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{email}" placeholder="Email" th:maxlength="32"
-                               class="form-control" />
+                        <div class="input-group">
+                            <input type="text" th:field="*{email}" placeholder="Email" th:maxlength="32"
+                                   class="form-control" aria-describedby="email-domain"/>
+                            <span class="input-group-addon" id="email-domain">@dlsu.edu.ph</span>
+                        </div>
                         <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                class="validation-message"></label>
                     </div>
