@@ -83,4 +83,11 @@ public class MainController {
 
         return modelAndView;
     }
+
+    @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
+    public ModelAndView viewAccessDenied() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("access-denied");
+        return modelAndView;
+    }
 }

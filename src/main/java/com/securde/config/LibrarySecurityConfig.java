@@ -60,8 +60,8 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);*/
 
-        http.
-                authorizeRequests()
+        http
+                .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/test").permitAll()
@@ -72,7 +72,11 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/staff/**").hasAuthority("STAFF")
                 .antMatchers("/admin/**").hasAuthority("ADMINISTRATOR")
                 .anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
+                .authenticated()
+                .and()
+                /*.csrf()
+                .disable()*/
+                .formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
                 .successHandler(libraryAuthenticationSuccessHandler)
                 .usernameParameter("username")
