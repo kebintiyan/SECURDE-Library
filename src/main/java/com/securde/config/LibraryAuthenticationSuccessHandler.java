@@ -66,10 +66,10 @@ public class LibraryAuthenticationSuccessHandler implements AuthenticationSucces
                 return "/admin/home";
             }
             else if (auth.equals(Role.MANAGER.getAuthority())) {
-                return "";
+                return "/manager/home";
             }
             else if (auth.equals(Role.STAFF.getAuthority())) {
-                return "";
+                return "/staff/home";
             }
             else if (auth.equals(Role.STUDENT.getAuthority()) ||
                     auth.equals(Role.FACULTY.getAuthority())) {
