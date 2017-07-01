@@ -100,7 +100,7 @@ VALUES
 
 INSERT INTO `texts`(`title`, `location`, `author`, `publisher`, `year`, `tags`)
 VALUES
-	('Introduction to Algorithms', 'Sciences', 'Cormen', 'MIT Press', '1990', 'computer science;algorithms'),
+	('Introduction to Algorithms', 'Sciences', 'Cormen', 'MIT Press', '1990', 'computer science,algorithms'),
     ('Mistborn', 'Fiction', 'Brandon Sanderson', 'TOR', '2000', 'fiction'),
     ('The Well of Ascension', 'Fiction', 'Brandon Sanderson', 'TOR', '2003', 'fiction'),
     ('The Hero of Ages', 'Fiction', 'Brandon Sanderson', 'TOR', '2006', 'fiction');

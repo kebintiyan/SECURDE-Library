@@ -47,4 +47,12 @@ public class ReservableService {
     public void saveText(Text text) {
         textRepository.save(text);
     }
+
+    public ArrayList<Text> findTextByTitleContaining(String title) {
+        return textRepository.findByTitleContaining(title);
+    }
+
+    public Text getText(Integer id) {
+        return textRepository.findOne(id);
+    }
 }

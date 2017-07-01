@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Details</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $("#panel-edit").hide();
+
+            $("#btn-edit").click(function() {
+                $("#panel-details").hide();
+                $("#panel-edit").show();
+            });
+        });
+
+    </script>
+</head>
+<body>
+<div class="container">
+
+    <div class="panel" id="panel-details">
+        <!--<div class="col-md-8">
+        </div>-->
+
+        <div class="panel-heading">
+            <h3 th:text="${text.title}"></h3>
+
+
+        </div>
+
+        <div class="panel-body">
+            Author: <span th:text="${text.author}"></span> <br/>
+            Year: <span th:text="${text.year}"></span> <br/>
+            Publisher: <span th:text="${text.publisher}"></span> <br/>
+            Tags: <span th:text="${text.tags}"></span><br/>
+
+            <hr/>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <a id="btn-edit" class="btn btn-primary">Edit</a>
+                    <a class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel" id="panel-edit">
+        <!--<div class="col-md-8">
+        </div>-->
+
+        <form th:object="${text}">
+            <div class="panel-heading">
+                <div class="form-group">
+                    <input type="text" placeholder="Title" th:value="*{title}"/>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                Author: <span th:text="${text.author}"></span> <br/>
+                Year: <span th:text="${text.year}"></span> <br/>
+                Publisher: <span th:text="${text.publisher}"></span> <br/>
+                Tags: <span th:text="${text.tags}"></span><br/>
+
+
+                <hr/>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="btn btn-success">Save</a>
+                        <a class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
