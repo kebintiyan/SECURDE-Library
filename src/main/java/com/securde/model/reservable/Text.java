@@ -1,5 +1,8 @@
 package com.securde.model.reservable;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 
@@ -28,10 +31,24 @@ public class Text extends Reservable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer textId;
 
+    @SafeHtml
+    @NotBlank(message = "Please input a valid title.")
     private String title;
+
+    @SafeHtml
+    @NotBlank(message = "Please input a valid location.")
     private String location;
+
+    @SafeHtml
+    @NotBlank(message = "Please input a valid author.")
     private String author;
+
+    @SafeHtml
+    @NotBlank(message = "Please input a valid publisher.")
     private String publisher;
+
+    @SafeHtml
+    @NotBlank(message = "Please input a valid year.")
     private String year;
 
     @Enumerated(EnumType.STRING)

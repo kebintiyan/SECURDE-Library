@@ -14,17 +14,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form autocomplete="off" action="#" th:action="@{/search}"
-            th:object="${text}" method="post" class="form-horizontal"
+            <form autocomplete="off" action="#" th:action="@{/search}" method="post" class="form-horizontal"
             role="form">
                 <div class="input-group" id="adv-search">
-                    <input type="text" class="form-control" th:field="${text}" placeholder="Search for books" />
+                    <input type="text" class="form-control" th:name="search-parameter" placeholder="Search for books" />
                         <div class="input-group-btn">
                             <div class="btn-group" role="group">
                                 <div class="dropdown dropdown-lg">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <form class="form-horizontal" role="form">
+                                        <!--<form class="form-horizontal" role="form">
                                             <div class="form-group">
                                                 <label>Filter by</label>
                                                 <select class="form-control">
@@ -38,18 +37,12 @@
                                                 <input class="form-control" type="text" />
                                             </div>
                                             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                        </form>
+                                        </form>-->
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                             </div>
-<<<<<<< HEAD
                          </div>
-=======
-                        </div>
-                        <button th:action="@{/search}" method="get" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
->>>>>>> c378f54208ceec7f16528ea2f207aac5f332d7d8
                 </div>
             </form>
         </div>

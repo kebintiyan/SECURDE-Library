@@ -27,10 +27,10 @@ public class SearchController {
     }
 
     @RequestMapping(value = {"/search"}, method = RequestMethod.POST)
-    public ModelAndView retrieveSearch(String text) {
+    public ModelAndView retrieveSearch(@RequestParam("search-parameter") String text) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("success");
-        System.out.print(text);
+        System.out.println(text);
 
         return modelAndView;
     }

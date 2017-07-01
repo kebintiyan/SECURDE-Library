@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * Created by kevin on 6/26/2017.
@@ -52,6 +53,19 @@ public class ManagerController {
         modelAndView.setViewName("manager/text_details");
 
         return modelAndView;
+    }
+
+    @RequestMapping(value = {"manager/text/details"}, method = RequestMethod.PUT)
+    public RedirectView editTextDetails(Text text) {
+        // Validate
+        // Save
+
+        // Redirect
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/manager/text/details?id=" + text.getTextId());
+
+
+        return redirectView;
     }
 
 }
