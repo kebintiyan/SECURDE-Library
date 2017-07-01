@@ -25,7 +25,7 @@ public class TestController {
 
     @Autowired
     TextService textService;
-    
+
     /*@RequestMapping("/")
     public void test() {
         User user = userService.findUserByUsername("admin");
