@@ -25,8 +25,7 @@ public class TestController {
 
     @Autowired
     TextService textService;
-
-<<<<<<< HEAD
+    
     /*@RequestMapping("/")
     public void test() {
         User user = userService.findUserByUsername("admin");
@@ -47,6 +46,4 @@ public class TestController {
     public void login(){
         System.out.println("Heeeeere");
     }*/
-=======
->>>>>>> 55aa96301b1d26355a9acddd1b6b759cb705f977
 }
