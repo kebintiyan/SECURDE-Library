@@ -78,7 +78,8 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()*/
                 .formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .successHandler(libraryAuthenticationSuccessHandler)
+//                .successHandler(libraryAuthenticationSuccessHandler)
+                .defaultSuccessUrl("/home")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()

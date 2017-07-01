@@ -25,7 +25,7 @@ public class AdminController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = {"/admin/home"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/admin", "/admin/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/home");

@@ -17,7 +17,7 @@ public class StaffController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = {"/staff/home"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/staff", "/staff/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("staff/home");

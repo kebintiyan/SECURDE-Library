@@ -25,7 +25,6 @@ import java.util.Collection;
  */
 @Component
 public class LibraryAuthenticationSuccessHandler
-        extends SimpleUrlAuthenticationSuccessHandler
         implements AuthenticationSuccessHandler {
 
     protected Log logger = LogFactory.getLog(this.getClass());
@@ -34,7 +33,6 @@ public class LibraryAuthenticationSuccessHandler
 
     public LibraryAuthenticationSuccessHandler() {
         super();
-        setUseReferer(true);
     }
 
     @Override
@@ -89,13 +87,13 @@ public class LibraryAuthenticationSuccessHandler
     }
 
 
-    /*protected void clearAuthenticationAttributes(HttpServletRequest request) {
+    protected void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return;
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-    }*/
+    }
 
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
         this.redirectStrategy = redirectStrategy;

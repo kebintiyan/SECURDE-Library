@@ -22,7 +22,7 @@ public class ManagerController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = {"/manager/home"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/manager", "/manager/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("manager/home");
