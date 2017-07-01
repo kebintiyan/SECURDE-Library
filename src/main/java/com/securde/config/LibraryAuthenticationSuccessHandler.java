@@ -10,6 +10,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -23,11 +24,18 @@ import java.util.Collection;
  * Created by kevin on 6/26/2017.
  */
 @Component
-public class LibraryAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class LibraryAuthenticationSuccessHandler
+        extends SimpleUrlAuthenticationSuccessHandler
+        implements AuthenticationSuccessHandler {
 
     protected Log logger = LogFactory.getLog(this.getClass());
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+    public LibraryAuthenticationSuccessHandler() {
+        super();
+        setUseReferer(true);
+    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -80,13 +88,14 @@ public class LibraryAuthenticationSuccessHandler implements AuthenticationSucces
         throw new IllegalStateException();
     }
 
-    protected void clearAuthenticationAttributes(HttpServletRequest request) {
+
+    /*protected void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return;
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-    }
+    }*/
 
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
         this.redirectStrategy = redirectStrategy;
