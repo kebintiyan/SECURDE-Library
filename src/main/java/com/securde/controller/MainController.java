@@ -35,7 +35,7 @@ public class MainController {
     @RequestMapping(value = {"/"})
     public ModelAndView main() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("main");
+        modelAndView.setViewName("search");
         return modelAndView;
     }
 
