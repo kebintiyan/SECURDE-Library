@@ -22,9 +22,11 @@
             <a th:href="@{/staff/text(id=${text.textId})}">
                 <div class="text-container">
                     <strong th:text="${text.title}"></strong> <br/>
+                    Type: <span th:text="${text.type}"></span> <br/>
                     Author: <span th:text="${text.author}"></span> <br/>
                     Year: <span th:text="${text.year}"></span> <br/>
                     Publisher: <span th:text="${text.publisher}"></span> <br/>
+                    Location: <span th:text="${text.location}"></span> <br/>
                     Tags: <span th:text="${text.tags}"></span><br/>
                 </div>
             </a>
