@@ -10,16 +10,15 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/filters.css}"/>
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/retrieve-filters.js}"></script>
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form id="search-form" autocomplete="off" action="#" th:action="@{/search}" method="post" class="form-horizontal"
+            <form id="search-form" autocomplete="off" action="#" th:action="@{/search}" th:object="${search_parameters}" method="post" class="form-horizontal"
             role="form">
                 <div class="input-group" id="adv-search">
-                    <input type="text" class="form-control" th:name="search-parameter" placeholder="Search for books" />
+                    <input type="text" class="form-control" th:field="*{search_parameter}" placeholder="Search for books" />
                         <div class="input-group-btn">
                             <div class="btn-group" role="group">
                                 <div class="dropdown dropdown-lg">
@@ -27,9 +26,9 @@
                                     <div class="dropdown-menu dropdown-menu-right" role="menu">
                                         <!--<form class="form-horizontal" role="form">-->
                                         <h3>Filter by:</h3>
-                                        <input type="checkbox" name="vehicle" value="author"/> Author<br/>
-                                        <input type="checkbox" name="vehicle" value="title"/> Title<br/>
-                                        <input type="checkbox" name="vehicle" value="publisher"/> Publisher<br/>
+                                        <input type="checkbox" name="filter" value="author" th:checked="*{author}"/> Author<br/>
+                                        <input type="checkbox" name="filter" value="title" th:checked="*{title}"/> Title<br/>
+                                        <input type="checkbox" name="filter" value="publisher" th:checked="*{publisher}"/> Publisher<br/>
                                         <!--<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                     </form>-->
 
