@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Text</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+
+Title : <span th:utext="${text.title}"></span> <br />
+Location : <span th:text="${text.location}"></span>  <br />
+Author : <span th:text="${text.author}"></span>  <br />
+Publisher : <span th:text="${text.publisher}"></span>  <br />
+Year : <span th:text="${text.year}"></span>  <br />
+Tags : <span th:text="${text.tags}"></span>  <br />
+Status : <span th:text="${text.status}"></span>  <br />
+
+<form th:action="@{/login}" method="get">
+    <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
+</form>
+
+</body>
+</html>
