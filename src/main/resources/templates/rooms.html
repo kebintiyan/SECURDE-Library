@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                     xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rooms</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+    <div class = "row">
+        <div class = "col-md-4 col-md-offset-1">
+            <h1>Rooms</h1>
+        </div>
+    </div>
+
+    <div class = "row">
+        <div class = "col-md-10 col-md-offset-1">
+            <table class = "table table-bordered">
+                <tr>
+                    <th>Room Number</th>
+                    <th th:each="time : ${times}" th:text="${time}"></th>
+                </tr>
+                <tr th:each = "room : ${rooms}">
+                    <td th:text="${room.name}"></td>
+                    <td th:each="time : ${times}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class = "row">
+        <div class = "col-md-4 col-md-offset-4 text-center">
+            <b>Chosen Room and Time : </b> DUMMY TEXT
+        </div>
+    </div>
+
+    <div class = "row">
+        <div class = "col-md-2 col-md-offset-5 text-center">
+            <form th:action="@{/reserve}" method="post">
+                <button class="btn btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

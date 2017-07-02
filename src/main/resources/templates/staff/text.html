@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Text</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+
+<b>Title : </b><span th:text="${text.title}"></span> <br />
+<b>Location : </b><span th:text="${text.location}"></span>  <br />
+<b>Author : </b><span th:text="${text.author}"></span>  <br />
+<b>Publisher : </b><span th:text="${text.publisher}"></span>  <br />
+<b>Year : </b><span th:text="${text.year}"></span>  <br />
+<b>Tags : </b><span th:text="${text.tags}"></span>  <br />
+<b>Status : </b><span th:text="${text.status}"></span>  <br />
+
+Date :
+<select>
+    <option th:each="date : ${dates}" th:value = "${date}" th:text = "${date}"></option>
+</select>
+
+<form th:action="@{/reserve}" method="post">
+    <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
+</form>
+
+</body>
+</html>
