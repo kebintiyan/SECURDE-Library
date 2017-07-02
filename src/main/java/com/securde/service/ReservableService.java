@@ -55,4 +55,8 @@ public class ReservableService {
     public Text getText(Integer id) {
         return textRepository.findOne(id);
     }
+
+    public void deleteText(Integer id) {
+        textRepository.delete(id);
+    }
 }
