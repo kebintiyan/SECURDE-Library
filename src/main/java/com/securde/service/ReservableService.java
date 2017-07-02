@@ -52,13 +52,36 @@ public class ReservableService {
         return textRepository.findByTitleContaining(title);
     }
 
+    public ArrayList<Text> findTextByAuthorContaining(String author) {
+        return textRepository.findByAuthorContaining(author);
+    }
+
+    public ArrayList<Text> findTextByPublisherContaining(String publisher) {
+        return textRepository.findByPublisherContaining(publisher);
+    }
+
+    public ArrayList<Text> findTextByTitleOrAuthorContaining(String titleorAuthor) {
+        return textRepository.findByTitleOrAuthorContaining(titleorAuthor);
+    }
+
+    public ArrayList<Text> findTextByTitleOrPublisherContaining(String titleorPublisher) {
+        return textRepository.findByTitleOrPublisherContaining(titleorPublisher);
+    }
+
+    public ArrayList<Text> findTextByAuthorOrPublisherContaining(String authorOrPublisher) {
+        return textRepository.findByAuthorOrPublisherContaining(authorOrPublisher);
+    }
+
     public Text getText(Integer id) {
         return textRepository.findOne(id);
+    }
+
+    public void deleteText(Integer id) {
+        textRepository.delete(id);
     }
 
     public Room getRoom(Integer id) {
         return roomRepository.findOne(id);
     }
-
 
 }

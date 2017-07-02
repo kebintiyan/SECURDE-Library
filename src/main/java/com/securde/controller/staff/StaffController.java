@@ -104,4 +104,14 @@ public class StaffController {
         return redirectView;
     }
 
+    @RequestMapping(value = {"staff/text"}, method = RequestMethod.DELETE)
+    public RedirectView deleteText(@RequestParam("text-id") Integer id) {
+        reservableService.deleteText(id);
+
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/staff/text");
+
+        return redirectView;
+    }
+
 }

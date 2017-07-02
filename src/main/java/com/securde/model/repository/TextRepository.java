@@ -22,5 +22,36 @@ public interface TextRepository extends CrudRepository <Text, Integer> {
             "t.tags LIKE LOWER(CONCAT('%',:searchParam, '%'))")
     ArrayList<Text> search(@Param("searchParam") String searchParam);
 
-    ArrayList<Text> findByTitleContaining(String title);
+    @Query("SELECT t " +
+            "from Text t " +
+            "WHERE t.title LIKE LOWER(CONCAT('%',:searchParam, '%'))")
+    ArrayList<Text> findByTitleContaining(@Param("searchParam") String title);
+
+    @Query("SELECT t " +
+            "from Text t " +
+            "WHERE t.author LIKE LOWER(CONCAT('%',:searchParam, '%'))")
+    ArrayList<Text> findByAuthorContaining(@Param("searchParam") String author);
+
+    @Query("SELECT t " +
+            "from Text t " +
+            "WHERE t.publisher LIKE LOWER(CONCAT('%',:searchParam, '%'))")
+    ArrayList<Text> findByPublisherContaining(@Param("searchParam") String title);
+
+    @Query("SELECT t " +
+            "from Text t " +
+            "WHERE t.title LIKE LOWER(CONCAT('%',:searchParam, '%')) OR " +
+            "t.author LIKE LOWER(CONCAT('%',:searchParam, '%'))")
+    ArrayList<Text> findByTitleOrAuthorContaining(@Param("searchParam") String title);
+
+    @Query("SELECT t " +
+            "from Text t " +
+            "WHERE t.title LIKE LOWER(CONCAT('%',:searchParam, '%')) OR " +
+            "t.publisher LIKE LOWER(CONCAT('%',:searchParam, '%'))")
+    ArrayList<Text> findByTitleOrPublisherContaining(@Param("searchParam") String title);
+
+    @Query("SELECT t " +
+            "from Text t " +
+            "WHERE t.author LIKE LOWER(CONCAT('%',:searchParam, '%')) OR " +
+            "t.publisher LIKE LOWER(CONCAT('%',:searchParam, '%'))")
+    ArrayList<Text> findByAuthorOrPublisherContaining(@Param("searchParam") String title);
 }
