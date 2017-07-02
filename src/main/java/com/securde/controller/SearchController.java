@@ -73,8 +73,10 @@ public class SearchController {
                 else
                     searchResult = reservableService.findTextByTitleContaining(searchString);
             }
-            else
+            else if(searchParameters.getPublisher() == true)
                 searchResult = reservableService.findTextByPublisherContaining(searchString);
+            else
+                searchResult = reservableService.searchText(searchString);
 
             if(searchResult.size() > 0)
                 for (int i = 0; i < searchResult.size(); i++)
