@@ -105,4 +105,14 @@ public class ManagerController {
 
         return redirectView;
     }
+
+    @RequestMapping(value = {"manager/text"}, method = RequestMethod.DELETE)
+    public RedirectView deleteText(@RequestParam("text-id") Integer id) {
+        reservableService.deleteText(id);
+
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/manager/text");
+
+        return redirectView;
+    }
 }

@@ -76,9 +76,12 @@ public class ReservableService {
         return textRepository.findOne(id);
     }
 
+    public void deleteText(Integer id) {
+        textRepository.delete(id);
+    }
+
     public Room getRoom(Integer id) {
         return roomRepository.findOne(id);
     }
-
 
 }
