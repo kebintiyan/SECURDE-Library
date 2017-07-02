@@ -75,4 +75,10 @@ public class ReservableService {
     public Text getText(Integer id) {
         return textRepository.findOne(id);
     }
+
+    public Room getRoom(Integer id) {
+        return roomRepository.findOne(id);
+    }
+
+
 }
