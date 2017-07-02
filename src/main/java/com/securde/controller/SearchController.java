@@ -49,6 +49,18 @@ public class SearchController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search");
 
+        ArrayList<String> uniqueAuthors = reservableService.findDistinctAuthors();
+        ArrayList<String> uniqueBooks = reservableService.findDistinctBooks();
+        ArrayList<String> uniqueMagazines = reservableService.findDistinctMagazines();
+        ArrayList<String> uniqueThesis = reservableService.findDistinctThesis();
+        ArrayList<String> uniquePublishers = reservableService.findDistinctPublishers();
+
+        modelAndView.addObject("uniqueAuthors", uniqueAuthors);
+        modelAndView.addObject("uniqueBooks", uniqueBooks);
+        modelAndView.addObject("uniqueMagazines", uniqueMagazines);
+        modelAndView.addObject("uniqueThesis", uniqueThesis);
+        modelAndView.addObject("uniquePublishers", uniquePublishers);
+
         ArrayList<Text> searchResult;
 
         System.out.println("Author: " + searchParameters.getAuthor() + "");
