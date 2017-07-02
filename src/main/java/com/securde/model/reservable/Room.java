@@ -20,6 +20,8 @@ public class Room extends Reservable {
     private Integer roomId;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Integer getRoomId() {
