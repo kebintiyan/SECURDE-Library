@@ -3,7 +3,14 @@
  */
 
 $(document).ready(function(){
+    $("#search-form").submit(function () {
+        retrieveFilters();
+    })
+});
+
+function retrieveFilters() {
     var filters = $('input:checkbox:checked').map(function () {
+        alert("tick");
         return this.value;
     }).get();
 
@@ -11,14 +18,13 @@ $(document).ready(function(){
         type : "POST",
         url : "/search",
         data : {
-            filters: filters //notice that "myArray" matches the value for @RequestParam
-                       //on the Java side
+            filters: filters
         },
         success : function(response) {
-            alert('success!');
+            alert(filters);
         },
         error : function(e) {
             alert('Error: ' + e);
         }
     });
-});
+}

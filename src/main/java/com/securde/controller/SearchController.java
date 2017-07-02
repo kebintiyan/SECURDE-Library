@@ -32,7 +32,7 @@ public class SearchController {
     }
 
     @RequestMapping(value = {"/search"}, method = RequestMethod.POST)
-    public ModelAndView retrieveSearch(@RequestParam("search-parameter") String text, @RequestParam("filters") ArrayList<String> filters) {
+    public ModelAndView retrieveSearch(@RequestParam("search-parameter") String text, @RequestParam("filters") String[] filters) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search");
 
