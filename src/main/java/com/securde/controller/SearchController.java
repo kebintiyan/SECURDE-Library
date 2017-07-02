@@ -47,16 +47,16 @@ public class SearchController {
 
             String searchString = searchParameters.getSearchString();
 
-            if(searchParameters.getAuthor() != null){
-                if(searchParameters.getTitle() != null)
+            if(searchParameters.getAuthor() == true){
+                if(searchParameters.getTitle() == true)
                     searchResult = reservableService.findTextByTitleOrAuthorContaining(searchString);
-                else if(searchParameters.getPublisher() != null)
+                else if(searchParameters.getPublisher() == true)
                     searchResult = reservableService.findTextByAuthorOrPublisherContaining(searchString);
                 else
                     searchResult = reservableService.findTextByAuthorContaining(searchString);
             }
-            else if(searchParameters.getTitle() != null){
-                if(searchParameters.getPublisher() != null)
+            else if(searchParameters.getTitle() == true){
+                if(searchParameters.getPublisher() == true)
                     searchResult = reservableService.findTextByTitleOrPublisherContaining(searchString);
                 else
                     searchResult = reservableService.findTextByTitleContaining(searchString);

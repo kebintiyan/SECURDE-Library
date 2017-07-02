@@ -35,7 +35,7 @@ public interface TextRepository extends CrudRepository <Text, Integer> {
     @Query("SELECT t " +
             "from Text t " +
             "WHERE t.publisher LIKE LOWER(CONCAT('%',:searchParam, '%'))")
-    ArrayList<Text> findByPublisherContaining(@Param("searchParam") String title);
+    ArrayList<Text> findByPublisherContaining(@Param("searchParam") String publisher);
 
     @Query("SELECT t " +
             "from Text t " +
