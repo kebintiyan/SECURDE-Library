@@ -13,22 +13,31 @@
 </head>
 <body>
 
-<b>Title : </b><span th:text="${text.title}"></span> <br />
-<b>Location : </b><span th:text="${text.location}"></span>  <br />
-<b>Author : </b><span th:text="${text.author}"></span>  <br />
-<b>Publisher : </b><span th:text="${text.publisher}"></span>  <br />
-<b>Year : </b><span th:text="${text.year}"></span>  <br />
-<b>Tags : </b><span th:text="${text.tags}"></span>  <br />
-<b>Status : </b><span th:text="${text.status}"></span>  <br />
+<div class = "row">
+    <div class = "col-md-offset-4 col-md-4">
 
-Date :
-<select>
-    <option th:each="date : ${dates}" th:value = "${date}" th:text = "${date}"></option>
-</select>
+        <div class = "panel panel-default">
+            <div class = "panel-body">
+                <b>Title : </b><span th:text="${text.title}"></span> <br />
+                <b>Location : </b><span th:text="${text.location}"></span>  <br />
+                <b>Author : </b><span th:text="${text.author}"></span>  <br />
+                <b>Publisher : </b><span th:text="${text.publisher}"></span>  <br />
+                <b>Year : </b><span th:text="${text.year}"></span>  <br />
+                <b>Tags : </b><span th:text="${text.tags}"></span>  <br />
+                <b>Status : </b><span th:text="${text.status}"></span>  <br />
 
-<form th:action="@{/reserve}" method="post">
-    <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
-</form>
+                Date :
+                <select>
+                    <option th:each="date : ${dates}" th:value = "${date}" th:text = "${date}"></option>
+                </select>
 
+                <form th:action="@{/reserve}" method="post">
+                    <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>
