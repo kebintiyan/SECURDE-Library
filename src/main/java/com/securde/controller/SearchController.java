@@ -37,11 +37,42 @@ public class SearchController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search");
 
-        ArrayList<Text> searchResult = reservableService.searchText(searchParameters.getSearchString());
+        ArrayList<Text> searchResult;
 
-        if(searchResult.size() > 0)
-            for(int i = 0; i < searchResult.size(); i++)
-                System.out.println(searchResult.get(0).getTitle());
+        System.out.println("Author: " + searchParameters.getAuthor() + "");
+        System.out.println("Title: " + searchParameters.getTitle() + "");
+        System.out.println("Publisher: " + searchParameters.getPublisher() + "");
+
+        if(searchParameters.getSearchString().length() > 0){
+
+            String searchString = searchParameters.getSearchString();
+
+            if(searchParameters.getAuthor() != null){
+                if(searchParameters.getTitle() != null)
+                    searchResult = reservableService.findTextByTitleOrAuthorContaining(searchString);
+                else if(searchParameters.getPublisher() != null)
+                    searchResult = reservableService.findTextByAuthorOrPublisherContaining(searchString);
+                else
+                    searchResult = reservableService.findTextByAuthorContaining(searchString);
+            }
+            else if(searchParameters.getTitle() != null){
+                if(searchParameters.getPublisher() != null)
+                    searchResult = reservableService.findTextByTitleOrPublisherContaining(searchString);
+                else
+                    searchResult = reservableService.findTextByTitleContaining(searchString);
+            }
+            else
+                searchResult = reservableService.findTextByPublisherContaining(searchString);
+
+            if(searchResult.size() > 0)
+                for (int i = 0; i < searchResult.size(); i++)
+                    System.out.println(searchResult.get(i).getTitle());
+
+            modelAndView.addObject("searchResult", searchResult);
+
+        }
+        else
+            System.out.print("empty search string");
 
         return modelAndView;
     }
