@@ -25,20 +25,22 @@ public class TextController {
     @Autowired
     ReservableService reservableService;
 
-    private static List<String> getDates() {
+    // 'int daysAfter' is the days going to be included after the date today
+    private static List<String> getDates(int daysAfter) { // Today's date is included
         Calendar calendar = Calendar.getInstance();
-        DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat value_sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //DateFormat display_sdf = new SimpleDateFormat("MMMM-dd-yyyy");
         Date dateToday = new Date();
 
         calendar.setTime(dateToday);
 
         List<String> dates = new ArrayList<String>();
 
-        int date_inc = 0;
-        for (int i = 0; i < dates.size(); i++) {
-            calendar.add(Calendar.DATE, date_inc++);
+        dates.add(value_sdf.format(calendar.getTime())); // add today
+        for (int i = 0; i < daysAfter; i++) {
+            calendar.add(Calendar.DATE, 1);
 
-            dates.add(sdf.format(calendar.getTime()));
+            dates.add(value_sdf.format(calendar.getTime()));
         }
 
         return dates;
@@ -50,7 +52,7 @@ public class TextController {
 
         Text text = reservableService.getText(id);
 
-        List<String> availableDates = getDates();
+        List<String> availableDates = getDates(7);
 
         modelAndView.setViewName("text");
         modelAndView.addObject(text);

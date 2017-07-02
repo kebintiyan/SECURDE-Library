@@ -17,21 +17,18 @@
 </head>
 <body>
 
-Title : <span th:text="${text.title}"></span> <br />
-Location : <span th:text="${text.location}"></span>  <br />
-Author : <span th:text="${text.author}"></span>  <br />
-Publisher : <span th:text="${text.publisher}"></span>  <br />
-Year : <span th:text="${text.year}"></span>  <br />
-Tags : <span th:text="${text.tags}"></span>  <br />
-Status : <span th:text="${text.status}"></span>  <br />
+<b>Title : </b><span th:text="${text.title}"></span> <br />
+<b>Location : </b><span th:text="${text.location}"></span>  <br />
+<b>Author : </b><span th:text="${text.author}"></span>  <br />
+<b>Publisher : </b><span th:text="${text.publisher}"></span>  <br />
+<b>Year : </b><span th:text="${text.year}"></span>  <br />
+<b>Tags : </b><span th:text="${text.tags}"></span>  <br />
+<b>Status : </b><span th:text="${text.status}"></span>  <br />
 
+Date :
 <select>
-
     <option th:each="date : ${dates}" th:value = "${date}" th:text = "${date}"></option>
-
 </select>
-
-<span th:text="${dates}"></span>
 
 <form th:action="@{/login}" method="get">
     <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
