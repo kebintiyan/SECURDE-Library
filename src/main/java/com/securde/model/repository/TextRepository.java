@@ -32,6 +32,29 @@ public interface TextRepository extends CrudRepository <Text, Integer> {
             "WHERE t.author LIKE LOWER(CONCAT('%',:searchParam, '%'))")
     ArrayList<Text> findByAuthorContaining(@Param("searchParam") String author);
 
+    @Query("SELECT DISTINCT t.author " +
+            "from Text t")
+    ArrayList<String> findDistinctAuthors();
+
+    @Query("SELECT DISTINCT t.title " +
+            "from Text t " +
+            "WHERE t.type LIKE '%BOOK%'")
+    ArrayList<String> findDistinctBooks();
+
+    @Query("SELECT DISTINCT t.title " +
+            "from Text t " +
+            "WHERE t.type LIKE '%MAGAZINE%'")
+    ArrayList<String> findDistinctMagazines();
+
+    @Query("SELECT DISTINCT t.title " +
+            "from Text t " +
+            "WHERE t.type LIKE '%THESIS%'")
+    ArrayList<String> findDistinctThesis();
+
+    @Query("SELECT DISTINCT t.publisher " +
+            "from Text t ")
+    ArrayList<String> findDistinctPublishers();
+
     @Query("SELECT t " +
             "from Text t " +
             "WHERE t.publisher LIKE LOWER(CONCAT('%',:searchParam, '%'))")

@@ -24,31 +24,35 @@
                     Categories
                 </a>
             </li>
-            <li>
-                <a href="#">Books</a>
-            </li>
-            <li>
-                <a href="#">Thesis</a>
-            </li>
-            <li>
-                <a href="#">Magazines</a>
-            </li>
-            <li>
-                <a href="#">Authors</a>
-            </li>
-            <!--<li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Books <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li class="dropdown-header">Dropdown heading</li>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
+                    <li><a href="#" th:each="book: ${uniqueBooks}"><span th:text="${book}"></span></a></li>
                 </ul>
-            </li>-->
-            <li>
-                <a href="#">Publishers</a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Thesis <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" th:each="thesis: ${uniqueThesis}"><span th:text="${thesis}"></span></a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Magazines <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" th:each="magazine: ${uniqueMagazines}"><span th:text="${magazine}"></span></a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Authors <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" th:each="author: ${uniqueAuthors}"><span th:text="${author}"></span></a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Publishers <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" th:each="publisher: ${uniquePublishers}"><span th:text="${publisher}"></span></a></li>
+                </ul>
             </li>
             <li>
                 <a href="#">Room Reservations</a>
