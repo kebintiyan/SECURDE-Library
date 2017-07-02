@@ -1,14 +1,12 @@
 package com.securde.model.reservable;
 
-import javax.persistence.Entity;
-
 /**
  * Created by avggo on 7/2/2017.
  */
 
 public class SearchParameters {
 
-    private String search_parameter;
+    private String searchString;
 
     private Boolean author;
     private Boolean title;
@@ -38,11 +36,11 @@ public class SearchParameters {
         this.publisher = publisher;
     }
 
-    public String getSearch_parameter() {
-        return search_parameter;
+    public String getSearchString() {
+        return searchString;
     }
 
-    public void setSearch_parameter(String search_parameter) {
-        this.search_parameter = search_parameter;
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
     }
 }
