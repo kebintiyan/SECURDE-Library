@@ -125,10 +125,21 @@ public class Text extends Reservable {
     }
 
     public ArrayList<String> getTags() {
+        /*while(tags.size() <= 5) {
+            tags.add("");
+        }*/
+
         return tags;
     }
 
     public Text setTags(ArrayList<String> tags) {
+        /*for (int i = 0; i < tags.size(); i++) {
+            if (tags.get(i).trim().isEmpty()) {
+                tags.remove(i);
+                i--;
+            }
+        }*/
+
         this.tags = tags;
         return this;
     }

@@ -18,6 +18,12 @@ public class TagConverter implements AttributeConverter<ArrayList<String>, Strin
 
     @Override
     public ArrayList<String> convertToEntityAttribute(String dbData) {
-        return new ArrayList<>(Arrays.asList(dbData.split(",")));
+        ArrayList<String> tags = new ArrayList<>(Arrays.asList(dbData.split(",")));
+
+        while(tags.size() < 5) {
+            tags.add("");
+        }
+
+        return tags;
     }
 }
