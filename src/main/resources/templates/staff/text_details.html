@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-confirmation.min.js}"></script>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -17,6 +18,14 @@
             $("#btn-edit").click(function() {
                 $("#panel-details").hide();
                 $("#text-edit").show();
+            });
+
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+                onConfirm: function() {
+                    $("#form-delete").submit();
+                }
+                // other options
             });
         });
         /*]]>*/
@@ -49,7 +58,15 @@
                 <div class="col-md-6">
                     <a id="btn-edit" class="btn btn-primary">Edit</a>
 
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                    <button class="btn btn-danger"
+                            data-toggle="confirmation"
+                            data-popout="true"
+                            data-btn-ok-label="Confirm Delete"
+                            data-btn-ok-class="btn btn-danger" data-btn-cancel-class="hidden">Delete</button>
+
+                    <form id="form-delete" th:action="@{/staff/text}" th:method="delete">
+                        <input type="hidden" th:name="text-id" th:value="${text.textId}" />
+                    </form>
                 </div>
             </div>
 
@@ -57,7 +74,7 @@
     </div>
 
     <!-- Modal -->
-    <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <!--<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
 
@@ -75,7 +92,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                    <form th:action="@{/staff/text}" th:method="delete">
+                    <form th:action="@{/manager/text}" th:method="delete">
                         <input type="hidden" th:name="text-id" th:value="${text.textId}" />
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
@@ -83,7 +100,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
 
     <div id="text-edit" class="row">
