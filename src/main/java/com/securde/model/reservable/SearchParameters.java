@@ -6,8 +6,9 @@ import javax.persistence.Entity;
  * Created by avggo on 7/2/2017.
  */
 
-@Entity
-public class Filters {
+public class SearchParameters {
+
+    private String search_parameter;
 
     private Boolean author;
     private Boolean title;
@@ -35,5 +36,13 @@ public class Filters {
 
     public void setPublisher(Boolean publisher) {
         this.publisher = publisher;
+    }
+
+    public String getSearch_parameter() {
+        return search_parameter;
+    }
+
+    public void setSearch_parameter(String search_parameter) {
+        this.search_parameter = search_parameter;
     }
 }
