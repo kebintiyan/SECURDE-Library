@@ -15,11 +15,11 @@
         <h2>Manage Texts</h2>
     </div>
 
-    <a th:href="@{/manager/text/add}" class="btn btn-primary">Add Text</a>
+    <a th:href="@{/staff/text/add}" class="btn btn-primary">Add Text</a>
 
     <ul class="list-group">
         <li th:each="text: ${texts}" class="list-group-item">
-            <a th:href="@{/manager/text(id=${text.textId})}">
+            <a th:href="@{/staff/text(id=${text.textId})}">
                 <div class="text-container">
                     <strong th:text="${text.title}"></strong> <br/>
                     Type: <span th:text="${text.type}"></span> <br/>

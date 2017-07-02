@@ -124,11 +124,38 @@ public class Text extends Reservable {
         return this;
     }
 
+    public Text setType(String type) {
+        type = type.toLowerCase();
+
+        if (type.equals("book")) {
+            setType(Text.Type.BOOK);
+        }
+        else if (type.equals("thesis")) {
+            setType(Text.Type.THESIS);
+        }
+        else if (type.equals("magazine")) {
+            setType(Text.Type.MAGAZINE);
+        }
+
+        return this;
+    }
+
     public ArrayList<String> getTags() {
+        /*while(tags.size() <= 5) {
+            tags.add("");
+        }*/
+
         return tags;
     }
 
     public Text setTags(ArrayList<String> tags) {
+        /*for (int i = 0; i < tags.size(); i++) {
+            if (tags.get(i).trim().isEmpty()) {
+                tags.remove(i);
+                i--;
+            }
+        }*/
+
         this.tags = tags;
         return this;
     }

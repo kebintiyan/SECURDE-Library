@@ -7,6 +7,7 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/search.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/filters.css}"/>
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
 </head>
@@ -14,39 +15,32 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form autocomplete="off" action="#" th:action="@{/search}" method="post" class="form-horizontal"
+            <form id="search-form" autocomplete="off" action="#" th:action="@{/search}" th:object="${searchParameters}" method="post" class="form-horizontal"
             role="form">
                 <div class="input-group" id="adv-search">
-                    <input type="text" class="form-control" th:name="search-parameter" placeholder="Search for books" />
+                    <input type="text" class="form-control" th:field="*{searchString}" placeholder="Search for books" />
                         <div class="input-group-btn">
                             <div class="btn-group" role="group">
                                 <div class="dropdown dropdown-lg">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <!--<form class="form-horizontal" role="form">
-                                            <div class="form-group">
-                                                <label>Filter by</label>
-                                                <select class="form-control">
-                                                    <option value="0" selected="true">Author</option>
-                                                    <option value="1">Title</option>
-                                                    <option value="2">Publisher</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Contains the words</label>
-                                                <input class="form-control" type="text" />
-                                            </div>
-                                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                        </form>-->
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </div>
-                         </div>
-                </div>
-            </form>
-        </div>
-    </div>
+                                        <!--<form class="form-horizontal" role="form">-->
+                                        <h3>Filter by:</h3>
+                                        <input type="checkbox" name="filter" value="author" th:checked="*{author}"/> Author<br/>
+                                        <input type="checkbox" name="filter" value="title" th:checked="*{title}"/> Title<br/>
+                                        <input type="checkbox" name="filter" value="publisher" th:checked="*{publisher}"/> Publisher<br/>
+                                        <!--<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                    </form>-->
+
+                                   </div>
+                               </div>
+                               <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                           </div>
+                        </div>
+               </div>
+           </form>
+       </div>
+   </div>
 </div>
 </body>
 </html>
