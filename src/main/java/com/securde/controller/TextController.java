@@ -1,7 +1,9 @@
 package com.securde.controller;
 
 import com.securde.model.reservable.Text;
+import com.securde.model.reservation.TextReservation;
 import com.securde.service.ReservableService;
+import com.securde.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,9 @@ public class TextController {
 
     @Autowired
     ReservableService reservableService;
+
+    @Autowired
+    ReservationService reservationService;
 
     // 'int daysAfter' is the days going to be included after the date today
     private static List<String> getDates(int daysAfter) { // Today's date is included
@@ -52,11 +57,14 @@ public class TextController {
 
         Text text = reservableService.getText(id);
 
-        List<String> availableDates = getDates(7);
+        TextReservation textReservation = new TextReservation();
+
+        //List<String> availableDates = getDates(7);
 
         modelAndView.setViewName("text");
+        modelAndView.addObject("reservation", textReservation);
         modelAndView.addObject(text);
-        modelAndView.addObject("dates", availableDates);
+        //modelAndView.addObject("dates", availableDates);
 
         return modelAndView;
     }

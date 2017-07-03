@@ -1,5 +1,6 @@
 package com.securde.model.reservation;
 
+import com.securde.model.account.User;
 import com.securde.model.reservable.Text;
 
 import javax.persistence.*;
@@ -17,6 +18,10 @@ public class TextReservation extends Reservation {
     private Integer textReservationId;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "text_id")
     private Text text;
 
@@ -29,6 +34,15 @@ public class TextReservation extends Reservation {
 
     public TextReservation setTextReservationId(Integer textReservationId) {
         this.textReservationId = textReservationId;
+        return this;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public TextReservation setUser(User user) {
+        this.user = user;
         return this;
     }
 

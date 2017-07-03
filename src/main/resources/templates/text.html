@@ -7,37 +7,60 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.standalone.min.css}" />
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-datepicker.min.js}"></script>
 
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+            });
+        });
+        /*]]>*/
+    </script>
 </head>
 <body>
+<div class = "wrapper">
+    <div class = "row">
+        <div class = "col-md-offset-4 col-md-4">
 
-<div class = "row">
-    <div class = "col-md-offset-4 col-md-4">
+            <div class = "panel panel-default">
+                <div class = "panel-body">
+                    <b>Title : </b><span th:text="${text.title}"></span> <br />
+                    <b>Location : </b><span th:text="${text.location}"></span>  <br />
+                    <b>Author : </b><span th:text="${text.author}"></span>  <br />
+                    <b>Publisher : </b><span th:text="${text.publisher}"></span>  <br />
+                    <b>Year : </b><span th:text="${text.year}"></span>  <br />
+                    <b>Tags : </b><span th:text="${text.tags}"></span>  <br />
+                    <b>Status : </b><span th:text="${text.status}"></span>  <br />
 
-        <div class = "panel panel-default">
-            <div class = "panel-body">
-                <b>Title : </b><span th:text="${text.title}"></span> <br />
-                <b>Location : </b><span th:text="${text.location}"></span>  <br />
-                <b>Author : </b><span th:text="${text.author}"></span>  <br />
-                <b>Publisher : </b><span th:text="${text.publisher}"></span>  <br />
-                <b>Year : </b><span th:text="${text.year}"></span>  <br />
-                <b>Tags : </b><span th:text="${text.tags}"></span>  <br />
-                <b>Status : </b><span th:text="${text.status}"></span>  <br />
+                    <form autocomplete="off" action="#" th:action="@{/text/reserve}"
+                          th:object="${reservation}" method="post" class="form-horizontal"
+                          role="form">
+                        <div class="form-group">
+                            <div class="col-sm-9">
+                                <div class="input-group date datepicker" data-provide="datepicker">
+                                    <input type="text" th:field="*{reservationStartDate}"
+                                           placeholder="Borrow Start Date" class="form-control" />
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                Date :
-                <select>
-                    <option th:each="date : ${dates}" th:value = "${date}" th:text = "${date}"></option>
-                </select>
+                        <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
+                    </form>
 
-                <form th:action="@{/reserve}" method="post">
-                    <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
-                </form>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>
+
 </body>
 </html>
