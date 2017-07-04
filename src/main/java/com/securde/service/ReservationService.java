@@ -2,6 +2,7 @@ package com.securde.service;
 
 import com.securde.model.repository.RoomReservationRepository;
 import com.securde.model.repository.TextReservationRepository;
+import com.securde.model.reservation.RoomReservation;
 import com.securde.model.reservation.TextReservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class ReservationService {
     @Autowired
     TextReservationRepository textReservationRepository;
 
+    @Autowired
+    RoomReservationRepository roomReservationRepository;
+
     public ArrayList<TextReservation> findTextReservationsByUserId (int id) {
         return textReservationRepository.findTextReservationsByUserId(id);
     }
@@ -27,6 +31,10 @@ public class ReservationService {
 
     public void saveTextReservation (TextReservation textReservation) {
         textReservationRepository.save(textReservation);
+    }
+
+    public void saveRoomReservation (RoomReservation roomReservation) {
+        roomReservationRepository.save(roomReservation);
     }
 
 }

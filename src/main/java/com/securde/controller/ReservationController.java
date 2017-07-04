@@ -1,7 +1,9 @@
 package com.securde.controller;
 
 import com.securde.model.account.Role;
+import com.securde.model.reservable.Room;
 import com.securde.model.reservable.Text;
+import com.securde.model.reservation.RoomReservation;
 import com.securde.model.reservation.TextReservation;
 import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
@@ -30,6 +32,9 @@ public class ReservationController {
     public static final int STUDENT_RESERVATION_DAYS = 7;
     public static final int FACULTY_RESERVATION_DAYS = 30;
 
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyy-MM-dd");
+    private Calendar calendar = Calendar.getInstance();
+
     @Autowired
     ReservationService reservationService;
 
@@ -47,11 +52,8 @@ public class ReservationController {
         com.securde.model.account.User my_user = userService.findUserByUsername(user.getUsername());
 
         textReservation.setUser(my_user);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyy-MM-dd");
         Date date = sdf.parse(textReservation.getReservationStartDate());
 
-        Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
         if (my_user.getRole().equals(Role.STUDENT)) {
@@ -78,10 +80,35 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/rooms/reserve", method = RequestMethod.POST)
-    public @ResponseBody ModelAndView reserveRoom (@RequestParam("chosenSlot") String chosenSlotString) {
+    public @ResponseBody ModelAndView reserveRoom (@RequestParam("msg") String msg, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
-        System.out.println("RESERVE ROOM");
+        RoomReservation roomReservation = new RoomReservation();
+
+        System.out.println(msg);
+
+        String[] splittedMessage = msg.split("-");
+
+        int roomId = Integer.parseInt(splittedMessage[0]);
+        String startTime = splittedMessage[1];
+        String endTime = splittedMessage[2];
+
+        Date date = new Date();
+
+        String reservationDate = sdf.format(date);
+
+        Room room = reservableService.getRoom(roomId);
+
+        User user = (User) authentication.getPrincipal();
+        com.securde.model.account.User my_user = userService.findUserByUsername(user.getUsername());
+
+        roomReservation.setUser(my_user);
+        roomReservation.setRoom(room);
+        roomReservation.setReservationStartTime(startTime);
+        roomReservation.setReservationEndTime(endTime);
+        roomReservation.setReservationDate(reservationDate);
+
+        reservationService.saveRoomReservation(roomReservation);
 
         modelAndView.setViewName("reserve");
 
