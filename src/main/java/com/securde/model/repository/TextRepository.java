@@ -24,6 +24,21 @@ public interface TextRepository extends CrudRepository <Text, Integer> {
 
     @Query("SELECT t " +
             "from Text t " +
+            "WHERE t.type LIKE '%BOOK%'")
+    ArrayList<Text> findAllBooks();
+
+    @Query("SELECT t " +
+            "from Text t " +
+            "WHERE t.type LIKE '%THESIS%'")
+    ArrayList<Text> findAllThesis();
+
+    @Query("SELECT t " +
+            "from Text t " +
+            "WHERE t.type LIKE '%MAGAZINE%'")
+    ArrayList<Text> findAllMagazines();
+
+    @Query("SELECT t " +
+            "from Text t " +
             "WHERE t.title LIKE LOWER(CONCAT('%',:searchParam, '%'))")
     ArrayList<Text> findByTitleContaining(@Param("searchParam") String title);
 
@@ -32,10 +47,19 @@ public interface TextRepository extends CrudRepository <Text, Integer> {
             "WHERE t.author LIKE LOWER(CONCAT('%',:searchParam, '%'))")
     ArrayList<Text> findByAuthorContaining(@Param("searchParam") String author);
 
+    @Query("SELECT DISTINCT t.author " +
+            "from Text t")
+    ArrayList<String> findDistinctAuthors();
+
+
+    @Query("SELECT DISTINCT t.publisher " +
+            "from Text t ")
+    ArrayList<String> findDistinctPublishers();
+
     @Query("SELECT t " +
             "from Text t " +
             "WHERE t.publisher LIKE LOWER(CONCAT('%',:searchParam, '%'))")
-    ArrayList<Text> findByPublisherContaining(@Param("searchParam") String title);
+    ArrayList<Text> findByPublisherContaining(@Param("searchParam") String publisher);
 
     @Query("SELECT t " +
             "from Text t " +

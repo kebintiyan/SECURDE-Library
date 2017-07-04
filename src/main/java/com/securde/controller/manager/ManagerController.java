@@ -2,17 +2,18 @@ package com.securde.controller.manager;
 
 import com.securde.model.reservable.Text;
 import com.securde.service.ReservableService;
-import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 /**
@@ -72,38 +73,36 @@ public class ManagerController {
     }
 
     @RequestMapping(value = {"/manager/text/add"}, method = RequestMethod.POST)
-    public RedirectView addText(Text text, @RequestParam("radio-type") String type) {
+    public ModelAndView addText(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type) {
+        ModelAndView modelAndView = new ModelAndView();
 
-        text.setType(type).setStatus(Text.Status.AVAILABLE);
-        reservableService.saveText(text);
-
-        // Invalid
-        /*if (false) {
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("text", text);
+        if (bindingResult.hasErrors()) {
             modelAndView.setViewName("manager/add_text");
+        }
+        else {
+            text.setType(type).setStatus(Text.Status.AVAILABLE);
+            reservableService.saveText(text);
+            modelAndView.setViewName("redirect:/manager/text");
+        }
 
-            return modelAndView;
-        }*/
-
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("/manager/text");
-        return redirectView;
+        return modelAndView;
     }
 
     @RequestMapping(value = {"manager/text"}, method = RequestMethod.PUT)
-    public RedirectView editTextDetails(Text text, @RequestParam("radio-type") String type) {
-        // Validate
+    public ModelAndView editTextDetails(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type) {
+        ModelAndView modelAndView = new ModelAndView();
 
-        text.setType(type);
-        reservableService.saveText(text);
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("error", true);
+            modelAndView.setViewName("manager/text_details");
+        }
+        else {
+            text.setType(type);
+            reservableService.saveText(text);
+            modelAndView.setViewName("redirect:/manager/text?id=" + text.getTextId());
+        }
 
-        // Redirect
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("/manager/text?id=" + text.getTextId());
-
-
-        return redirectView;
+        return modelAndView;
     }
 
     @RequestMapping(value = {"manager/text"}, method = RequestMethod.DELETE)

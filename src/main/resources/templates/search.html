@@ -21,40 +21,26 @@
         <ul class="nav sidebar-nav">
             <li class="sidebar-brand">
                 <a href="#">
-                    Brand
+                    Categories
                 </a>
             </li>
             <li>
-                <a href="#">Home</a>
+                <a th:href="@{/books}">Books</a>
             </li>
             <li>
-                <a href="#">About</a>
+                <a th:href="@{/thesis}">Thesis</a>
             </li>
             <li>
-                <a href="#">Events</a>
+                <a th:href="@{/magazines}">Magazines</a>
             </li>
             <li>
-                <a href="#">Team</a>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li class="dropdown-header">Dropdown heading</li>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                </ul>
+                <a th:href="@{/authors}">Authors</a>
             </li>
             <li>
-                <a href="#">Services</a>
+                <a th:href="@{/publishers}">Publishers</a>
             </li>
             <li>
-                <a href="#">Contact</a>
-            </li>
-            <li>
-                <a href="https://twitter.com/maridlcrmn">Follow me</a>
+                <a href="#">Room Reservations</a>
             </li>
         </ul>
     </nav>
@@ -100,7 +86,7 @@
 
                         <ul class="list-group">
                             <li th:each="text: ${searchResult}" class="list-group-item">
-                                <a th:href="@{text(id=${text.textId})}">
+                                <a th:href="@{/text(id=${text.textId})}">
                                     <div class="text-container">
                                         <strong th:text="${text.title}"></strong> <br/>
                                         Author: <span th:text="${text.author}"></span> <br/>
@@ -110,6 +96,34 @@
                                         Type: <span th:text="${text.type}"></span> <br/>
                                         Status: <span th:text="${text.status}"></span> <br/>
                                         Tags: <span th:text="${text.tags}"></span><br/>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div th:if="${uniqueAuthors != null}">
+                        <h2>Results</h2>
+
+                        <ul class="list-group">
+                            <li th:each="author: ${uniqueAuthors}" class="list-group-item">
+                                <a th:href="@{/search/author(name=${author})}">
+                                    <div class="text-container">
+                                        <span th:text="${author}"></span> <br/>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div th:if="${uniquePublishers != null}">
+                        <h2>Results</h2>
+
+                        <ul class="list-group">
+                            <li th:each="publisher: ${uniquePublishers}" class="list-group-item">
+                                <a th:href="@{/search/publisher(name=${publisher})}">
+                                    <div class="text-container">
+                                        <span th:text="${publisher}"></span> <br/>
                                     </div>
                                 </a>
                             </li>

@@ -72,6 +72,26 @@ public class ReservableService {
         return textRepository.findByAuthorOrPublisherContaining(authorOrPublisher);
     }
 
+    public ArrayList<String> findDistinctAuthors(){
+        return textRepository.findDistinctAuthors();
+    }
+
+    public ArrayList<Text> findAllBooks(){
+        return textRepository.findAllBooks();
+    }
+
+    public ArrayList<Text> findAllThesis(){
+        return textRepository.findAllThesis();
+    }
+
+    public ArrayList<Text> findAllMagazines(){
+        return textRepository.findAllMagazines();
+    }
+
+    public ArrayList<String> findDistinctPublishers(){
+        return textRepository.findDistinctPublishers();
+    }
+
     public Text getText(Integer id) {
         return textRepository.findOne(id);
     }

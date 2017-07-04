@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+
 /**
  * Created by kevin on 6/26/2017.
  */
@@ -24,6 +26,11 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(new UserValidator());
+    }
 
     @RequestMapping(value = {"/admin", "/admin/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
@@ -48,17 +55,13 @@ public class AdminController {
     }
 
     @RequestMapping(value = {"/admin/create"}, method = RequestMethod.POST)
-    public ModelAndView createUser(User user, @RequestParam("radio_role") String role, BindingResult bindingResult) {
+    public ModelAndView createUser(@Valid User user, @RequestParam("radio_role") String role, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
 
         if(role.equals("manager"))
             user.setRole(Role.MANAGER);
         else
             user.setRole(Role.STAFF);
-
-        UserValidator validator = new UserValidator();
-
-        validator.validate(user, bindingResult);
 
         if (userService.findUserByUsername(user.getUsername()) != null) {
             bindingResult.rejectValue("username", "error.user", "Username is already in use.");
