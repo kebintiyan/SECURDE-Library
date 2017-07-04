@@ -76,16 +76,16 @@ public class ReservableService {
         return textRepository.findDistinctAuthors();
     }
 
-    public ArrayList<String> findDistinctBooks(){
-        return textRepository.findDistinctBooks();
+    public ArrayList<Text> findAllBooks(){
+        return textRepository.findAllBooks();
     }
 
-    public ArrayList<String> findDistinctMagazines(){
-        return textRepository.findDistinctMagazines();
+    public ArrayList<Text> findAllThesis(){
+        return textRepository.findAllThesis();
     }
 
-    public ArrayList<String> findDistinctThesis(){
-        return textRepository.findDistinctThesis();
+    public ArrayList<Text> findAllMagazines(){
+        return textRepository.findAllMagazines();
     }
 
     public ArrayList<String> findDistinctPublishers(){

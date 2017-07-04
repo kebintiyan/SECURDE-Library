@@ -24,35 +24,20 @@
                     Categories
                 </a>
             </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Books <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" th:each="book: ${uniqueBooks}"><span th:text="${book}"></span></a></li>
-                </ul>
+            <li>
+                <a th:href="@{/books}">Books</a>
             </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Thesis <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" th:each="thesis: ${uniqueThesis}"><span th:text="${thesis}"></span></a></li>
-                </ul>
+            <li>
+                <a th:href="@{/thesis}">Thesis</a>
             </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Magazines <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" th:each="magazine: ${uniqueMagazines}"><span th:text="${magazine}"></span></a></li>
-                </ul>
+            <li>
+                <a th:href="@{/magazines}">Magazines</a>
             </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Authors <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" th:each="author: ${uniqueAuthors}"><span th:text="${author}"></span></a></li>
-                </ul>
+            <li>
+                <a th:href="@{/authors}">Authors</a>
             </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Publishers <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" th:each="publisher: ${uniquePublishers}"><span th:text="${publisher}"></span></a></li>
-                </ul>
+            <li>
+                <a th:href="@{/publishers}">Publishers</a>
             </li>
             <li>
                 <a href="#">Room Reservations</a>
@@ -101,7 +86,7 @@
 
                         <ul class="list-group">
                             <li th:each="text: ${searchResult}" class="list-group-item">
-                                <a th:href="@{text(id=${text.textId})}">
+                                <a th:href="@{/text(id=${text.textId})}">
                                     <div class="text-container">
                                         <strong th:text="${text.title}"></strong> <br/>
                                         Author: <span th:text="${text.author}"></span> <br/>
@@ -111,6 +96,34 @@
                                         Type: <span th:text="${text.type}"></span> <br/>
                                         Status: <span th:text="${text.status}"></span> <br/>
                                         Tags: <span th:text="${text.tags}"></span><br/>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div th:if="${uniqueAuthors != null}">
+                        <h2>Results</h2>
+
+                        <ul class="list-group">
+                            <li th:each="author: ${uniqueAuthors}" class="list-group-item">
+                                <a th:href="@{/search/author(name=${author})}">
+                                    <div class="text-container">
+                                        <span th:text="${author}"></span> <br/>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div th:if="${uniquePublishers != null}">
+                        <h2>Results</h2>
+
+                        <ul class="list-group">
+                            <li th:each="publisher: ${uniquePublishers}" class="list-group-item">
+                                <a th:href="@{/search/publisher(name=${publisher})}">
+                                    <div class="text-container">
+                                        <span th:text="${publisher}"></span> <br/>
                                     </div>
                                 </a>
                             </li>
