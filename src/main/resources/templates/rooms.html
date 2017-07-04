@@ -10,6 +10,45 @@
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/room_reservation_script.js}"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var user = /*[[@{/rooms/reserve}]]*/ 'User Name';
+
+        $(document).ready(function() {
+            $("#reserve-btn").click(function () {
+                console.log("RESERVE BTN CLICK");
+
+                /*$.postJSON("chosenSlot", currentSlot, function(data){
+
+                 });*/
+
+                var url = window.location;
+
+                $.ajax({
+                    url : url + "/reserve",
+                    type : "POST",
+                    dataType: "json",
+                    data : {
+                        chosenSlot: currentSlot
+                    }
+
+                })
+                    .done(function(result) {
+                        console.log("success");
+
+                        console.log(result);
+                    })
+                    .fail(function( jqXHR, textStatus, errorThrown ) {
+                        console.log(jqXHR.responseText + " " + textStatus + " " + errorThrown);
+                    });
+
+            });
+        });
+
+        /*]]>*/
+    </script>
 </head>
 <body>
 
@@ -44,11 +83,11 @@
 
     <div class = "row">
         <div class = "col-md-2 col-md-offset-5 text-center">
-            <form th:action="@{/reserve}" method="post">
-                <button class="btn btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
-            </form>
+            <button id = "reserve-btn" class="btn btn-primary btn-block" name="Submit" th:text="Reserve"></button>
         </div>
     </div>
+
+    <a href="/rooms/reserve">TEST</a>
 
 </body>
 </html>

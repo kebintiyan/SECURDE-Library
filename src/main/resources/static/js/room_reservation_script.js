@@ -4,9 +4,37 @@
 
 var currentSlot = null;
 
-$(document).ready(function() {
+/*$(document).ready(function() {
+    $("#reserve-btn").click(function () {
+        console.log("RESERVE BTN CLICK");
 
+        $.postJSON("chosenSlot", currentSlot, function(data){
+
+         });
+
+
+
+        $.ajax({
+            url : "rooms/reserve",
+            type : "GET",
+            dataType: "json",
+            data : {
+                chosenSlot: currentSlot
+            }
+
+        })
+            .done(function(result) {
+                console.log("success");
+
+                console.log(result);
+            })
+            .fail(function( jqXHR, textStatus, errorThrown ) {
+                console.log(jqXHR.responseText + " " + textStatus + " " + errorThrown);
+            });
+
+    });
 });
+*/
 
 $(document).on ("click", ".slot", function () {
     currentSlot = this.id;
