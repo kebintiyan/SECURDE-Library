@@ -16,10 +16,40 @@
 
     <script th:inline="javascript">
         /*<![CDATA[*/
+
+        var times = /*[[${times}]]*/ null;
+        var rooms = /*[[${rooms}]]*/ null;
+        var existing_reservations = /*[[${reserved_slots}]]*/ null;
+
+        var table = $('#table-contents');
+        var table_body = $('#tableBody');
+
         $(document).ready(function() {
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
             });
+
+            table.empty();
+
+            var tableBody = document.createElement("tbody");
+            tableBody.id = "tableBody";
+
+            table.append(tableBody);
+
+            for(i = 0; i < times.length; i++) {
+
+            }
+
+            for (i = 0; i < rooms.length; i++) {
+                table_body.append("<tr>");
+                table_body.append("<th>" + rooms[i].name + "</th>");
+
+                for (j = 0; j < times.length; j++) {
+                    table_body.append("<td> <div id='"+ rooms[i].roomId + "-" + times[j][0] + "-" + times[j][1] +"' class='slot'></div> </td>")
+                }
+
+                table_body.append("</tr>");
+            }
         });
         /*]]>*/
     </script>
@@ -34,17 +64,7 @@
 
     <div class = "row">
         <div class = "col-md-10 col-md-offset-1">
-            <table class = "table table-bordered">
-                <tr>
-                    <th>Room Number</th>
-                    <th th:each="time : ${times}" th:text="${time}"></th>
-                </tr>
-                <tr th:each = "room : ${rooms}">
-                    <th th:text="${room.name}"></th>
-                    <td th:each="time : ${times}">
-                        <div th:id = "${room.roomId} + '-' + ${time} + '-' + ${room.name}" class = "slot"></div>
-                    </td>
-                </tr>
+            <table id = "table-contents" class = "table table-bordered">
             </table>
         </div>
     </div>

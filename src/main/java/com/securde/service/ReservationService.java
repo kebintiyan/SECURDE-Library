@@ -50,4 +50,8 @@ public class ReservationService {
         return textReservationRepository.findPreviousTextReservationsByUserIdAndTextId(userId, textId, sdf.format(date));
     }
 
+    public ArrayList<RoomReservation> getRoomReservationsByDate(String date) {
+        return roomReservationRepository.findTextReservationsByDate(date);
+    }
+
 }
