@@ -45,23 +45,30 @@
                     <b>Status : </b><span th:text="${text.status}"></span>  <br />
                     You've reserved this text <b><span th:text="${reservationCount}"></span></b> time(s) <br/>
 
-                    <form autocomplete="off" action="#" th:action="@{/text/reserve(id=${text.textId})}"
-                          th:object="${reservation}" method="post" class="form-horizontal"
-                          role="form">
-                        <div class="form-group">
-                            <div class="col-sm-9">
-                                <div class="input-group date datepicker" data-provide="datepicker">
-                                    <input type="text" th:field="*{reservationStartDate}"
-                                           placeholder="Borrow Start Date" class="form-control" />
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
+                    <div th:if="!${hasReservation}">
+                        <form autocomplete="off" action="#" th:action="@{/text/reserve(id=${text.textId})}"
+                              th:object="${reservation}" method="post" class="form-horizontal"
+                              role="form">
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <div class="input-group date datepicker" data-provide="datepicker">
+                                        <input type="text" th:field="*{reservationStartDate}"
+                                               placeholder="Borrow Start Date" class="form-control" />
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <button th:if="${hasReservation}" class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
-                    </form>
+                            <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
+                        </form>
+                    </div>
+
+                    <div th:if="${hasReservation}">
+                        <br/>
+                        <span class="text-danger">You still have an active reservation!</span>
+                    </div>
 
                 </div>
             </div>
