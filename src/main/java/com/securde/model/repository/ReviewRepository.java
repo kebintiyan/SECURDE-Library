@@ -1,7 +1,9 @@
 package com.securde.model.repository;
 
 import com.securde.model.reservable.Review;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.ArrayList;
 
@@ -10,6 +12,13 @@ import java.util.ArrayList;
  */
 public interface ReviewRepository extends CrudRepository<Review, Integer> {
 
-    ArrayList<Review> findByUserId(Integer userId);
-    ArrayList<Review> findByTextId(Integer textId);
+    @Query("SELECT r " +
+            "FROM Review r " +
+            "WHERE r.user.userId = :userId")
+    ArrayList<Review> findByUserId(@Param("userId") Integer userId);
+
+    @Query("SELECT r " +
+            "FROM Review r " +
+            "WHERE r.text.textId = :textId")
+    ArrayList<Review> findByTextId(@Param("textId") Integer textId);
 }
