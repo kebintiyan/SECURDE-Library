@@ -44,6 +44,10 @@ public class ReservationService {
         return textReservationRepository.findTextReservationsByUserIdAndTextId(userId, textId);
     }
 
+    public ArrayList<TextReservation> getReservationsByUserIdAndTextIdFromDate(Integer userId, Integer textId, String date) {
+        return textReservationRepository.findTextReservationsByUserIdAndTextIdFromDate(userId, textId, date);
+    }
+
     public ArrayList<TextReservation> getPreviousReservationsByUserIdAndTextId(Integer userId, Integer textId) {
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

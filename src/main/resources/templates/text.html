@@ -60,7 +60,7 @@
                             </div>
                         </div>
 
-                        <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
+                        <button th:if="${hasReservation}" class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
                     </form>
 
                 </div>
