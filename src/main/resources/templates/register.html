@@ -20,10 +20,6 @@
     </script>
 </head>
 <body>
-<form th:action="@{/login}" method="get">
-    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
-</form>
-
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -135,6 +131,7 @@
                         <button type="submit" class="btn btn-primary btn-block">Register</button>
                     </div>
                 </div>
+                <a th:href="@{/login}">Already have an account? Log in</a>
 
                 <span th:utext="${successMessage}"></span>
 
