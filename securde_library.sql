@@ -60,6 +60,7 @@ CREATE TABLE `text_reservations` (
         REFERENCES `users`(`user_id`),
 	FOREIGN KEY (`text_id`)
         REFERENCES `texts`(`text_id`)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE `room_reservations` (
@@ -76,6 +77,22 @@ CREATE TABLE `room_reservations` (
         REFERENCES `users`(`user_id`),
 	FOREIGN KEY (`room_id`)
         REFERENCES `rooms`(`room_id`)
+);
+
+CREATE TABLE `reviews` (
+	`review_id` 	INT NOT NULL AUTO_INCREMENT,
+    `user_id` 		INT NOT NULL,
+    `text_id` 		INT NOT NULL,
+    `rating` 		INT NOT NULL,
+    `review` 		VARCHAR(10000) NOT NULL,
+	
+    PRIMARY KEY (`review_id`),
+    
+	FOREIGN KEY (`user_id`)
+        REFERENCES `users`(`user_id`),
+	FOREIGN KEY (`text_id`)
+        REFERENCES `texts`(`text_id`)
+        ON DELETE CASCADE
 );
 
 DELIMITER $$
