@@ -30,7 +30,7 @@ public class RoomController {
     @Autowired
     ReservationService reservationService;
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyy-MM-dd");
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar calendar = Calendar.getInstance();
 
     private static List<List<String>> getTimes () {
@@ -58,10 +58,8 @@ public class RoomController {
     }
 
     @RequestMapping(value = "/rooms", method = RequestMethod.GET)
-    public ModelAndView home (String inputDate) {
+    public ModelAndView home (@RequestParam(value = "date", required = false) String inputDate) {
         ModelAndView modelAndView = new ModelAndView();
-
-        RoomReservation roomReservation = new RoomReservation();
 
         List<Room> rooms = reservableService.getAllRooms();
 
@@ -83,7 +81,7 @@ public class RoomController {
         modelAndView.addObject("rooms", rooms);
         modelAndView.addObject("times", getTimes());
         modelAndView.addObject("reserved_slots", roomIDAndStartTimes);
-        modelAndView.addObject(roomReservation);
+        modelAndView.addObject("inputDate", inputDate);
 
         return modelAndView;
     }

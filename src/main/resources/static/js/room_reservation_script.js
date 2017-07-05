@@ -32,7 +32,7 @@ var currentSlot = null;
 });
 */
 
-$(document).on ("click", ".slot", function () {
+$(document).on ("click", ".free", function () {
     currentSlot = this.id;
 
     var splitArray = currentSlot.split("-");

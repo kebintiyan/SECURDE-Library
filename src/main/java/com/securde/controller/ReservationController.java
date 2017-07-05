@@ -81,8 +81,10 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/rooms/reserve", method = RequestMethod.POST)
-    public @ResponseBody ModelAndView reserveRoom (@RequestParam("msg") String msg, RoomReservation roomReservation, Authentication authentication) {
+    public @ResponseBody ModelAndView reserveRoom (@RequestParam("msg") String msg, @RequestParam("date") String date, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
+
+        RoomReservation roomReservation = new RoomReservation();
 
         System.out.println(msg);
 
@@ -101,6 +103,7 @@ public class ReservationController {
         roomReservation.setRoom(room);
         roomReservation.setReservationStartTime(startTime);
         roomReservation.setReservationEndTime(endTime);
+        roomReservation.setReservationDate(date);
 
         reservationService.saveRoomReservation(roomReservation);
 

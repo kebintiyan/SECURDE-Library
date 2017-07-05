@@ -21,34 +21,58 @@
         var rooms = /*[[${rooms}]]*/ null;
         var existing_reservations = /*[[${reserved_slots}]]*/ null;
 
-        var table = $('#table-contents');
-        var table_body = $('#tableBody');
+        function changeDate() {
+            var date = $("#date_field").val();
+
+            window.location.href = "/rooms?date=" + date;
+        }
 
         $(document).ready(function() {
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
             });
 
-            table.empty();
+            var table = $('#table-contents tbody');
 
-            var tableBody = document.createElement("tbody");
-            tableBody.id = "tableBody";
+            table.append("<tr id = 'timerow'></tr>");
 
-            table.append(tableBody);
+            var table_header = $("#timerow");
 
+            table_header.append("<th>Room Name</th>");
             for(i = 0; i < times.length; i++) {
-
+                table_header.append("<th> " + times[i][0] + "-" + times[i][1] + " </th>");
             }
 
             for (i = 0; i < rooms.length; i++) {
-                table_body.append("<tr>");
-                table_body.append("<th>" + rooms[i].name + "</th>");
+                table.append("<tr id = room" + rooms[i].roomId + "></tr>");
+            }
+
+            for (i = 0; i < rooms.length; i++) {
+                $("#room"+rooms[i].roomId).append("<th>" + rooms[i].name + "</th>");
 
                 for (j = 0; j < times.length; j++) {
-                    table_body.append("<td> <div id='"+ rooms[i].roomId + "-" + times[j][0] + "-" + times[j][1] +"' class='slot'></div> </td>")
-                }
+                    var reserved = false;
 
-                table_body.append("</tr>");
+                    for (k = 0; k < existing_reservations.length; k++) {
+                        if ((rooms[i].roomId == existing_reservations[k].id) &&
+                            ((times[j][0]+":00").localeCompare(existing_reservations[k].time) == 0)) {
+                            reserved = true;
+
+                            console.log("Reserved " + existing_reservations[k].id + " " + existing_reservations[k].time);
+
+                            break;
+                        }
+                    }
+
+                    var classname = "slot";
+
+                    if (reserved)
+                        classname += " reserved";
+                    else
+                        classname += " free";
+
+                    $("#room"+rooms[i].roomId).append("<td> <div id='"+ rooms[i].roomId + "-" + times[j][0] + "-" + times[j][1] + " - " + rooms[i].name + "' class='" + classname + "'></div> </td>")
+                }
             }
         });
         /*]]>*/
@@ -65,6 +89,9 @@
     <div class = "row">
         <div class = "col-md-10 col-md-offset-1">
             <table id = "table-contents" class = "table table-bordered">
+                <tbody>
+
+                </tbody>
             </table>
         </div>
     </div>
@@ -83,7 +110,7 @@
         <div class = "form-group">
             <div class = "col-md-2 col-md-offset-5">
                 <div class="input-group date datepicker" data-provide="datepicker">
-                    <input type="text" th:field="*{reservationDate}"
+                    <input id="date_field" type="text" name="date" onchange="changeDate()" th:value="${inputDate}"
                            placeholder="Reservation Date" class="form-control" />
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
