@@ -19,6 +19,7 @@ public interface ReviewRepository extends CrudRepository<Review, Integer> {
 
     @Query("SELECT r " +
             "FROM Review r " +
-            "WHERE r.text.textId = :textId")
+            "WHERE r.text.textId = :textId " +
+            "ORDER BY r.dateTimeReviewed DESC")
     ArrayList<Review> findByTextId(@Param("textId") Integer textId);
 }
