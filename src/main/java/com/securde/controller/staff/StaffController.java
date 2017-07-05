@@ -6,7 +6,6 @@ import com.securde.model.reservable.Text;
 import com.securde.model.reservation.RoomReservation;
 import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
-import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

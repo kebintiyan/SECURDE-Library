@@ -40,6 +40,10 @@ public class ReservationService {
         roomReservationRepository.save(roomReservation);
     }
 
+    public void deleteRoomReservation (Integer id) {
+        roomReservationRepository.delete(id);
+    }
+
     public ArrayList<TextReservation> getReservationsByUserIdAndTextId(Integer userId, Integer textId) {
         return textReservationRepository.findTextReservationsByUserIdAndTextId(userId, textId);
     }
@@ -60,6 +64,10 @@ public class ReservationService {
 
     public ArrayList<RoomReservation> getRoomReservationsByUserFromDate(Integer userId, String date) {
         return roomReservationRepository.findRoomReservationsByUserFromDate(userId, date);
+    }
+
+    public ArrayList<RoomReservation> getRoomReservationByRoomIdFromStartTimeAndDate(Integer roomId, String startTime, String date) {
+        return roomReservationRepository.findRoomReservationByRoomIdFromStartTimeAndDate(roomId, startTime, date);
     }
 
 }

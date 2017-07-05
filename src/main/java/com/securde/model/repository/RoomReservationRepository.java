@@ -22,4 +22,11 @@ public interface RoomReservationRepository extends CrudRepository<RoomReservatio
             "WHERE rr.user.userId = :userId AND " +
                 "rr.reservationDate >= :date")
     ArrayList<RoomReservation> findRoomReservationsByUserFromDate(@Param("userId") Integer userId, @Param("date") String date);
+
+    @Query("SELECT rr " +
+            "FROM RoomReservation rr " +
+            "WHERE rr.room.roomId = :roomId AND " +
+                "rr.reservationStartTime = :startTime AND " +
+                "rr.reservationDate = :date")
+    ArrayList<RoomReservation> findRoomReservationByRoomIdFromStartTimeAndDate(@Param("roomId") Integer userId, @Param("startTime") String startTime, @Param("date") String date);
 }

@@ -96,7 +96,7 @@
         </div>
     </div>
 
-    <form id="reserve-form" th:object="${roomReservation}" method="post" th:action="@{/rooms/reserve}"
+    <form id="reserve-form" method="post" th:action="@{/manager/rooms/delete}"
           class = "form-horizontal" role="form">
 
         <div class = "form-group">
@@ -121,7 +121,7 @@
 
         <div class = "form-group">
             <div class = "col-md-2 col-md-offset-5 text-center">
-                <button th:if="!${hasReservation}" id = "reserve-btn" class="btn btn-danger btn-block" name="Submit" th:text="Delete"></button>
+                <button id = "reserve-btn" class="btn btn-danger btn-block" name="Submit" th:text="Delete"></button>
             </div>
         </div>
 

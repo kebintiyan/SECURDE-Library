@@ -7,13 +7,10 @@ import com.securde.model.reservation.RoomReservation;
 import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -154,6 +151,29 @@ public class ManagerController {
         modelAndView.addObject("times", RoomController.getTimes());
         modelAndView.addObject("reserved_slots", roomIDAndStartTimes);
         modelAndView.addObject("inputDate", inputDate);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "manager/rooms/delete", method = RequestMethod.POST)
+    public @ResponseBody
+    ModelAndView deleteRoom (@RequestParam("msg") String msg, @RequestParam("date") String date, Authentication authentication) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        System.out.println(msg);
+
+        String[] splitMessage = msg.split("-");
+
+        Integer roomId = Integer.parseInt(splitMessage[0]);
+        String startTime = splitMessage[1];
+
+        ArrayList<RoomReservation> retrievedSlots = reservationService.getRoomReservationByRoomIdFromStartTimeAndDate(roomId, startTime, date);
+
+        for (int i = 0; i < retrievedSlots.size(); i++){
+            reservationService.deleteRoomReservation(retrievedSlots.get(i).getRoomReservationId());
+        }
+
+        modelAndView.setViewName("manager/delete");
 
         return modelAndView;
     }

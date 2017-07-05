@@ -69,17 +69,16 @@ public class RoomReservation extends Reservation {
         return this;
     }
 
-
     public static class RoomIDAndStartTime {
 
         Integer id;
         String time;
 
-        public RoomIDAndStartTime () {
+        public RoomIDAndStartTime() {
 
         }
 
-        public RoomIDAndStartTime (Integer id, String time) {
+        public RoomIDAndStartTime(Integer id, String time) {
             this.id = id;
             this.time = time;
         }
@@ -99,5 +98,6 @@ public class RoomReservation extends Reservation {
         public void setTime(String time) {
             this.time = time;
         }
+
     }
 }
