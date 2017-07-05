@@ -1,7 +1,9 @@
 package com.securde.service;
 
+import com.securde.model.repository.ReviewRepository;
 import com.securde.model.repository.RoomRepository;
 import com.securde.model.repository.TextRepository;
+import com.securde.model.reservable.Review;
 import com.securde.model.reservable.Room;
 import com.securde.model.reservable.Text;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ReservableService {
 
     @Autowired
     TextRepository textRepository;
+
+    @Autowired
+    ReviewRepository reviewRepository;
 
     public ArrayList<Room> getAllRooms() {
         ArrayList<Room> rooms = new ArrayList<>();
@@ -102,6 +107,10 @@ public class ReservableService {
 
     public Room getRoom(Integer id) {
         return roomRepository.findOne(id);
+    }
+
+    public ArrayList<Review> getReviewsByTextId(Integer id) {
+        return reviewRepository.findByTextId(id);
     }
 
 }
