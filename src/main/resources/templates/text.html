@@ -37,7 +37,7 @@
                     <b>Tags : </b><span th:text="${text.tags}"></span>  <br />
                     <b>Status : </b><span th:text="${text.status}"></span>  <br />
 
-                    <form autocomplete="off" action="#" th:action="@{/text/reserve}"
+                    <form autocomplete="off" action="#" th:action="@{/text/reserve(id=${text.textId})}"
                           th:object="${reservation}" method="post" class="form-horizontal"
                           role="form">
                         <div class="form-group">

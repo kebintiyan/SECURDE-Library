@@ -8,10 +8,6 @@ var currentSlot = null;
     $("#reserve-btn").click(function () {
         console.log("RESERVE BTN CLICK");
 
-        $.postJSON("chosenSlot", currentSlot, function(data){
-
-         });
-
 
 
         $.ajax({
@@ -43,4 +39,13 @@ $(document).on ("click", ".slot", function () {
     //console.log(currentSlot);
 
     $("#displayCurrentSlot").html(splitArray[3] + " " + splitArray[1] + " - " + splitArray[2]);
+
+    var currentAction = $("#reserve-form").attr("action");
+
+    var splitArray2 = currentAction.split("=");
+
+    currentAction = splitArray2[0] + "=" + splitArray[0] + "-" + splitArray[1] + "-" + splitArray[2];
+
+    $("#reserve-form").attr("action", currentAction);
+
 });
