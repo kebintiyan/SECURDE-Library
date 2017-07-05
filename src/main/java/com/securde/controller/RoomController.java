@@ -33,7 +33,7 @@ public class RoomController {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar calendar = Calendar.getInstance();
 
-    private static List<List<String>> getTimes () {
+    public static List<List<String>> getTimes() {
         int startTime = 7;
 
         List<List<String>> times = new ArrayList<List<String>>();
@@ -70,11 +70,11 @@ public class RoomController {
 
         ArrayList<RoomReservation> reservedSlots = reservationService.getRoomReservationsByDate(inputDate);
 
-        List<RoomIDAndStartTime> roomIDAndStartTimes = new ArrayList<>();
+        List<RoomReservation.RoomIDAndStartTime> roomIDAndStartTimes = new ArrayList<>();
 
         for (int i = 0; i < reservedSlots.size(); i++) {
             RoomReservation reservedSlot = reservedSlots.get(i);
-            roomIDAndStartTimes.add(new RoomIDAndStartTime(reservedSlot.getRoom().getRoomId(), reservedSlot.getReservationStartTime()));
+            roomIDAndStartTimes.add(new RoomReservation.RoomIDAndStartTime(reservedSlot.getRoom().getRoomId(), reservedSlot.getReservationStartTime()));
         }
 
         modelAndView.setViewName("rooms");
@@ -84,37 +84,6 @@ public class RoomController {
         modelAndView.addObject("inputDate", inputDate);
 
         return modelAndView;
-    }
-
-    public class RoomIDAndStartTime {
-
-        Integer id;
-        String time;
-
-        public RoomIDAndStartTime () {
-
-        }
-
-        public RoomIDAndStartTime (Integer id, String time) {
-            this.id = id;
-            this.time = time;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
     }
 
 }

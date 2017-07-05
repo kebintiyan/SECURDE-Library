@@ -68,4 +68,36 @@ public class RoomReservation extends Reservation {
         this.reservationEndTime = reservationEndTime;
         return this;
     }
+
+
+    public static class RoomIDAndStartTime {
+
+        Integer id;
+        String time;
+
+        public RoomIDAndStartTime () {
+
+        }
+
+        public RoomIDAndStartTime (Integer id, String time) {
+            this.id = id;
+            this.time = time;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
+    }
 }
