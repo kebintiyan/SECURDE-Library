@@ -81,6 +81,9 @@ public class User {
     @Column(name = "temp")
     private boolean temp;
 
+    @Column(name = "active")
+    private boolean active;
+
     private String dateTimeCreated;
 
     public User() {
@@ -201,6 +204,15 @@ public class User {
 
     public User setTemp(boolean temp) {
         this.temp = temp;
+        return this;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public User setActive(boolean active) {
+        this.active = active;
         return this;
     }
 

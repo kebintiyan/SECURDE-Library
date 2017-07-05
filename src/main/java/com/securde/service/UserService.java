@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 /**
  * Created by kevin on 6/25/2017.
  */
@@ -32,6 +34,10 @@ public class UserService {
         return userRepository.findByIdNumber(idNumber);
     }
 
+    public User findUserByUserId(Integer id) {
+        return userRepository.findOne(id);
+    }
+
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -49,5 +55,9 @@ public class UserService {
         }
 
         userRepository.save(user);
+    }
+
+    public ArrayList<User> getInactiveUsers() {
+        return userRepository.findByActive(false);
     }
 }

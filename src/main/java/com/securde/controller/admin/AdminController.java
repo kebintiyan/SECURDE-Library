@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by kevin on 6/26/2017.
@@ -76,9 +77,34 @@ public class AdminController {
             /*modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());*/
             modelAndView.addObject("registered", true);
-            modelAndView.setViewName("/admin/home");
+            modelAndView.setViewName("redirect:/admin/home");
         }
 
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/admin/unlock"}, method = RequestMethod.GET)
+    public ModelAndView viewUnlockAccount() {
+        ModelAndView modelAndView = new ModelAndView();
+
+        ArrayList<User> users = userService.getInactiveUsers();
+        modelAndView.addObject("users", users);
+
+        modelAndView.setViewName("admin/unlock_account");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/admin/unlock"}, method = RequestMethod.PUT)
+    public ModelAndView unlockAccount(@RequestParam("id") Integer id) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        User user = userService.findUserByUserId(id);
+        user.setActive(true);
+
+        userService.saveUser(user);
+
+        modelAndView.setViewName("redirect:/admin/unlock");
         return modelAndView;
     }
 }
