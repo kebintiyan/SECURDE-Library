@@ -40,12 +40,9 @@ $(document).on ("click", ".slot", function () {
 
     $("#displayCurrentSlot").html(splitArray[3] + " " + splitArray[1] + " - " + splitArray[2]);
 
-    var currentAction = $("#reserve-form").attr("action");
+    var currentAction = splitArray[0] + "-" + splitArray[1] + "-" + splitArray[2];
 
-    var splitArray2 = currentAction.split("=");
-
-    currentAction = splitArray2[0] + "=" + splitArray[0] + "-" + splitArray[1] + "-" + splitArray[2];
-
-    $("#reserve-form").attr("action", currentAction);
+    //$("#reserve-form").attr("action", currentAction);
+    $("#msg").attr("value", currentAction);
 
 });
