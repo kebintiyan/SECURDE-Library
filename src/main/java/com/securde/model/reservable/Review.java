@@ -26,7 +26,9 @@ public class Review {
 
     private Integer rating;
 
-    private String review;
+    private String reviewText;
+
+    private String dateTimeReviewed;
 
     public Integer getReviewId() {
         return reviewId;
@@ -64,12 +66,21 @@ public class Review {
         return this;
     }
 
-    public String getReview() {
-        return review;
+    public String getReviewText() {
+        return reviewText;
     }
 
-    public Review setReview(String review) {
-        this.review = review;
+    public Review setReviewText(String reviewText) {
+        this.reviewText = reviewText;
+        return this;
+    }
+
+    public String getDateTimeReviewed() {
+        return dateTimeReviewed;
+    }
+
+    public Review setDateTimeReviewed(String dateTimeReviewed) {
+        this.dateTimeReviewed = dateTimeReviewed;
         return this;
     }
 }

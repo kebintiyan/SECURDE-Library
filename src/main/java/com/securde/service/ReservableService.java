@@ -113,4 +113,8 @@ public class ReservableService {
         return reviewRepository.findByTextId(id);
     }
 
+    public void saveReview(Review review) {
+        reviewRepository.save(review);
+    }
+
 }

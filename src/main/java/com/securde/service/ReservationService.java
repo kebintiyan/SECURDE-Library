@@ -7,7 +7,10 @@ import com.securde.model.reservation.TextReservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by patricktobias on 03/07/2017.
@@ -35,6 +38,16 @@ public class ReservationService {
 
     public void saveRoomReservation (RoomReservation roomReservation) {
         roomReservationRepository.save(roomReservation);
+    }
+
+    public ArrayList<TextReservation> getReservationsByUserIdAndTextId(Integer userId, Integer textId) {
+        return textReservationRepository.findTextReservationsByUserIdAndTextId(userId, textId);
+    }
+
+    public ArrayList<TextReservation> getPreviousReservationsByUserIdAndTextId(Integer userId, Integer textId) {
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return textReservationRepository.findPreviousTextReservationsByUserIdAndTextId(userId, textId, sdf.format(date));
     }
 
 }

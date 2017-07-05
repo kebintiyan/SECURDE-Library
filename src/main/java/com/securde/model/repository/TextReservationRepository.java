@@ -15,11 +15,25 @@ public interface TextReservationRepository extends CrudRepository<TextReservatio
     @Query("SELECT tr " +
             "FROM TextReservation tr " +
             "WHERE tr.user.userId = :userId")
-    ArrayList<TextReservation> findTextReservationsByUserId(@Param("userId") int userId);
+    ArrayList<TextReservation> findTextReservationsByUserId(@Param("userId") Integer userId);
 
     @Query("SELECT tr " +
             "FROM TextReservation tr " +
             "WHERE tr.text.textId = :textId")
-    ArrayList<TextReservation> findTextReservationsByTextId(@Param("textId") int textId);
+    ArrayList<TextReservation> findTextReservationsByTextId(@Param("textId") Integer textId);
 
+    @Query("SELECT tr " +
+            "FROM TextReservation tr " +
+            "WHERE tr.user.userId = :userId " +
+                "AND tr.text.textId = :textId")
+    ArrayList<TextReservation> findTextReservationsByUserIdAndTextId(@Param("userId") Integer userId, @Param("textId") Integer textId);
+
+    @Query("SELECT tr " +
+            "FROM TextReservation tr " +
+            "WHERE tr.user.userId = :userId " +
+                "AND tr.text.textId = :textId AND tr.reservationEndDate < :endDate")
+    ArrayList<TextReservation> findPreviousTextReservationsByUserIdAndTextId(
+            @Param("userId") Integer userId,
+            @Param("textId") Integer textId,
+            @Param("endDate") String endDate);
 }

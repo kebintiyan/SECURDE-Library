@@ -1,10 +1,14 @@
 package com.securde.controller;
 
+import com.securde.model.reservable.Review;
 import com.securde.model.reservable.Text;
 import com.securde.model.reservation.TextReservation;
 import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
+import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +34,9 @@ public class TextController {
     @Autowired
     ReservationService reservationService;
 
+    @Autowired
+    UserService userService;
+
     // 'int daysAfter' is the days going to be included after the date today
     private static List<String> getDates(int daysAfter) { // Today's date is included
         Calendar calendar = Calendar.getInstance();
@@ -52,21 +59,43 @@ public class TextController {
     }
 
     @RequestMapping(value="/text", method = RequestMethod.GET)
-    public ModelAndView home (@RequestParam("id") Integer id) {
+    public ModelAndView viewText (@RequestParam("id") Integer id, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
         Text text = reservableService.getText(id);
 
+        User authUser = (User) authentication.getPrincipal();
+        com.securde.model.account.User user = userService.findUserByUsername(authUser.getUsername());
+
+        Integer reservationCount = reservationService.getPreviousReservationsByUserIdAndTextId(user.getUserId(), id).size();
+
         TextReservation textReservation = new TextReservation();
+        Review review = new Review()
+                .setUser(user)
+                .setText(text);
+
+        ArrayList<Review> reviews = reservableService.getReviewsByTextId(id);
 
         //List<String> availableDates = getDates(7);
 
         modelAndView.setViewName("text");
         modelAndView.addObject("reservation", textReservation);
-        modelAndView.addObject(text);
+        modelAndView.addObject("text", text);
+        modelAndView.addObject("reservationCount", reservationCount);
+        modelAndView.addObject("review", review);
+        modelAndView.addObject("reviews", reviews);
         //modelAndView.addObject("dates", availableDates);
 
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/text/review"}, method = RequestMethod.POST)
+    public ModelAndView writeReview(Review review) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        reservableService.saveReview(review);
+
+        modelAndView.setViewName("redirect:/text?id=" + review.getText().getTextId());
+        return modelAndView;
+    }
 }

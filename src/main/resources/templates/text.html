@@ -18,6 +18,12 @@
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
             });
+
+            var userReservations = [[${reservationCount}]];
+
+            if (userReservations == 0) {
+                $("#write-review").hide();
+            }
         });
         /*]]>*/
     </script>
@@ -36,6 +42,7 @@
                     <b>Year : </b><span th:text="${text.year}"></span>  <br />
                     <b>Tags : </b><span th:text="${text.tags}"></span>  <br />
                     <b>Status : </b><span th:text="${text.status}"></span>  <br />
+                    You've reserved this text <b><span th:text="${reservationCount}"></span></b> time(s) <br/>
 
                     <form autocomplete="off" action="#" th:action="@{/text/reserve(id=${text.textId})}"
                           th:object="${reservation}" method="post" class="form-horizontal"
@@ -55,6 +62,36 @@
                         <button class="btn btn-primary" name="Submit" value="Login" type="Submit" th:text="Reserve"></button>
                     </form>
 
+                </div>
+            </div>
+
+            <div class="reviews-container">
+
+                <div id="write-review">
+                    <form th:object="${review}" th:action="@{/text/review}" th:method="post">
+                        <input type="hidden" th:value="*{user.userId}" th:field="*{user.userId}" />
+                        <input type="hidden" th:value="*{text.textId}" th:field="*{text.textId}" />
+                        <div class="form-group">
+                            <label for="text-review">Write a review:</label>
+                            <input id="text-review" class="form-control" type="text" placeholder="Your review" th:field="*{reviewText}" />
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="reviews">
+                    <ul class="list-group">
+                        <li th:each="r : ${reviews}" class="list-group-item">
+                            <div>
+                                <strong><span th:text="${r.user.username}"></span></strong> <br/>
+                                <small><span th:text="${r.dateTimeReviewed}"></span></small>
+                                <br/> <br/>
+                                <p th:text="${r.reviewText}"></p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
 

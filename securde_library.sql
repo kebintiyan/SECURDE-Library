@@ -80,11 +80,12 @@ CREATE TABLE `room_reservations` (
 );
 
 CREATE TABLE `reviews` (
-	`review_id` 	INT NOT NULL AUTO_INCREMENT,
-    `user_id` 		INT NOT NULL,
-    `text_id` 		INT NOT NULL,
-    `rating` 		INT NOT NULL,
-    `review` 		VARCHAR(10000) NOT NULL,
+	`review_id` 			INT NOT NULL AUTO_INCREMENT,
+    `user_id` 				INT NOT NULL,
+    `text_id` 				INT NOT NULL,
+    `rating` 				INT,
+    `review_text` 			VARCHAR(10000) NOT NULL,
+    `date_time_reviewed` 	DATETIME NOT NULL,
 	
     PRIMARY KEY (`review_id`),
     
@@ -101,6 +102,16 @@ DROP TRIGGER IF EXISTS `default_date_time_text_users`$$
 CREATE TRIGGER `default_date_time_text_users` BEFORE INSERT ON `users` FOR EACH ROW
 	IF ( isnull(NEW.date_time_created) ) THEN
 		SET NEW.date_time_created=NOW();
+	END IF;
+$$
+delimiter ;
+
+DELIMITER $$
+USE `securde_library`$$
+DROP TRIGGER IF EXISTS `default_date_time_reviews`$$
+CREATE TRIGGER `default_date_time_reviews` BEFORE INSERT ON `reviews` FOR EACH ROW
+	IF ( isnull(NEW.date_time_reviewed) ) THEN
+		SET NEW.date_time_reviewed=NOW();
 	END IF;
 $$
 delimiter ;
