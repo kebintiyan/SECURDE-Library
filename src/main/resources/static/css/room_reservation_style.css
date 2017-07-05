@@ -2,14 +2,21 @@ body{
     padding-top: 10px;
 }
 
-div.slot {
+div.slot.free{
     padding: 0%;
     background-color: #42f146;
     height: 40px;
     width: 100%;
 }
 
-div.slot:hover {
+div.slot.reserved {
+    padding: 0%;
+    background-color: #dddddd;
+    height: 40px;
+    width: 100%;
+}
+
+div.slot.free:hover {
     background-color: #bbff96;
 }
 

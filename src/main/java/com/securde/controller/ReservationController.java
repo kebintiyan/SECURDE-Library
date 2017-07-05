@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
@@ -80,16 +81,18 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/rooms/reserve", method = RequestMethod.POST)
-    public @ResponseBody ModelAndView reserveRoom (@RequestParam("msg") String msg, RoomReservation roomReservation, Authentication authentication) {
+    public @ResponseBody ModelAndView reserveRoom (@RequestParam("msg") String msg, @RequestParam("date") String date, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
+
+        RoomReservation roomReservation = new RoomReservation();
 
         System.out.println(msg);
 
-        String[] splittedMessage = msg.split("-");
+        String[] splitMessage = msg.split("-");
 
-        int roomId = Integer.parseInt(splittedMessage[0]);
-        String startTime = splittedMessage[1];
-        String endTime = splittedMessage[2];
+        int roomId = Integer.parseInt(splitMessage[0]);
+        String startTime = splitMessage[1];
+        String endTime = splitMessage[2];
 
         Room room = reservableService.getRoom(roomId);
 
@@ -100,6 +103,7 @@ public class ReservationController {
         roomReservation.setRoom(room);
         roomReservation.setReservationStartTime(startTime);
         roomReservation.setReservationEndTime(endTime);
+        roomReservation.setReservationDate(date);
 
         reservationService.saveRoomReservation(roomReservation);
 

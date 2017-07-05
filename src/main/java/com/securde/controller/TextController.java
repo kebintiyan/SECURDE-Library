@@ -90,8 +90,8 @@ public class TextController {
             calendar.setTime(curStartDate);
 
             while(calendar.getTimeInMillis() <= curEndDate.getTime()) {
-                calendar.add(Calendar.DATE, 1);
                 reservationStrings.add(sdf.format(calendar.getTime()));
+                calendar.add(Calendar.DATE, 1);
             }
         }
 
