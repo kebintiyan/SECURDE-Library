@@ -1,7 +1,11 @@
 package com.securde.controller.manager;
 
+import com.securde.controller.RoomController;
+import com.securde.model.reservable.Room;
 import com.securde.model.reservable.Text;
+import com.securde.model.reservation.RoomReservation;
 import com.securde.service.ReservableService;
+import com.securde.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,7 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by kevin on 6/26/2017.
@@ -25,6 +33,12 @@ public class ManagerController {
 
     @Autowired
     ReservableService reservableService;
+
+    @Autowired
+    ReservationService reservationService;
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private Calendar calendar = Calendar.getInstance();
 
     @RequestMapping(value = {"/manager", "/manager/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
@@ -113,5 +127,34 @@ public class ManagerController {
         redirectView.setUrl("/manager/text");
 
         return redirectView;
+    }
+
+    @RequestMapping(value = {"manager/rooms"}, method = RequestMethod.GET)
+    public ModelAndView viewRooms(@RequestParam(value = "date", required = false) String inputDate) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<Room> rooms = reservableService.getAllRooms();
+
+        if (inputDate == null) {
+            Date date = new Date();
+            inputDate = sdf.format(date);
+        }
+
+        ArrayList<RoomReservation> reservedSlots = reservationService.getRoomReservationsByDate(inputDate);
+
+        List<RoomReservation.RoomIDAndStartTime> roomIDAndStartTimes = new ArrayList<>();
+
+        for (int i = 0; i < reservedSlots.size(); i++) {
+            RoomReservation reservedSlot = reservedSlots.get(i);
+            roomIDAndStartTimes.add(new RoomReservation.RoomIDAndStartTime(reservedSlot.getRoom().getRoomId(), reservedSlot.getReservationStartTime()));
+        }
+
+        modelAndView.setViewName("manager/rooms");
+        modelAndView.addObject("rooms", rooms);
+        modelAndView.addObject("times", RoomController.getTimes());
+        modelAndView.addObject("reserved_slots", roomIDAndStartTimes);
+        modelAndView.addObject("inputDate", inputDate);
+
+        return modelAndView;
     }
 }

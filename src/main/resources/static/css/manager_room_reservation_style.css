@@ -1,0 +1,25 @@
+body{
+    padding-top: 10px;
+}
+
+div.slot.free{
+    padding: 0%;
+    background-color: #dddddd;
+    height: 40px;
+    width: 100%;
+}
+
+div.slot.reserved {
+    padding: 0%;
+    background-color: #59c5ff;
+    height: 40px;
+    width: 100%;
+}
+
+div.slot.reserved:hover {
+    background-color: #a8dbff;
+}
+
+.table>tbody>tr>td {
+    padding: 0px;
+}

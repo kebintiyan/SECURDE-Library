@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                     xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rooms</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/manager_room_reservation_style.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.standalone.min.css}" />
+
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/manager_room_reservation_script.js}"></script>
+    <script th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var times = /*[[${times}]]*/ null;
+        var rooms = /*[[${rooms}]]*/ null;
+        var existing_reservations = /*[[${reserved_slots}]]*/ null;
+
+        function changeDate() {
+            var date = $("#date_field").val();
+
+            window.location.href = "/manager/rooms?date=" + date;
+        }
+
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+            });
+
+            var table = $('#table-contents tbody');
+
+            table.append("<tr id = 'timerow'></tr>");
+
+            var table_header = $("#timerow");
+
+            table_header.append("<th>Room Name</th>");
+            for(i = 0; i < times.length; i++) {
+                table_header.append("<th> " + times[i][0] + "-" + times[i][1] + " </th>");
+            }
+
+            for (i = 0; i < rooms.length; i++) {
+                table.append("<tr id = room" + rooms[i].roomId + "></tr>");
+            }
+
+            for (i = 0; i < rooms.length; i++) {
+                $("#room"+rooms[i].roomId).append("<th>" + rooms[i].name + "</th>");
+
+                for (j = 0; j < times.length; j++) {
+                    var reserved = false;
+
+                    for (k = 0; k < existing_reservations.length; k++) {
+                        if ((rooms[i].roomId == existing_reservations[k].id) &&
+                            ((times[j][0]+":00").localeCompare(existing_reservations[k].time) == 0)) {
+                            reserved = true;
+
+                            console.log("Reserved " + existing_reservations[k].id + " " + existing_reservations[k].time);
+
+                            break;
+                        }
+                    }
+
+                    var classname = "slot";
+
+                    if (reserved)
+                        classname += " reserved";
+                    else
+                        classname += " free";
+
+                    $("#room"+rooms[i].roomId).append("<td> <div id='"+ rooms[i].roomId + "-" + times[j][0] + "-" + times[j][1] + " - " + rooms[i].name + "' class='" + classname + "'></div> </td>")
+                }
+            }
+        });
+        /*]]>*/
+    </script>
+</head>
+<body>
+
+    <div class = "row">
+        <div class = "col-md-4 col-md-offset-1">
+            <h1>Rooms</h1>
+        </div>
+    </div>
+
+    <div class = "row">
+        <div class = "col-md-10 col-md-offset-1">
+            <table id = "table-contents" class = "table table-bordered">
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <form id="reserve-form" th:object="${roomReservation}" method="post" th:action="@{/rooms/reserve}"
+          class = "form-horizontal" role="form">
+
+        <div class = "form-group">
+            <div class = "col-md-4 col-md-offset-4 text-center">
+                <b>Chosen Room and Time : </b> <span id = "displayCurrentSlot">None</span>
+            </div>
+        </div>
+
+        <input type="hidden" id="msg" name="msg" />
+
+        <div class = "form-group">
+            <div class = "col-md-2 col-md-offset-5">
+                <div class="input-group date datepicker" data-provide="datepicker">
+                    <input id="date_field" type="text" name="date" onchange="changeDate()" th:value="${inputDate}"
+                           placeholder="Reservation Date" class="form-control" />
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class = "form-group">
+            <div class = "col-md-2 col-md-offset-5 text-center">
+                <button th:if="!${hasReservation}" id = "reserve-btn" class="btn btn-danger btn-block" name="Submit" th:text="Delete"></button>
+            </div>
+        </div>
+
+    </form>
+
+</body>
+</html>
