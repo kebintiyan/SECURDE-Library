@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,6 +37,9 @@ public class TextController {
 
     @Autowired
     UserService userService;
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyy-MM-dd");
+    private Calendar calendar = Calendar.getInstance();
 
     // 'int daysAfter' is the days going to be included after the date today
     private static List<String> getDates(int daysAfter) { // Today's date is included
@@ -59,7 +63,7 @@ public class TextController {
     }
 
     @RequestMapping(value="/text", method = RequestMethod.GET)
-    public ModelAndView viewText (@RequestParam("id") Integer id, Authentication authentication) {
+    public ModelAndView viewText (@RequestParam("id") Integer id, Authentication authentication) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
 
         Text text = reservableService.getText(id);
@@ -76,6 +80,21 @@ public class TextController {
 
         ArrayList<Review> reviews = reservableService.getReviewsByTextId(id);
 
+        ArrayList<TextReservation> reservations = reservationService.findTextReservationByTextId(id);
+        ArrayList<String> reservationStrings = new ArrayList<>();
+
+        for(int i = 0; i < reservations.size(); i++){
+            Date curStartDate = sdf.parse(reservations.get(i).getReservationStartDate());
+            Date curEndDate = sdf.parse(reservations.get(i).getReservationEndDate());
+
+            calendar.setTime(curStartDate);
+
+            while(calendar.getTimeInMillis() <= curEndDate.getTime()) {
+                calendar.add(Calendar.DATE, 1);
+                reservationStrings.add(sdf.format(calendar.getTime()));
+            }
+        }
+
         //List<String> availableDates = getDates(7);
 
         modelAndView.setViewName("text");
@@ -84,6 +103,7 @@ public class TextController {
         modelAndView.addObject("reservationCount", reservationCount);
         modelAndView.addObject("review", review);
         modelAndView.addObject("reviews", reviews);
+        modelAndView.addObject("reservationStrings", reservationStrings);
         //modelAndView.addObject("dates", availableDates);
 
         return modelAndView;
