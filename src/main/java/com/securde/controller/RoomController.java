@@ -4,7 +4,10 @@ import com.securde.model.reservable.Room;
 import com.securde.model.reservation.RoomReservation;
 import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
+import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +32,9 @@ public class RoomController {
 
     @Autowired
     ReservationService reservationService;
+
+    @Autowired
+    UserService userService;
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar calendar = Calendar.getInstance();
@@ -58,7 +64,8 @@ public class RoomController {
     }
 
     @RequestMapping(value = "/rooms", method = RequestMethod.GET)
-    public ModelAndView home (@RequestParam(value = "date", required = false) String inputDate) {
+    public ModelAndView viewReserveRoom (@RequestParam(value = "date", required = false) String inputDate,
+                                         Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
         List<Room> rooms = reservableService.getAllRooms();
@@ -77,11 +84,20 @@ public class RoomController {
             roomIDAndStartTimes.add(new RoomIDAndStartTime(reservedSlot.getRoom().getRoomId(), reservedSlot.getReservationStartTime()));
         }
 
+        User authUser = (User) authentication.getPrincipal();
+        com.securde.model.account.User user = userService.findUserByUsername(authUser.getUsername());
+
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Boolean hasReservation = reservationService.getRoomReservationsByUserFromDate(user.getUserId(), sdf.format(date)).size() > 0;
+
         modelAndView.setViewName("rooms");
         modelAndView.addObject("rooms", rooms);
         modelAndView.addObject("times", getTimes());
         modelAndView.addObject("reserved_slots", roomIDAndStartTimes);
         modelAndView.addObject("inputDate", inputDate);
+        modelAndView.addObject("hasReservation", hasReservation);
 
         return modelAndView;
     }

@@ -55,7 +55,11 @@ public class ReservationService {
     }
 
     public ArrayList<RoomReservation> getRoomReservationsByDate(String date) {
-        return roomReservationRepository.findTextReservationsByDate(date);
+        return roomReservationRepository.findRoomReservationsByDate(date);
+    }
+
+    public ArrayList<RoomReservation> getRoomReservationsByUserFromDate(Integer userId, String date) {
+        return roomReservationRepository.findRoomReservationsByUserFromDate(userId, date);
     }
 
 }
