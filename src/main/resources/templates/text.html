@@ -17,9 +17,10 @@
         $(document).ready(function() {
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
+                datesDisabled: /*[${reservationStrings}]*/null
             });
 
-            var userReservations = [[${reservationCount}]];
+            var userReservations = /*[[${reservationCount}]]*/null;
 
             if (userReservations == 0) {
                 $("#write-review").hide();
