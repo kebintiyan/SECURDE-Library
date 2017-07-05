@@ -121,7 +121,8 @@
 
         <div class = "form-group">
             <div class = "col-md-2 col-md-offset-5 text-center">
-                <button id = "reserve-btn" class="btn btn-primary btn-block" name="Submit" th:text="Reserve"></button>
+                <button th:if="!${hasReservation}" id = "reserve-btn" class="btn btn-primary btn-block" name="Submit" th:text="Reserve"></button>
+                <span th:if="${hasReservation}" class="text-danger">You still have an active reservation!</span>
             </div>
         </div>
 

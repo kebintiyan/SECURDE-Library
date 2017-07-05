@@ -95,6 +95,9 @@ public class TextController {
             }
         }
 
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Boolean hasReservation = reservationService.getReservationsByUserIdAndTextIdFromDate(user.getUserId(), id, sdf.format(date)).size() > 0;
         //List<String> availableDates = getDates(7);
 
         modelAndView.setViewName("text");
@@ -104,6 +107,8 @@ public class TextController {
         modelAndView.addObject("review", review);
         modelAndView.addObject("reviews", reviews);
         modelAndView.addObject("reservationStrings", reservationStrings);
+        modelAndView.addObject("hasReservation", hasReservation);
+
         //modelAndView.addObject("dates", availableDates);
 
         return modelAndView;
