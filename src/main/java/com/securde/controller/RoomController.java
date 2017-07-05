@@ -1,6 +1,7 @@
 package com.securde.controller;
 
 import com.securde.model.reservable.Room;
+import com.securde.model.reservation.RoomReservation;
 import com.securde.service.ReservableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,11 +45,14 @@ public class RoomController {
     public ModelAndView home () {
         ModelAndView modelAndView = new ModelAndView();
 
+        RoomReservation roomReservation = new RoomReservation();
+
         List<Room> rooms = reservableService.getAllRooms();
 
         modelAndView.setViewName("rooms");
         modelAndView.addObject("rooms", rooms);
         modelAndView.addObject("times", getTimes());
+        modelAndView.addObject(roomReservation);
 
         return modelAndView;
     }

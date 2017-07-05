@@ -80,10 +80,8 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/rooms/reserve", method = RequestMethod.POST)
-    public @ResponseBody ModelAndView reserveRoom (@RequestParam("msg") String msg, Authentication authentication) {
+    public @ResponseBody ModelAndView reserveRoom (@RequestParam("msg") String msg, RoomReservation roomReservation, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
-
-        RoomReservation roomReservation = new RoomReservation();
 
         System.out.println(msg);
 
@@ -92,10 +90,6 @@ public class ReservationController {
         int roomId = Integer.parseInt(splittedMessage[0]);
         String startTime = splittedMessage[1];
         String endTime = splittedMessage[2];
-
-        Date date = new Date();
-
-        String reservationDate = sdf.format(date);
 
         Room room = reservableService.getRoom(roomId);
 
@@ -106,7 +100,6 @@ public class ReservationController {
         roomReservation.setRoom(room);
         roomReservation.setReservationStartTime(startTime);
         roomReservation.setReservationEndTime(endTime);
-        roomReservation.setReservationDate(reservationDate);
 
         reservationService.saveRoomReservation(roomReservation);
 
