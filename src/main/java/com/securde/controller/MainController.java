@@ -49,10 +49,18 @@ public class MainController {
             redirectView.setUrl("/staff/home");
         }
         else {
-            redirectView.setUrl("/");
+            redirectView.setUrl("/userhome");
         }
 
         return redirectView;
+    }
+
+    @RequestMapping(value = {"/userhome"}, method = RequestMethod.GET)
+    public ModelAndView home () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("home");
+
+        return modelAndView;
     }
 
     @RequestMapping(value = {"/"})

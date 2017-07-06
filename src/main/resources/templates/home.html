@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
@@ -10,16 +10,17 @@
     <script th:src="@{/js/bootstrap.min.js}"></script>
 </head>
 <body>
+
 <div class="container">
-    <h2>Staff home</h2>
+    <h2>User home</h2>
 
     <ul>
         <li>
-            <a th:href="@{/manager/text}">Manage Texts</a>
+            <a th:href="@{/search}">Search Texts</a>
         </li>
 
         <li>
-            <a th:href="@{/staff/rooms}">Manage Reservations</a>
+            <a th:href="@{/rooms}">Reserve a room</a>
         </li>
 
         <li>
@@ -31,5 +32,6 @@
         </li>
     </ul>
 </div>
+
 </body>
 </html>
