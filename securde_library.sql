@@ -17,9 +17,9 @@ CREATE TABLE `users` (
     `secret_question` 	VARCHAR(128),
     `secret_answer` 	VARCHAR(128),
     
-    `temp` 				TINYINT(1) NOT NULL DEFAULT 0,
+    `temp` 				TINYINT(1) DEFAULT 0,
     
-    `active`			TINYINT(1) NOT NULL DEFAULT 1,
+    `active`			TINYINT(1) DEFAULT 1,
     `date_time_created` DATETIME NOT NULL,
     
     PRIMARY KEY(`user_id`)

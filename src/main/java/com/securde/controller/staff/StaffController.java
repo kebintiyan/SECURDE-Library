@@ -49,7 +49,7 @@ public class StaffController {
     public ModelAndView viewManageTexts() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("texts", reservableService.getAllTexts());
-        modelAndView.setViewName("manager/text_management");
+        modelAndView.setViewName("staff/text_management");
         return modelAndView;
     }
 

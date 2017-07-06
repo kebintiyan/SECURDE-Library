@@ -38,12 +38,11 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
-    public void saveUser(User user) {
+    public void createNewUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        if (user.getSecretAnswer() != null) {
-            user.setSecretAnswer(passwordEncoder.encode(user.getSecretAnswer()));
-        }
+        user.setSecretAnswer(passwordEncoder.encode(user.getSecretAnswer()));
+        user.setActive(true);
+        user.setTemp(false);
 
         if (user.getIdNumber() != null) {
             if (user.getIdNumber().charAt(0) == '2') {
@@ -54,6 +53,18 @@ public class UserService {
             }
         }
 
+        userRepository.save(user);
+    }
+
+    public void createNewAdmin(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setActive(true);
+        user.setTemp(true);
+
+        userRepository.save(user);
+    }
+
+    public void updateUser(User user) {
         userRepository.save(user);
     }
 

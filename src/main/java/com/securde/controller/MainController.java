@@ -12,7 +12,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -49,13 +48,13 @@ public class MainController {
             redirectView.setUrl("/staff/home");
         }
         else {
-            redirectView.setUrl("/userhome");
+            redirectView.setUrl("/user/home");
         }
 
         return redirectView;
     }
 
-    @RequestMapping(value = {"/userhome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/user","/user/home"}, method = RequestMethod.GET)
     public ModelAndView home () {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
@@ -106,7 +105,7 @@ public class MainController {
             modelAndView.setViewName("register");
         }
         else {
-            userService.saveUser(user);
+            userService.createNewUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("register");

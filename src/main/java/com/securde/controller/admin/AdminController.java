@@ -5,7 +5,6 @@ import com.securde.model.account.User;
 import com.securde.model.account.UserValidator;
 import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -72,8 +71,7 @@ public class AdminController {
             modelAndView.setViewName("/admin/create");
         }
         else {
-            user.setTemp(true);
-            userService.saveUser(user);
+            userService.createNewAdmin(user);
             /*modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());*/
             modelAndView.addObject("registered", true);
@@ -102,7 +100,7 @@ public class AdminController {
         User user = userService.findUserByUserId(id);
         user.setActive(true);
 
-        userService.saveUser(user);
+        userService.updateUser(user);
 
         modelAndView.setViewName("redirect:/admin/unlock");
         return modelAndView;

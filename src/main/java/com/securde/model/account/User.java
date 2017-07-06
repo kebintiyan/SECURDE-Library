@@ -19,70 +19,43 @@ public class User {
     private Integer userId;
 
     @SafeHtml
-//    @NotNull(message = "Please provide a valid username")
-//    @Size(min = 6, max = 16, message = "Username must have at least 6 characters and cannot exceed " +
-//            "16 characters.")
     private String username;
 
     @SafeHtml
-/*    @NotNull(message = "Please provide a valid password")
-    @Size(min = 6, max = 16, message = "Password must have at least 6 characters and cannot exceed " +
-            "16 characters.")*/
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @SafeHtml
-//    @NotNull
-//    @Size(min = 8, max = 8, message = "Please input a valid ID number.")
     private String idNumber;
 
     @SafeHtml
-//    @NotNull(message = "Please input a valid email.")
-//    @NotBlank(message = "Please input a valid email.")
     private String email;
 
     @SafeHtml
-//    @NotNull(message = "Please input your first name.")
-/*    @NotBlank(message = "Please input your first name.")
-    @Size(max = 64, message = "First name is too long.")*/
     private String firstName;
 
     @SafeHtml
-//    @NotNull(message = "Please input your middle initial.")
-    /*@NotBlank(message = "Please input your middle initial.")
-    @Size(max = 5, message = "Middle initial is too long.")*/
     private String middleInitial;
 
     @SafeHtml
-//    @NotNull(message = "Please input your last name.")
-    /*@NotBlank(message = "Please input your last name.")
-    @Size(max = 64, message = "Last name is too long.")*/
     private String lastName;
 
     @SafeHtml
-//    @NotNull(message = "Please input your birthday.")
-//    @NotBlank(message = "Please input your birthday.")
     private String birthday;
 
     @SafeHtml
-//    @NotNull(message = "Please input a secret question.")
-    /*@NotBlank(message = "Please input a secret question.")
-    @Size(max = 128, message = "Secret question is too long.")*/
     private String secretQuestion;
 
     @SafeHtml
-//    @NotNull(message = "Please input a secret answer.")
-    /*@NotBlank(message = "Please input a secret answer.")
-    @Size(max = 32, message = "Secret answer is too long.")*/
     private String secretAnswer;
 
     @Column(name = "temp")
-    private boolean temp;
+    private Boolean temp;
 
     @Column(name = "active")
-    private boolean active;
+    private Boolean active;
 
     private String dateTimeCreated;
 
@@ -198,20 +171,20 @@ public class User {
         return this;
     }
 
-    public boolean isTemp() {
+    public Boolean isTemp() {
         return temp;
     }
 
-    public User setTemp(boolean temp) {
+    public User setTemp(Boolean temp) {
         this.temp = temp;
         return this;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public User setActive(boolean active) {
+    public User setActive(Boolean active) {
         this.active = active;
         return this;
     }
