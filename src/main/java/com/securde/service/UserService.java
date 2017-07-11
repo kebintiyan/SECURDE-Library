@@ -7,7 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by kevin on 6/25/2017.
@@ -70,5 +76,17 @@ public class UserService {
 
     public ArrayList<User> getInactiveUsers() {
         return userRepository.findByActive(false);
+    }
+
+    public void lockTemporaryAccounts() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Instant now = Instant.now(); //current date
+        Instant before = now.minus(Duration.ofDays(1));
+        Date dateBefore = Date.from(before);
+
+//        System.out.println(dateFormat.format(dateBefore));
+
+        userRepository.lockTemporaryAccounts(dateFormat.format(dateBefore));
     }
 }
