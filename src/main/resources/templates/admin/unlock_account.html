@@ -20,7 +20,7 @@
             <div>
                 <form th:action="@{/admin/unlock}" th:method="put" th:object="${user}">
                     Username: <span th:text="*{username}"></span> <br/>
-                    Date Created: <span th:text="*{dateTimeCreated}"></span> <br/>
+                    Date Created: <span th:text="*{dateTimeUpdated}"></span> <br/>
                     <!--<input type="hidden" th:value="*{userId}" th:field="*{userId}" />-->
                     <input type="hidden" th:value="*{userId}" th:name="id" />
                     <button type="submit" class="btn btn-primary">Unlock</button>

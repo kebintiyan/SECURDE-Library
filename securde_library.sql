@@ -108,6 +108,14 @@ delimiter ;
 
 DELIMITER $$
 USE `securde_library`$$
+DROP TRIGGER IF EXISTS `update_date_time_text_users`$$
+CREATE TRIGGER `update_date_time_text_users` BEFORE UPDATE ON `users` FOR EACH ROW
+	SET NEW.date_time_created=NOW();
+$$
+delimiter ;
+
+DELIMITER $$
+USE `securde_library`$$
 DROP TRIGGER IF EXISTS `default_date_time_reviews`$$
 CREATE TRIGGER `default_date_time_reviews` BEFORE INSERT ON `reviews` FOR EACH ROW
 	IF ( isnull(NEW.date_time_reviewed) ) THEN

@@ -89,4 +89,13 @@ public class UserService {
 
         userRepository.lockTemporaryAccounts(dateFormat.format(dateBefore));
     }
+
+    public boolean validateUser(String username, String password) {
+        User user = findUserByUsername(username);
+
+        if (user == null)
+            return false;
+
+        return passwordEncoder.matches(password, user.getPassword());
+    }
 }

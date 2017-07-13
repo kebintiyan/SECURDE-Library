@@ -26,6 +26,6 @@ public interface UserRepository extends CrudRepository<User, Integer>{
     @Transactional
     @Query("UPDATE User u " +
             "SET u.active = FALSE " +
-            "WHERE u.dateTimeCreated < :date AND u.temp = TRUE AND u.active = TRUE")
+            "WHERE u.dateTimeUpdated < :date AND u.temp = TRUE AND u.active = TRUE")
     void lockTemporaryAccounts(@Param("date") String date);
 }

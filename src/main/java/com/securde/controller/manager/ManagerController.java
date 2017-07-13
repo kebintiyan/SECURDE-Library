@@ -6,8 +6,10 @@ import com.securde.model.reservable.Text;
 import com.securde.model.reservation.RoomReservation;
 import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
+import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +35,9 @@ public class ManagerController {
 
     @Autowired
     ReservationService reservationService;
+
+    @Autowired
+    UserService userService;
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar calendar = Calendar.getInstance();
@@ -157,7 +162,7 @@ public class ManagerController {
 
     @RequestMapping(value = "manager/rooms/delete", method = RequestMethod.POST)
     public @ResponseBody
-    ModelAndView deleteRoom (@RequestParam("msg") String msg, @RequestParam("date") String date, Authentication authentication) {
+    ModelAndView deleteRoom (@RequestParam("msg") String msg, @RequestParam("date") String date) {
         ModelAndView modelAndView = new ModelAndView();
 
         System.out.println(msg);
@@ -174,6 +179,42 @@ public class ManagerController {
         }
 
         modelAndView.setViewName("manager/delete");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"manager/change_password"}, method = RequestMethod.GET)
+    public ModelAndView viewChangePassword() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("manager/change_password");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"manager/change_password"}, method = RequestMethod.POST)
+    public ModelAndView changePassword(Authentication authentication,
+                                       @RequestParam("currentPassword") String currentPassword,
+                                       @RequestParam("newPassword") String newPassword,
+                                       @RequestParam("confirmNewPassword") String confirmNewPassword) {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        User authUser = (User) authentication.getPrincipal();
+//        com.securde.model.account.User user = userService.findUserByUsername(authUser.getUsername());
+
+        boolean hasError;
+
+        // check if input current password matches actual password
+        // check if new password is equal to confirm new password
+
+        hasError = !userService.validateUser(authUser.getUsername(), currentPassword);
+        hasError = hasError && !newPassword.equals(confirmNewPassword);
+
+        if (hasError) {
+            // Insert error here
+            modelAndView.addObject("error", true);
+        }
+
+        modelAndView.setViewName("manager/change_password");
 
         return modelAndView;
     }

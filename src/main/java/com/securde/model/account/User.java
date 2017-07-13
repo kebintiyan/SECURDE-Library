@@ -3,8 +3,6 @@ package com.securde.model.account;
 import org.hibernate.validator.constraints.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * Created by kevin on 6/21/2017.
@@ -57,7 +55,7 @@ public class User {
     @Column(name = "active")
     private Boolean active;
 
-    private String dateTimeCreated;
+    private String dateTimeUpdated;
 
     public User() {
 
@@ -189,12 +187,12 @@ public class User {
         return this;
     }
 
-    public String getDateTimeCreated() {
-        return dateTimeCreated;
+    public String getDateTimeUpdated() {
+        return dateTimeUpdated;
     }
 
-    public User setDateTimeCreated(String dateTimeCreated) {
-        this.dateTimeCreated = dateTimeCreated.trim();
+    public User setDateTimeUpdated(String dateTimeUpdated) {
+        this.dateTimeUpdated = dateTimeUpdated.trim();
         return this;
     }
 
