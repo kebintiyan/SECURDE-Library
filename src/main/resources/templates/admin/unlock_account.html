@@ -19,6 +19,7 @@
         <li th:each="user: ${users}" class="list-group-item">
             <div>
                 <form th:action="@{/admin/unlock}" th:method="put" th:object="${user}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     Username: <span th:text="*{username}"></span> <br/>
                     Date Created: <span th:text="*{dateTimeUpdated}"></span> <br/>
                     <!--<input type="hidden" th:value="*{userId}" th:field="*{userId}" />-->

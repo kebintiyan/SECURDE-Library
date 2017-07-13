@@ -17,6 +17,7 @@
             <form autocomplete="off" th:action="@{/admin/create}"
                   th:object="${user}" method="post" class="form-horizontal"
                   role="form">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                 <h2>Create a New Superuser</h2>
 

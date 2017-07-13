@@ -98,6 +98,7 @@
 
     <form id="reserve-form" method="post" th:action="@{/manager/rooms/delete}"
           class = "form-horizontal" role="form">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
         <div class = "form-group">
             <div class = "col-md-4 col-md-offset-4 text-center">

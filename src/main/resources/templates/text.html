@@ -49,6 +49,8 @@
                         <form autocomplete="off" action="#" th:action="@{/text/reserve(id=${text.textId})}"
                               th:object="${reservation}" method="post" class="form-horizontal"
                               role="form">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                             <div class="form-group">
                                 <div class="col-sm-9">
                                     <div class="input-group date datepicker" data-provide="datepicker">
@@ -77,6 +79,8 @@
 
                 <div id="write-review">
                     <form th:object="${review}" th:action="@{/text/review}" th:method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                         <input type="hidden" th:value="*{user.userId}" th:field="*{user.userId}" />
                         <input type="hidden" th:value="*{text.textId}" th:field="*{text.textId}" />
                         <div class="form-group">

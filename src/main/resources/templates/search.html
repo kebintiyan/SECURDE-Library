@@ -58,6 +58,8 @@
                 <div class="col-md-12">
                     <form id="search-form" autocomplete="off" action="#" th:action="@{/search}" th:object="${searchParameters}" method="post" class="form-horizontal"
                           role="form">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                         <div class="input-group" id="adv-search">
                             <input type="text" class="form-control" th:field="*{searchString}" placeholder="Search for books" />
                             <div class="input-group-btn">

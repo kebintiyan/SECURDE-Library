@@ -26,6 +26,8 @@
             <form autocomplete="off" action="#" th:action="@{/register}"
                   th:object="${user}" method="post" class="form-horizontal"
                   role="form">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                 <h2>Registration Form</h2>
                 <div class="form-group">
                     <div class="col-sm-9">

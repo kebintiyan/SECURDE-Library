@@ -115,6 +115,7 @@
                   th:action="@{/manager/text}"
                   th:method="put" th:object="${text}"
                   class="form-horizontal" role="form" >
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                 <input id="text-id" type="hidden" th:value="*{textId}" th:field="*{textId}"/>
                 <input id="text-status" type="hidden" th:value="*{status}" th:field="*{status}" />
