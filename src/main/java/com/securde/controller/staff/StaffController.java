@@ -6,7 +6,10 @@ import com.securde.model.reservable.Text;
 import com.securde.model.reservation.RoomReservation;
 import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
+import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,9 @@ public class StaffController {
 
     @Autowired
     ReservationService reservationService;
+
+    @Autowired
+    UserService userService;
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar calendar = Calendar.getInstance();
@@ -152,6 +158,42 @@ public class StaffController {
         modelAndView.addObject("times", RoomController.getTimes());
         modelAndView.addObject("reserved_slots", roomIDAndStartTimes);
         modelAndView.addObject("inputDate", inputDate);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"staff/change_password"}, method = RequestMethod.GET)
+    public ModelAndView viewChangePassword() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("staff/change_password");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"staff/change_password"}, method = RequestMethod.POST)
+    public ModelAndView changePassword(Authentication authentication,
+                                       @RequestParam("currentPassword") String currentPassword,
+                                       @RequestParam("newPassword") String newPassword,
+                                       @RequestParam("confirmNewPassword") String confirmNewPassword) {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        User authUser = (User) authentication.getPrincipal();
+
+        boolean hasError;
+
+        hasError = !userService.validateUser(authUser.getUsername(), currentPassword);
+        hasError = hasError || !newPassword.equals(confirmNewPassword);
+
+        if (hasError) {
+            modelAndView.addObject("errorMessage", "Invalid input. Try again.");
+        }
+        else {
+
+            userService.changePassword(authUser.getUsername(), newPassword);
+            modelAndView.addObject("successMessage", "Successfully changed password.");
+        }
+
+        modelAndView.setViewName("staff/change_password");
 
         return modelAndView;
     }

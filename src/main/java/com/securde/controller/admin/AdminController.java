@@ -2,7 +2,7 @@ package com.securde.controller.admin;
 
 import com.securde.model.account.Role;
 import com.securde.model.account.User;
-import com.securde.model.account.UserValidator;
+import com.securde.validator.UserValidator;
 import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,5 +1,6 @@
-package com.securde.model.account;
+package com.securde.validator;
 
+import com.securde.model.account.User;
 import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
