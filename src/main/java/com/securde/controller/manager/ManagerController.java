@@ -199,19 +199,20 @@ public class ManagerController {
         ModelAndView modelAndView = new ModelAndView();
 
         User authUser = (User) authentication.getPrincipal();
-//        com.securde.model.account.User user = userService.findUserByUsername(authUser.getUsername());
 
         boolean hasError;
 
-        // check if input current password matches actual password
-        // check if new password is equal to confirm new password
-
         hasError = !userService.validateUser(authUser.getUsername(), currentPassword);
-        hasError = hasError && !newPassword.equals(confirmNewPassword);
+        hasError = hasError || !newPassword.equals(confirmNewPassword);
 
         if (hasError) {
             // Insert error here
-            modelAndView.addObject("error", true);
+            modelAndView.addObject("errorMessage", "Invalid input. Try again.");
+        }
+        else {
+            // Save changes
+            userService.changePassword(authUser.getUsername(), newPassword);
+            modelAndView.addObject("successMessage", "Successfully changed password.");
         }
 
         modelAndView.setViewName("manager/change_password");

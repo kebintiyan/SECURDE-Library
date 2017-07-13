@@ -98,4 +98,13 @@ public class UserService {
 
         return passwordEncoder.matches(password, user.getPassword());
     }
+
+    public void changePassword(String username, String newPassword) {
+        User user = findUserByUsername(username);
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setTemp(false);
+
+        userRepository.save(user);
+    }
 }
