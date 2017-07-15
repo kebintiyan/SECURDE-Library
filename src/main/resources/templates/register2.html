@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>INSPINIA | Register</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet"/>
+    <link href="css/animate.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">BF</h1>
+
+            </div>
+            <h3>Register to BF</h3>
+            <p>Create account to experience bookgasm.</p>
+            <form autocomplete="off" class="m-t" role="form" action="login.html" th:action="@{/register}"
+                  th:object="${user}" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                <div class="form-group">
+                    <input type="text" th:maxlength="16" th:field="*{username}" placeholder="Username"
+                           class="form-control" />
+                    <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                           class="validation-message"></label>
+                </div>
+                <div class="form-group">
+                    <input type="password" th:field="*{password}" th:maxlength="32"
+                           placeholder="Password" class="form-control" />
+                    <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                           class="validation-message"></label>
+                </div>
+                <div class="form-group">
+                    <input type="text" th:field="*{idNumber}" th:maxlength="8"
+                           placeholder="ID Number" class="form-control" />
+                    <label th:if="${#fields.hasErrors('idNumber')}" th:errors="*{idNumber}"
+                           class="validation-message"></label>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" th:field="*{email}" placeholder="Email" th:maxlength="32"
+                               class="form-control" aria-describedby="email-domain"/>
+                        <span class="input-group-addon" id="email-domain">@dlsu.edu.ph</span>
+                    </div>
+                    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                           class="validation-message"></label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{firstName}" th:maxlength="16"
+                           placeholder="First Name" class="form-control" />
+                    <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                           class="validation-message"></label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{middleInitial}" th:maxlength="5"
+                           placeholder="Middle Initial" class="form-control" />
+                    <label th:if="${#fields.hasErrors('middleInitial')}" th:errors="*{middleInitial}"
+                           class="validation-message"></label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{lastName}" th:maxlength="16"
+                           placeholder="Last Name" class="form-control" />
+                    <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                           class="validation-message"></label>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group date datepicker" data-provide="datepicker">
+                        <input type="text" th:field="*{birthday}"
+                               placeholder="Birthday" class="form-control" />
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                        <label th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"
+                               class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{secretQuestion}" th:maxlength="64"
+                           placeholder="Secret Question" class="form-control" />
+                    <label th:if="${#fields.hasErrors('secretQuestion')}" th:errors="*{secretQuestion}"
+                           class="validation-message"></label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{secretAnswer}" th:maxlength="32"
+                           placeholder="Secret Answer" class="form-control" />
+                    <label th:if="${#fields.hasErrors('secretAnswer')}" th:errors="*{secretAnswer}"
+                           class="validation-message"></label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+
+                <p class="text-muted text-center"><small>Already have an account?</small></p>
+                <a class="btn btn-sm btn-white btn-block" th:href="@{/login}">Login</a>
+
+                <span th:utext="${successMessage}"></span>
+            </form>
+            <p class="m-t"> <small>Team Name &copy; 2017</small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+</body>
+
+</html>

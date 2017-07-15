@@ -65,7 +65,7 @@ public class MainController {
     @RequestMapping(value = {"/"})
     public ModelAndView main() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("main");
+        modelAndView.setViewName("login2");
         return modelAndView;
     }
 
@@ -81,7 +81,7 @@ public class MainController {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("register");
+        modelAndView.setViewName("register2");
         return modelAndView;
     }
 
@@ -102,13 +102,13 @@ public class MainController {
         }
 
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("register");
+            modelAndView.setViewName("register2");
         }
         else {
             userService.createNewUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("register");
+            modelAndView.setViewName("register2");
         }
 
         return modelAndView;
