@@ -9,11 +9,11 @@
 
     <title>BookFind</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" type="text/css" rel="stylesheet"/>
 
-    <link href="css/animate.css" rel="stylesheet"/>
-    <link href="css/style.css" rel="stylesheet"/>
+    <link th:href="@{/css/animate.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" type="text/css" rel="stylesheet"/>
 
 </head>
 
@@ -31,7 +31,8 @@
                 <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
             </p>
             <p>Login to experience bookgasm.</p>
-            <form class="m-t" role="form" action="index.html" th:action="@{/login}" method="POST">
+
+            <form class="m-t" role="form" th:action="@{/login}" method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-group">
                     <input type="text" id="username" name="username" th:maxlength="16"
