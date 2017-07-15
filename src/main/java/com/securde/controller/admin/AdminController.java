@@ -35,7 +35,7 @@ public class AdminController {
     @RequestMapping(value = {"/admin", "/admin/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin/home");
+        modelAndView.setViewName("admin/home2");
         return modelAndView;
     }
 
