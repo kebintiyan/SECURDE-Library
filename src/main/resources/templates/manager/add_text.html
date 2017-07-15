@@ -80,11 +80,11 @@
                     <div class="col-md-4">
                         <label>Tags:</label>
                         <br/>
-                        <th:block th:each="tag, stat: *{tags}">
+                        <th:block th:each="tag, status: *{tags}">
                             <input type="text"
                                    class="form-control"
                                    th:value="${tag}"
-                                   th:field="*{tags[__${stat.index}__]}" />
+                                   th:field="*{tags[__${status.index}__]}" />
                             <br/>
                         </th:block>
                     </div>
