@@ -44,22 +44,6 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        /*http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/", "/home", "/about").permitAll()
-                .antMatchers("/admin*//**").hasAnyRole("ADMINISTRATOR")
-                .antMatchers("/user*//**").hasAnyRole("USER")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);*/
-
         http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
@@ -86,6 +70,16 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/home");
+                .accessDeniedPage("/home")
+                .and()
+                .headers().contentTypeOptions()
+                .and()
+                .xssProtection()
+                .and()
+                .cacheControl()
+                .and()
+                .httpStrictTransportSecurity()
+                .and()
+                .frameOptions();
     }
 }
