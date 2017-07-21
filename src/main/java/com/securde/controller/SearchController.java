@@ -22,7 +22,7 @@ public class SearchController {
     @Autowired
     ReservableService reservableService;
 
-    @RequestMapping(value = {"/search"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/search", "/"}, method = RequestMethod.GET)
     public ModelAndView search() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search");

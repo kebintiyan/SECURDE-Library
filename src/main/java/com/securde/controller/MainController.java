@@ -2,6 +2,7 @@ package com.securde.controller;
 
 import com.securde.model.account.Role;
 import com.securde.model.account.User;
+import com.securde.model.reservable.SearchParameters;
 import com.securde.validator.UserValidator;
 import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,12 +63,13 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/"})
+    /*@RequestMapping(value = {"/"})
     public ModelAndView main() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login2");
+        modelAndView.setViewName("search");
+
         return modelAndView;
-    }
+    }*/
 
     @RequestMapping(value={"/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
