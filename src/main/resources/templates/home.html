@@ -12,25 +12,29 @@
 <body>
 
 <div class="container">
-    <h2>User home</h2>
 
-    <ul>
-        <li>
-            <a th:href="@{/search}">Search Texts</a>
-        </li>
+    <div class = "row">
+        <div class = "col-md-12 text-center">
+            <h1>DLSU SHS Library</h1>
+        </div>
+    </div>
 
-        <li>
-            <a th:href="@{/rooms}">Reserve a room</a>
-        </li>
+    <div class = "row">
+        <div class = "col-md-12 text-center">
+            <h2>User Home</h2>
+        </div>
+    </div>
 
-        <li>
-            <a>Change password</a>
-        </li>
-
-        <li>
-            <a th:href="@{/logout}">Log out</a>
-        </li>
-    </ul>
+    <div class = "row">
+        <div class = "col-md-6 col-md-offset-3">
+            <div class="btn-group btn-group-sm btn-group-justified btn-categories" role="group" aria-label="...">
+                <a role="button" class="btn btn-default" th:href="@{/search}">Search</a>
+                <a role="button" class="btn btn-default" th:href="@{/rooms}">Rooms</a>
+                <a role="button" class="btn btn-default" th:href="@{#}">Change Password</a>
+                <a role="button" class="btn btn-danger" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
