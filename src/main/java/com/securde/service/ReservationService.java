@@ -44,15 +44,19 @@ public class ReservationService {
         roomReservationRepository.delete(id);
     }
 
-    public ArrayList<TextReservation> getReservationsByUserIdAndTextId(Integer userId, Integer textId) {
+    public ArrayList<TextReservation> getTextReservationsByUserIdAndTextId(Integer userId, Integer textId) {
         return textReservationRepository.findTextReservationsByUserIdAndTextId(userId, textId);
     }
 
-    public ArrayList<TextReservation> getReservationsByUserIdAndTextIdFromDate(Integer userId, Integer textId, String date) {
+    public ArrayList<TextReservation> getTextReservationsByTextIdFromDate(Integer textId, String date) {
+        return textReservationRepository.findTextReservationsByTextIdFromDate(textId, date);
+    }
+
+    public ArrayList<TextReservation> getTextReservationsByUserIdAndTextIdFromDate(Integer userId, Integer textId, String date) {
         return textReservationRepository.findTextReservationsByUserIdAndTextIdFromDate(userId, textId, date);
     }
 
-    public ArrayList<TextReservation> getPreviousReservationsByUserIdAndTextId(Integer userId, Integer textId) {
+    public ArrayList<TextReservation> getPreviousTextReservationsByUserIdAndTextId(Integer userId, Integer textId) {
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return textReservationRepository.findPreviousTextReservationsByUserIdAndTextId(userId, textId, sdf.format(date));
@@ -60,6 +64,10 @@ public class ReservationService {
 
     public ArrayList<RoomReservation> getRoomReservationsByDate(String date) {
         return roomReservationRepository.findRoomReservationsByDate(date);
+    }
+
+    public ArrayList<RoomReservation> getRoomReservationsByRoomIdFromDate(Integer roomId, String date) {
+        return roomReservationRepository.findRoomReservationsByRoomIdFromDate(roomId, date);
     }
 
     public ArrayList<RoomReservation> getRoomReservationsByUserFromDate(Integer userId, String date) {

@@ -45,4 +45,12 @@ public interface TextReservationRepository extends CrudRepository<TextReservatio
             @Param("userId") Integer userId,
             @Param("textId") Integer textId,
             @Param("date") String date);
+
+    @Query("SELECT tr " +
+            "FROM TextReservation tr " +
+            "WHERE tr.text.textId = :textId AND " +
+            "tr.reservationStartDate >= :date OR tr.reservationEndDate >= :date")
+    ArrayList<TextReservation> findTextReservationsByTextIdFromDate(
+            @Param("textId") Integer textId,
+            @Param("date") String date);
 }
