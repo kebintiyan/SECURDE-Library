@@ -1,6 +1,7 @@
 package com.securde.controller.manager;
 
 import com.securde.controller.RoomController;
+import com.securde.export.XlsxView;
 import com.securde.model.reservable.Room;
 import com.securde.model.reservable.Text;
 import com.securde.model.reservation.RoomReservation;
@@ -19,10 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by kevin on 6/26/2017.
@@ -222,5 +220,19 @@ public class ManagerController {
         modelAndView.setViewName("manager/change_password");
 
         return modelAndView;
+    }
+
+    @RequestMapping(value = {"manager/status"}, method = RequestMethod.GET)
+    public ModelAndView getLogs() {
+        HashMap<String, Object> model = new HashMap<>();
+
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = sdf.format(date);
+
+        model.put("textReservations", reservationService.getTextReservationsFromDate(currentDate));
+        model.put("roomReservations", reservationService.getRoomReservationsFromDate(currentDate));
+
+        return new ModelAndView(new XlsxView(), model);
     }
 }

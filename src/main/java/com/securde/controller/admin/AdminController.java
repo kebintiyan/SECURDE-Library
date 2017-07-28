@@ -116,7 +116,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"admin/export_logs"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"admin/status"}, method = RequestMethod.GET)
     public ModelAndView getLogs() {
         HashMap<String, Object> model = new HashMap<>();
 
