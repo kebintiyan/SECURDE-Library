@@ -1,19 +1,23 @@
 body{
-    padding-top: 10px;
+    padding-top: 10%;
+}
+
+th {
+    font-size: 8px;
+}
+
+div.slot {
+    padding: 0;
+    height: 40px;
+    width: 100%
 }
 
 div.slot.free{
-    padding: 0%;
     background-color: #42f146;
-    height: 40px;
-    width: 80px
 }
 
 div.slot.reserved {
-    padding: 0%;
     background-color: #dddddd;
-    height: 40px;
-    width: 100%;
 }
 
 div.slot.free:hover {

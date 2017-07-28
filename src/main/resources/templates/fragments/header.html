@@ -1,12 +1,42 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/search.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
+
+    <link th:href="@{/css/animate.css}" type="text/css" rel="stylesheet"/>
+
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/sidebar.js}"></script>
 </head>
 <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+        <div class = "container">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a th:href="@{/search}"><span class="glyphicon glyphicon-book"></span> Search Text</a></li>
+                <li><a th:href="@{/rooms}"><span class="glyphicon glyphicon-briefcase"></span> Reserve Meeting Room</a></li>
+            </ul>
+
+            <div sec:authorize="isFullyAuthenticated()">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+            </div>
+
+            <div sec:authorize="isAnonymous()">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
