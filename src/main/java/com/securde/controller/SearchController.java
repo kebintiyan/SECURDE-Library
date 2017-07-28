@@ -45,7 +45,7 @@ public class SearchController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/authors"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/search/authors"}, method = RequestMethod.GET)
     public ModelAndView authorCategory() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search");
@@ -60,7 +60,7 @@ public class SearchController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/publishers"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/search/publishers"}, method = RequestMethod.GET)
     public ModelAndView publisherCategory() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search");
@@ -75,7 +75,7 @@ public class SearchController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/books"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/search/books"}, method = RequestMethod.GET)
     public ModelAndView bookCategory() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search");
@@ -90,7 +90,7 @@ public class SearchController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/thesis"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/search/thesis"}, method = RequestMethod.GET)
     public ModelAndView thesisCategory() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search");
@@ -105,7 +105,7 @@ public class SearchController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/magazines"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/search/magazines"}, method = RequestMethod.GET)
     public ModelAndView magazineCategory() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search");

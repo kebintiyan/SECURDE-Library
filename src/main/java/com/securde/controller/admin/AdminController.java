@@ -1,7 +1,9 @@
 package com.securde.controller.admin;
 
+import com.securde.export.XlsxView;
 import com.securde.model.account.Role;
 import com.securde.model.account.User;
+import com.securde.service.ReservationService;
 import com.securde.validator.UserValidator;
 import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import sun.misc.Request;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by kevin on 6/26/2017.
@@ -26,6 +33,9 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ReservationService reservationService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -104,5 +114,19 @@ public class AdminController {
 
         modelAndView.setViewName("redirect:/admin/unlock");
         return modelAndView;
+    }
+
+    @RequestMapping(value = {"admin/export_logs"}, method = RequestMethod.GET)
+    public ModelAndView getLogs() {
+        HashMap<String, Object> model = new HashMap<>();
+
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = sdf.format(date);
+
+        model.put("textReservations", reservationService.getTextReservationsFromDate(currentDate));
+        model.put("roomReservations", reservationService.getRoomReservationsFromDate(currentDate));
+
+        return new ModelAndView(new XlsxView(), model);
     }
 }

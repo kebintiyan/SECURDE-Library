@@ -62,8 +62,16 @@ public class ReservationService {
         return textReservationRepository.findPreviousTextReservationsByUserIdAndTextId(userId, textId, sdf.format(date));
     }
 
+    public ArrayList<TextReservation> getTextReservationsFromDate(String date) {
+        return textReservationRepository.findTextReservationsFromDate(date);
+    }
+
     public ArrayList<RoomReservation> getRoomReservationsByDate(String date) {
         return roomReservationRepository.findRoomReservationsByDate(date);
+    }
+
+    public ArrayList<RoomReservation> getRoomReservationsFromDate(String date) {
+        return roomReservationRepository.findRoomReservationsFromDate(date);
     }
 
     public ArrayList<RoomReservation> getRoomReservationsByRoomIdFromDate(Integer roomId, String date) {

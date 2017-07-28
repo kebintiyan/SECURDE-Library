@@ -1,6 +1,9 @@
 package com.securde.model.reservable;
 
+import com.securde.model.reservation.RoomReservation;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 
 /**
  * Created by kevin on 6/21/2017.
@@ -23,6 +26,9 @@ public class Room extends Reservable {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    /*@OneToMany(mappedBy = "rooms")
+    private ArrayList<RoomReservation> roomReservations;*/
 
     public Integer getRoomId() {
         return roomId;
