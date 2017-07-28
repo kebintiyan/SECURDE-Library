@@ -31,9 +31,6 @@ public class LibraryAuthenticaionFailureHandler extends SimpleUrlAuthenticationF
 
         if (!loginAttemptService.isBlocked(ip))
             loginAttemptService.loginFailed(ip);
-        else {
-            // put blocked code here
-        }
 
         getRedirectStrategy().sendRedirect(request, response, "/login?error=true");
 

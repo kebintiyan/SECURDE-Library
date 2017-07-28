@@ -83,16 +83,16 @@ public class MainController {
         String ip = request.getRemoteAddr();
 
         if (loginAttemptService.isBlocked(ip)) {
-            // redirect to blocked page
+            modelAndView.setViewName("blocked");
 
             System.out.println(ip + " is blocked.");
 
         } else {
             modelAndView.setViewName("login2");
-            return modelAndView;
+
         }
 
-        return null;
+        return modelAndView;
     }
 
     @RequestMapping(value="/register", method = RequestMethod.GET)
