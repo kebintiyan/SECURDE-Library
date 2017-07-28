@@ -36,6 +36,7 @@ public class XlsxView extends AbstractXlsxView {
 
     private void generateTextSheet(Workbook workbook, ArrayList<TextReservation> textReservations) {
         Sheet textSheet = workbook.createSheet("Text Reservations");
+        textSheet.setDefaultColumnWidth(30);
 
         Row header = textSheet.createRow(0);
         header.createCell(0).setCellValue("Text Title");
@@ -57,6 +58,7 @@ public class XlsxView extends AbstractXlsxView {
 
     private void generateRoomSheet(Workbook workbook, ArrayList<RoomReservation> roomReservations) {
         Sheet roomSheet = workbook.createSheet("Room Reservations");
+        roomSheet.setDefaultColumnWidth(30);
         Row header = roomSheet.createRow(0);
         header.createCell(0).setCellValue("Room Name");
         header.createCell(1).setCellValue("Reserved By");
