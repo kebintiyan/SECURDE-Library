@@ -78,4 +78,6 @@ public interface TextRepository extends CrudRepository <Text, Integer> {
             "WHERE t.author LIKE LOWER(CONCAT('%',:searchParam, '%')) OR " +
             "t.publisher LIKE LOWER(CONCAT('%',:searchParam, '%'))")
     ArrayList<Text> findByAuthorOrPublisherContaining(@Param("searchParam") String title);
+
+
 }

@@ -1,5 +1,6 @@
 package com.securde.model.reservable;
 
+import com.securde.model.reservation.TextReservation;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -60,6 +61,9 @@ public class Text extends Reservable {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    /*@OneToMany(mappedBy = "texts")
+    private ArrayList<TextReservation> textReservations;*/
 
     public Integer getTextId() {
         return textId;
@@ -141,21 +145,10 @@ public class Text extends Reservable {
     }
 
     public ArrayList<String> getTags() {
-        /*while(tags.size() <= 5) {
-            tags.add("");
-        }*/
-
         return tags;
     }
 
     public Text setTags(ArrayList<String> tags) {
-        /*for (int i = 0; i < tags.size(); i++) {
-            if (tags.get(i).trim().isEmpty()) {
-                tags.remove(i);
-                i--;
-            }
-        }*/
-
         this.tags = tags;
         return this;
     }
