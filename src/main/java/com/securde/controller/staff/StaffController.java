@@ -7,6 +7,7 @@ import com.securde.model.reservation.RoomReservation;
 import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
 import com.securde.service.UserService;
+import com.securde.validator.PasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import sun.security.util.Password;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
@@ -176,13 +178,14 @@ public class StaffController {
                                        @RequestParam("confirmNewPassword") String confirmNewPassword) {
 
         ModelAndView modelAndView = new ModelAndView();
-
         User authUser = (User) authentication.getPrincipal();
-
         boolean hasError;
+        PasswordValidator passwordValidator = new PasswordValidator();
 
         hasError = !userService.validateUser(authUser.getUsername(), currentPassword);
         hasError = hasError || !newPassword.equals(confirmNewPassword);
+        hasError = hasError || !passwordValidator.isValidPassword(currentPassword) ||
+                !passwordValidator.isValidPassword(newPassword);
 
         if (hasError) {
             modelAndView.addObject("errorMessage", "Invalid input. Try again.");

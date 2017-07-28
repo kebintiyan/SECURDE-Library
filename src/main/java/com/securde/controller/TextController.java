@@ -71,7 +71,7 @@ public class TextController {
         User authUser = (User) authentication.getPrincipal();
         com.securde.model.account.User user = userService.findUserByUsername(authUser.getUsername());
 
-        Integer reservationCount = reservationService.getPreviousReservationsByUserIdAndTextId(user.getUserId(), id).size();
+        Integer reservationCount = reservationService.getPreviousTextReservationsByUserIdAndTextId(user.getUserId(), id).size();
 
         TextReservation textReservation = new TextReservation();
         Review review = new Review()
@@ -97,7 +97,7 @@ public class TextController {
 
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Boolean hasReservation = reservationService.getReservationsByUserIdAndTextIdFromDate(user.getUserId(), id, sdf.format(date)).size() > 0;
+        Boolean hasReservation = reservationService.getTextReservationsByUserIdAndTextIdFromDate(user.getUserId(), id, sdf.format(date)).size() > 0;
         //List<String> availableDates = getDates(7);
 
         modelAndView.setViewName("text");
