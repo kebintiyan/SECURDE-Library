@@ -23,6 +23,9 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LibraryAuthenticationSuccessHandler libraryAuthenticationSuccessHandler;
 
+    @Autowired
+    private LibraryAuthenticaionFailureHandler libraryAuthenticaionFailureHandler;
+
     @Value("${spring.queries.users-query}")
     private String usersQuery;
 
@@ -62,7 +65,8 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 /*.csrf()
                 .disable()*/
                 .formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
+                .loginPage("/login")
+                .failureHandler(libraryAuthenticaionFailureHandler)
 //                .successHandler(libraryAuthenticationSuccessHandler)
                 .defaultSuccessUrl("/home")
                 .usernameParameter("username")

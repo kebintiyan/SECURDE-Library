@@ -3,6 +3,7 @@ package com.securde.controller;
 import com.securde.model.account.Role;
 import com.securde.model.account.User;
 import com.securde.model.reservable.SearchParameters;
+import com.securde.service.LoginAttemptService;
 import com.securde.validator.UserValidator;
 import com.securde.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -27,6 +30,9 @@ public class MainController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    LoginAttemptService loginAttemptService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -72,10 +78,21 @@ public class MainController {
     }*/
 
     @RequestMapping(value={"/login"}, method = RequestMethod.GET)
-    public ModelAndView login(){
+    public @ResponseBody ModelAndView login(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login2");
-        return modelAndView;
+        String ip = request.getRemoteAddr();
+
+        if (loginAttemptService.isBlocked(ip)) {
+            // redirect to blocked page
+
+            System.out.println(ip + " is blocked.");
+
+        } else {
+            modelAndView.setViewName("login2");
+            return modelAndView;
+        }
+
+        return null;
     }
 
     @RequestMapping(value="/register", method = RequestMethod.GET)
