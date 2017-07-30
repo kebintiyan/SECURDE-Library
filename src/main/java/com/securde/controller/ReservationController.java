@@ -8,6 +8,8 @@ import com.securde.model.reservation.TextReservation;
 import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
 import com.securde.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -33,6 +35,8 @@ public class ReservationController {
     public static final int STUDENT_RESERVATION_DAYS = 7;
     public static final int FACULTY_RESERVATION_DAYS = 30;
 
+    private static Logger logger = LoggerFactory.getLogger(ReservationController.class);
+
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyy-MM-dd");
     private Calendar calendar = Calendar.getInstance();
 
@@ -49,17 +53,17 @@ public class ReservationController {
     public ModelAndView reserveText (@RequestParam("id") String id, TextReservation textReservation, Authentication authentication) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
 
-        User user = (User) authentication.getPrincipal();
-        com.securde.model.account.User my_user = userService.findUserByUsername(user.getUsername());
+        User authUser = (User) authentication.getPrincipal();
+        com.securde.model.account.User user = userService.findUserByUsername(authUser.getUsername());
 
-        textReservation.setUser(my_user);
+        textReservation.setUser(user);
         Date date = sdf.parse(textReservation.getReservationStartDate());
 
         calendar.setTime(date);
 
-        if (my_user.getRole().equals(Role.STUDENT)) {
+        if (user.getRole().equals(Role.STUDENT)) {
             calendar.add(Calendar.DATE, STUDENT_RESERVATION_DAYS);
-        } else if (my_user.getRole().equals(Role.FACULTY)) {
+        } else if (user.getRole().equals(Role.FACULTY)) {
             calendar.add(Calendar.DATE, FACULTY_RESERVATION_DAYS);
         }
 
@@ -71,6 +75,8 @@ public class ReservationController {
         textReservation.setText(text);
 
         reservationService.saveTextReservation(textReservation);
+
+        logger.info(user.getUsername() + " reserved text with ID: " + text.getTextId());
 
         modelAndView.setViewName("reserve");
 
@@ -96,16 +102,18 @@ public class ReservationController {
 
         Room room = reservableService.getRoom(roomId);
 
-        User user = (User) authentication.getPrincipal();
-        com.securde.model.account.User my_user = userService.findUserByUsername(user.getUsername());
+        User authUser = (User) authentication.getPrincipal();
+        com.securde.model.account.User user = userService.findUserByUsername(authUser.getUsername());
 
-        roomReservation.setUser(my_user);
+        roomReservation.setUser(user);
         roomReservation.setRoom(room);
         roomReservation.setReservationStartTime(startTime);
         roomReservation.setReservationEndTime(endTime);
         roomReservation.setReservationDate(date);
 
         reservationService.saveRoomReservation(roomReservation);
+
+        logger.info(user.getUsername() + " reserved room with ID: " + room.getRoomId());
 
         modelAndView.setViewName("reserve");
 

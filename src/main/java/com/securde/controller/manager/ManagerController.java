@@ -9,12 +9,17 @@ import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
 import com.securde.service.UserService;
 import com.securde.validator.PasswordValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -37,6 +42,8 @@ public class ManagerController {
 
     @Autowired
     UserService userService;
+
+    private static Logger logger = LoggerFactory.getLogger(ManagerController.class);
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar calendar = Calendar.getInstance();
@@ -88,7 +95,8 @@ public class ManagerController {
     }
 
     @RequestMapping(value = {"/manager/text/add"}, method = RequestMethod.POST)
-    public ModelAndView addText(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type) {
+    public ModelAndView addText(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type,
+                                Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
@@ -97,6 +105,10 @@ public class ManagerController {
         else {
             text.setType(type).setStatus(Text.Status.AVAILABLE);
             reservableService.saveText(text);
+
+            org.springframework.security.core.userdetails.User authUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+            logger.info(authUser.getUsername() + " added a new " + text.getType());
+
             modelAndView.setViewName("redirect:/manager/text");
         }
 
@@ -104,7 +116,8 @@ public class ManagerController {
     }
 
     @RequestMapping(value = {"manager/text"}, method = RequestMethod.PUT)
-    public ModelAndView editTextDetails(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type) {
+    public ModelAndView editTextDetails(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type,
+                                        Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
@@ -114,6 +127,10 @@ public class ManagerController {
         else {
             text.setType(type);
             reservableService.saveText(text);
+
+            org.springframework.security.core.userdetails.User authUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+            logger.info(authUser.getUsername() + " updated text with ID " + text.getTextId());
+
             modelAndView.setViewName("redirect:/manager/text?id=" + text.getTextId());
         }
 
@@ -121,8 +138,11 @@ public class ManagerController {
     }
 
     @RequestMapping(value = {"manager/text"}, method = RequestMethod.DELETE)
-    public RedirectView deleteText(@RequestParam("text-id") Integer id) {
+    public RedirectView deleteText(@RequestParam("text-id") Integer id, Authentication authentication) {
         reservableService.deleteText(id);
+
+        org.springframework.security.core.userdetails.User authUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+        logger.info(authUser.getUsername() + " deleted text with ID " + id);
 
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl("/manager/text");
@@ -161,7 +181,8 @@ public class ManagerController {
 
     @RequestMapping(value = "manager/rooms/delete", method = RequestMethod.POST)
     public @ResponseBody
-    ModelAndView deleteRoom (@RequestParam("msg") String msg, @RequestParam("date") String date) {
+    ModelAndView deleteRoom (@RequestParam("msg") String msg, @RequestParam("date") String date,
+                             Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
         System.out.println(msg);
@@ -175,6 +196,10 @@ public class ManagerController {
 
         for (int i = 0; i < retrievedSlots.size(); i++){
             reservationService.deleteRoomReservation(retrievedSlots.get(i).getRoomReservationId());
+
+            org.springframework.security.core.userdetails.User authUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+
+            logger.info(authUser.getUsername() + " deleted room reservation with ID " + retrievedSlots.get(i).getRoomReservationId());
         }
 
         modelAndView.setViewName("manager/delete");
@@ -214,6 +239,9 @@ public class ManagerController {
         else {
             // Save changes
             userService.changePassword(authUser.getUsername(), newPassword);
+
+            logger.info(authUser.getUsername() + " changed password");
+
             modelAndView.addObject("successMessage", "Successfully changed password.");
         }
 

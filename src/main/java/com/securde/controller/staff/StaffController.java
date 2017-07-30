@@ -8,6 +8,8 @@ import com.securde.service.ReservableService;
 import com.securde.service.ReservationService;
 import com.securde.service.UserService;
 import com.securde.validator.PasswordValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -42,6 +44,8 @@ public class StaffController {
 
     @Autowired
     UserService userService;
+
+    private static Logger logger = LoggerFactory.getLogger(StaffController.class);
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar calendar = Calendar.getInstance();
@@ -93,7 +97,8 @@ public class StaffController {
     }
 
     @RequestMapping(value = {"/staff/text/add"}, method = RequestMethod.POST)
-    public ModelAndView addText(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type) {
+    public ModelAndView addText(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type,
+                                Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
@@ -102,6 +107,10 @@ public class StaffController {
         else {
             text.setType(type).setStatus(Text.Status.AVAILABLE);
             reservableService.saveText(text);
+
+            org.springframework.security.core.userdetails.User authUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+            logger.info(authUser.getUsername() + " added a new " + text.getType());
+
             modelAndView.setViewName("redirect:/staff/text");
         }
 
@@ -109,7 +118,8 @@ public class StaffController {
     }
 
     @RequestMapping(value = {"staff/text"}, method = RequestMethod.PUT)
-    public ModelAndView editTextDetails(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type) {
+    public ModelAndView editTextDetails(@Valid Text text, BindingResult bindingResult, @RequestParam("radio-type") String type,
+                                        Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
@@ -119,6 +129,10 @@ public class StaffController {
         else {
             text.setType(type);
             reservableService.saveText(text);
+
+            org.springframework.security.core.userdetails.User authUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+            logger.info(authUser.getUsername() + " updated text with ID " + text.getTextId());
+
             modelAndView.setViewName("redirect:/staff/text?id=" + text.getTextId());
         }
 
@@ -126,8 +140,12 @@ public class StaffController {
     }
 
     @RequestMapping(value = {"staff/text"}, method = RequestMethod.DELETE)
-    public RedirectView deleteText(@RequestParam("text-id") Integer id) {
+    public RedirectView deleteText(@RequestParam("text-id") Integer id,
+                                   Authentication authentication) {
         reservableService.deleteText(id);
+
+        org.springframework.security.core.userdetails.User authUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+        logger.info(authUser.getUsername() + " deleted text with ID " + id);
 
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl("/staff/text");
@@ -191,8 +209,8 @@ public class StaffController {
             modelAndView.addObject("errorMessage", "Invalid input. Try again.");
         }
         else {
-
             userService.changePassword(authUser.getUsername(), newPassword);
+            logger.info(authUser.getUsername() + " changed password");
             modelAndView.addObject("successMessage", "Successfully changed password.");
         }
 

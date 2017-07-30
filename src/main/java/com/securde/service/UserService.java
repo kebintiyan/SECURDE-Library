@@ -3,6 +3,7 @@ package com.securde.service;
 import com.securde.model.account.Role;
 import com.securde.model.account.User;
 import com.securde.model.repository.UserRepository;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

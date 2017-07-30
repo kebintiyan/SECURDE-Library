@@ -1,6 +1,8 @@
 package com.securde.config;
 
 import com.securde.service.LoginAttemptService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -15,12 +17,14 @@ import java.io.IOException;
  * Created by patricktobias on 27/07/2017.
  */
 @Component
-public class LibraryAuthenticaionFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class LibraryAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Autowired
     LoginAttemptService loginAttemptService;
 
-    public LibraryAuthenticaionFailureHandler () {
+    private static Logger logger = LoggerFactory.getLogger(LibraryAuthenticationFailureHandler.class);
+
+    public LibraryAuthenticationFailureHandler() {
         super();
     }
 
@@ -29,8 +33,10 @@ public class LibraryAuthenticaionFailureHandler extends SimpleUrlAuthenticationF
 
         String ip = request.getRemoteAddr();
 
-        if (!loginAttemptService.isBlocked(ip))
+        if (!loginAttemptService.isBlocked(ip)) {
+            logger.warn(ip + " failed log in attempt");
             loginAttemptService.loginFailed(ip);
+        }
 
         getRedirectStrategy().sendRedirect(request, response, "/login?error=true");
 

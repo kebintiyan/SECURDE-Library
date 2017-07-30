@@ -24,7 +24,7 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
     private LibraryAuthenticationSuccessHandler libraryAuthenticationSuccessHandler;
 
     @Autowired
-    private LibraryAuthenticaionFailureHandler libraryAuthenticaionFailureHandler;
+    private LibraryAuthenticationFailureHandler libraryAuthenticationFailureHandler;
 
     @Value("${spring.queries.users-query}")
     private String usersQuery;
@@ -67,7 +67,7 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()*/
                 .formLogin()
                 .loginPage("/login")
-                .failureHandler(libraryAuthenticaionFailureHandler)
+                .failureHandler(libraryAuthenticationFailureHandler)
 //                .successHandler(libraryAuthenticationSuccessHandler)
                 .defaultSuccessUrl("/home")
                 .usernameParameter("username")

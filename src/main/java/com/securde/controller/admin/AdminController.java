@@ -6,7 +6,10 @@ import com.securde.model.account.User;
 import com.securde.service.ReservationService;
 import com.securde.validator.UserValidator;
 import com.securde.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -37,6 +40,8 @@ public class AdminController {
     @Autowired
     ReservationService reservationService;
 
+    private static Logger logger = LoggerFactory.getLogger(AdminController.class);
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(new UserValidator());
@@ -65,7 +70,8 @@ public class AdminController {
     }
 
     @RequestMapping(value = {"/admin/create"}, method = RequestMethod.POST)
-    public ModelAndView createUser(@Valid User user, @RequestParam("radio_role") String role, BindingResult bindingResult) {
+    public ModelAndView createUser(@Valid User user, @RequestParam("radio_role") String role, BindingResult bindingResult,
+                                   Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
         if(role.equals("manager"))
@@ -84,7 +90,15 @@ public class AdminController {
             userService.createNewAdmin(user);
             /*modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());*/
+
+            org.springframework.security.core.userdetails.User authUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+
+            logger.info(authUser.getUsername() + " created new " + role + " with username " + user.getUsername());
+
             modelAndView.addObject("registered", true);
+
+
+
             modelAndView.setViewName("redirect:/admin/home");
         }
 
@@ -104,13 +118,16 @@ public class AdminController {
     }
 
     @RequestMapping(value = {"/admin/unlock"}, method = RequestMethod.PUT)
-    public ModelAndView unlockAccount(@RequestParam("id") Integer id) {
+    public ModelAndView unlockAccount(@RequestParam("id") Integer id, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
         User user = userService.findUserByUserId(id);
         user.setActive(true);
 
         userService.updateUser(user);
+
+        org.springframework.security.core.userdetails.User authUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+        logger.info(authUser.getUsername() + " unlocked account with username " + user.getUsername());
 
         modelAndView.setViewName("redirect:/admin/unlock");
         return modelAndView;
