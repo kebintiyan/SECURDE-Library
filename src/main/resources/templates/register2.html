@@ -7,23 +7,30 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>INSPINIA | Register</title>
+    <title>Register</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/animate.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.standalone.min.css}" />
 
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/pwstrength-bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+
 
     <script th:inline="javascript">
         /*<![CDATA[*/
         $(document).ready(function() {
             $('#password').pwstrength({
                 ui: { showVerdictsInsideProgressBar: true }
+            });
+
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
             });
         });
         /*]]>*/
@@ -71,7 +78,7 @@
                         <span class="input-group-addon" id="email-domain">@dlsu.edu.ph</span>
                     </div>
                     <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                           class="validation-message"></label>
+                           class="validation-message text-error"></label>
                 </div>
 
                 <div class="form-group">

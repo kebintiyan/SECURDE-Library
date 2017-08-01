@@ -40,12 +40,15 @@ public class AdminController {
     @Autowired
     ReservationService reservationService;
 
+    @Autowired
+    UserValidator userValidator;
+
     private static Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-    @InitBinder
+    /*@InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(new UserValidator());
-    }
+    }*/
 
     @RequestMapping(value = {"/admin", "/admin/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
@@ -70,7 +73,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = {"/admin/create"}, method = RequestMethod.POST)
-    public ModelAndView createUser(@Valid User user, @RequestParam("radio_role") String role, BindingResult bindingResult,
+    public ModelAndView createUser(User user, @RequestParam("radio_role") String role, BindingResult bindingResult,
                                    Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
 
@@ -78,6 +81,8 @@ public class AdminController {
             user.setRole(Role.MANAGER);
         else
             user.setRole(Role.STAFF);
+
+        userValidator.validate(user, bindingResult);
 
         if (userService.findUserByUsername(user.getUsername()) != null) {
             bindingResult.rejectValue("username", "error.user", "Username is already in use.");

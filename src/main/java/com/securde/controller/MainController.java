@@ -34,10 +34,13 @@ public class MainController {
     @Autowired
     LoginAttemptService loginAttemptService;
 
-    @InitBinder
+    @Autowired
+    UserValidator userValidator;
+
+    /*@InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(new UserValidator());
-    }
+    }*/
 
     @RequestMapping("/home")
     public RedirectView redirectAfterLogin(Authentication auth) {
@@ -105,8 +108,10 @@ public class MainController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+    public ModelAndView createNewUser(User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+
+        userValidator.validate(user, bindingResult);
 
         if (userService.findUserByUsername(user.getUsername()) != null) {
             bindingResult.rejectValue("username", "error.user", "Username is already in use.");

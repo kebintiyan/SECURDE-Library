@@ -1,14 +1,16 @@
 package com.securde.validator;
 
 import com.securde.model.account.User;
-import com.securde.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
  * Created by kevin on 6/27/2017.
  */
+
+@Component
 public class UserValidator implements Validator {
 
     private static final String ERROR_CODE_REQUIRED = "field.required";
@@ -44,10 +46,12 @@ public class UserValidator implements Validator {
             validateFirstName(user.getFirstName(), errors);
             validateMiddleInitial(user.getMiddleInitial(), errors);
             validateLastName(user.getLastName(), errors);
+            validateBirthday(user.getBirthday(), errors);
             validateSecretQuestion(user.getSecretQuestion(), errors);
             validateSecretAnswer(user.getSecretAnswer(), errors);
         }
     }
+
 
     private void validateUsername(String username, Errors errors) {
         if (isNullOrEmpty(username)) {
@@ -79,8 +83,10 @@ public class UserValidator implements Validator {
 
     private void validateIdNumber(String idNumber, Errors errors) {
         if (isNullOrEmpty(idNumber)) {
-            rejectRequired(errors, "ID number");
+//            rejectRequired(errors, "idNumber");
+            errors.rejectValue("idNumber", ERROR_CODE_REQUIRED, "Please input a valid ID number.");
         }
+
         else if (idNumber.length() != ID_NUMBER_LENGTH) {
             errors.rejectValue("idNumber", ERROR_LENGTH, "ID Number must be exactly " + ID_NUMBER_LENGTH + " characters.");
         }
@@ -98,31 +104,47 @@ public class UserValidator implements Validator {
 
     private void validateFirstName(String firstName, Errors errors) {
         if (isNullOrEmpty(firstName)) {
-            rejectRequired(errors, "first name");
+//            rejectRequired(errors, "firstName");
+            errors.rejectValue("firstName", ERROR_CODE_REQUIRED, "Please input a valid first name.");
+
         }
     }
 
     private void validateMiddleInitial(String middleInitial, Errors errors) {
         if (isNullOrEmpty(middleInitial)) {
-            rejectRequired(errors, "middle initial");
+//            rejectRequired(errors, "middleInitial");
+            errors.rejectValue("middleInitial", ERROR_CODE_REQUIRED, "Please input a valid middle initial.");
+
         }
     }
 
     private void validateLastName(String lastName, Errors errors) {
         if (isNullOrEmpty(lastName)) {
-            rejectRequired(errors, "last name");
+//            rejectRequired(errors, "lastName");
+            errors.rejectValue("lastName", ERROR_CODE_REQUIRED, "Please input a valid last name.");
+
+        }
+    }
+
+    private void validateBirthday(String birthday, Errors errors) {
+        if (isNullOrEmpty(birthday)) {
+            errors.rejectValue("birthday", ERROR_CODE_REQUIRED, "Please input a valid birthday.");
         }
     }
 
     private void validateSecretQuestion(String secretQuestion, Errors errors) {
         if (isNullOrEmpty(secretQuestion)) {
-            rejectRequired(errors, "secret question");
+//            rejectRequired(errors, "secretQuestion");
+            errors.rejectValue("secretQuestion", ERROR_CODE_REQUIRED, "Please input a valid secret question.");
+
         }
     }
 
     private void validateSecretAnswer(String secretAnswer, Errors errors) {
         if (isNullOrEmpty(secretAnswer)) {
-            rejectRequired(errors, "secret answer");
+//            rejectRequired(errors, "secretAnswer");
+            errors.rejectValue("secretAnswer", ERROR_CODE_REQUIRED, "Please input a valid secret answer.");
+
         }
     }
 

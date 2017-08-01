@@ -102,7 +102,7 @@ public class User {
     }
 
     public User setIdNumber(String idNumber) {
-        this.idNumber = idNumber.trim();
+        this.idNumber = idNumber;
         return this;
     }
 
@@ -197,6 +197,6 @@ public class User {
     }
 
     public boolean isRegularUser() {
-        return role == Role.STUDENT || role == Role.FACULTY;
+        return role == null || role == Role.STUDENT || role == Role.FACULTY;
     }
 }

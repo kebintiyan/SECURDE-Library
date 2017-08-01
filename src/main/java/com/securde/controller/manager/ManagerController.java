@@ -51,7 +51,7 @@ public class ManagerController {
     @RequestMapping(value = {"/manager", "/manager/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("manager/home");
+        modelAndView.setViewName("manager/home2");
         return modelAndView;
     }
 

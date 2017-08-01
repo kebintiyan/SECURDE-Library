@@ -53,7 +53,7 @@ public class StaffController {
     @RequestMapping(value = {"/staff", "/staff/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("staff/home");
+        modelAndView.setViewName("staff/home2");
         return modelAndView;
     }
 
