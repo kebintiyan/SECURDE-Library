@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**
@@ -84,6 +85,8 @@ public class MainController {
     public @ResponseBody ModelAndView login(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
         String ip = request.getRemoteAddr();
+
+        HttpSession session = request.getSession(); //sessionCreated() is executed
 
         if (loginAttemptService.isBlocked(ip)) {
             modelAndView.setViewName("error/blocked");
