@@ -86,7 +86,7 @@ public class MainController {
         String ip = request.getRemoteAddr();
 
         if (loginAttemptService.isBlocked(ip)) {
-            modelAndView.setViewName("blocked");
+            modelAndView.setViewName("error/blocked");
 
             System.out.println(ip + " is blocked.");
 

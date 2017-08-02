@@ -91,8 +91,8 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionFixation().migrateSession()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .invalidSessionUrl("/invalidSession.html")
+                .invalidSessionUrl("/invalid_session")
                 .maximumSessions(1)
-                .expiredUrl("/sessionExpired.html");
+                .expiredUrl("/expired_session");
     }
 }
