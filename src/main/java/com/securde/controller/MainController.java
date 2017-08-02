@@ -44,7 +44,8 @@ public class MainController {
     }*/
 
     @RequestMapping("/home")
-    public RedirectView redirectAfterLogin(Authentication auth) {
+    public RedirectView redirectAfterLogin(Authentication auth, HttpSession session) {
+        session.setMaxInactiveInterval(15);
         RedirectView redirectView = new RedirectView();
 
         String role = auth.getAuthorities().toArray()[0].toString();
