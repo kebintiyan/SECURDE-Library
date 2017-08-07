@@ -28,6 +28,12 @@ public class UserValidator implements Validator {
 
     private static final int EMAIL_MAX_LENGTH = 64;
 
+    private static final int NAME_MAX_LENGTH = 64;
+    private static final int MIDDLE_INITIAL_MAX_LENGTH = 5;
+
+    private static final int SECRET_QUESTION_MAX_LENGTH = 64;
+    private static final int SECRET_ANSWER_MAX_LENGTH = 32;
+
     @Override
     public boolean supports(Class<?> clazz) {
         return User.class.equals(clazz);
@@ -108,13 +114,18 @@ public class UserValidator implements Validator {
             errors.rejectValue("firstName", ERROR_CODE_REQUIRED, "Please input a valid first name.");
 
         }
+        else if(firstName.length() > NAME_MAX_LENGTH) {
+            errors.rejectValue("firstName", ERROR_CODE_MAX_LENGTH, "Your first name is too long!");
+        }
     }
 
     private void validateMiddleInitial(String middleInitial, Errors errors) {
         if (isNullOrEmpty(middleInitial)) {
 //            rejectRequired(errors, "middleInitial");
             errors.rejectValue("middleInitial", ERROR_CODE_REQUIRED, "Please input a valid middle initial.");
-
+        }
+        else if (middleInitial.length() > MIDDLE_INITIAL_MAX_LENGTH) {
+            errors.rejectValue("middleInitial", ERROR_CODE_MAX_LENGTH, "Your middle initial is too long!");
         }
     }
 
@@ -122,7 +133,9 @@ public class UserValidator implements Validator {
         if (isNullOrEmpty(lastName)) {
 //            rejectRequired(errors, "lastName");
             errors.rejectValue("lastName", ERROR_CODE_REQUIRED, "Please input a valid last name.");
-
+        }
+        else if(lastName.length() > NAME_MAX_LENGTH) {
+            errors.rejectValue("lastName", ERROR_CODE_MAX_LENGTH, "Your last name is too long!");
         }
     }
 
@@ -136,7 +149,9 @@ public class UserValidator implements Validator {
         if (isNullOrEmpty(secretQuestion)) {
 //            rejectRequired(errors, "secretQuestion");
             errors.rejectValue("secretQuestion", ERROR_CODE_REQUIRED, "Please input a valid secret question.");
-
+        }
+        else if (secretQuestion.length() > SECRET_QUESTION_MAX_LENGTH) {
+            errors.rejectValue("secretQuestion", ERROR_CODE_MAX_LENGTH, "Your secret question is too long!");
         }
     }
 
@@ -144,7 +159,9 @@ public class UserValidator implements Validator {
         if (isNullOrEmpty(secretAnswer)) {
 //            rejectRequired(errors, "secretAnswer");
             errors.rejectValue("secretAnswer", ERROR_CODE_REQUIRED, "Please input a valid secret answer.");
-
+        }
+        else if (secretAnswer.length() > SECRET_ANSWER_MAX_LENGTH) {
+            errors.rejectValue("secretAnswer", ERROR_CODE_MAX_LENGTH, "Your secret answer is too long!");
         }
     }
 
