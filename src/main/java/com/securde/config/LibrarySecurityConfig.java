@@ -95,7 +95,6 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .sessionManagement()
                 .maximumSessions(1)
-                .maxSessionsPreventsLogin(true)
                 .expiredUrl("/expired_session");
     }
 
