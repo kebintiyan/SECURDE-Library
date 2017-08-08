@@ -83,11 +83,16 @@ public class MainController {
     }*/
 
     @RequestMapping(value={"/login"}, method = RequestMethod.GET)
-    public @ResponseBody ModelAndView login(HttpServletRequest request){
+    public @ResponseBody ModelAndView login(HttpServletRequest request, Authentication authentication){
         ModelAndView modelAndView = new ModelAndView();
         String ip = request.getRemoteAddr();
 
         HttpSession session = request.getSession(); //sessionCreated() is executed
+
+        if (authentication != null) {
+            modelAndView.setViewName("redirect:/home");
+            return modelAndView;
+        }
 
         if (loginAttemptService.isBlocked(ip)) {
             modelAndView.setViewName("error/blocked");
