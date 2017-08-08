@@ -49,7 +49,7 @@
             </div>
             <h3>Register to BF</h3>
             <p>Create account to experience bookgasm.</p>
-            <form autocomplete="off" class="m-t" role="form" action="login.html" th:action="@{/register}"
+            <form autocomplete="off" class="m-t" role="form" th:action="@{/register}"
                   th:object="${user}" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 

@@ -108,4 +108,10 @@ public class UserService {
 
         userRepository.save(user);
     }
+
+    public boolean validateSecretAnswer(Integer userId, String answer) {
+        User user = findUserByUserId(userId);
+
+        return passwordEncoder.matches(answer, user.getSecretAnswer());
+    }
 }

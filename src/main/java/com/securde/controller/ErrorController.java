@@ -15,7 +15,7 @@ public class ErrorController {
     @RequestMapping(value = {"/invalid_session"}, method = RequestMethod.GET)
     public ModelAndView viewInvalidSession() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("error/error");
+        modelAndView.setViewName("error");
         modelAndView.addObject("errorMessage",
                 "Your session is invalid.");
         return modelAndView;
@@ -24,7 +24,7 @@ public class ErrorController {
     @RequestMapping(value = {"/expired_session"}, method = RequestMethod.GET)
     public ModelAndView viewExpiredSession() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("error/error");
+        modelAndView.setViewName("error");
         modelAndView.addObject("errorMessage",
                 "Your session has expired.");
         return modelAndView;
@@ -33,7 +33,7 @@ public class ErrorController {
     @RequestMapping(value = {"/error"}, method = RequestMethod.GET)
     public ModelAndView viewError() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("error/error");
+        modelAndView.setViewName("error");
         modelAndView.addObject("errorMessage",
                 "You're seeing this page because something wrong happened. Please try again.");
         return modelAndView;
